@@ -5,7 +5,8 @@
 
 BachelorThesis::BachelorThesis(QWidget *parent)
 	: QMainWindow(parent),
-	videoReader( VideoReader::Type::CPU )
+	videoReader( VideoReader::Type::CPU ),
+	playbackSpeed( 1 )
 {
 	ui.setupUi(this);
 
@@ -16,6 +17,7 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	timer->start( 100 );
 
 	connect( ui.actionOpen_File, SIGNAL( triggered() ), this, SLOT( openFile() ) );
+	connect( ui.verticalSlider, SIGNAL( valueChanged( int ) ), this, SLOT( changePlaybackSpeed( int ) ) );
 
 
 	std::cout << "QTimer started..";
@@ -32,11 +34,12 @@ void BachelorThesis::loadImage()
 	{
 		timer.start();
 		cv::Mat loadedImage = videoReader.getNextImage();
-		loadedImage = videoReader.getNextImage();
-		loadedImage = videoReader.getNextImage();
-		loadedImage = videoReader.getNextImage();
-		loadedImage = videoReader.getNextImage();
-		loadedImage = videoReader.getNextImage();
+
+		for( int i = 0; i < playbackSpeed; i++ ) 
+		{
+			loadedImage = videoReader.getNextImage();
+		}
+		
 		cv::imshow( "VIDEO_CPU", loadedImage );
 		timer.stop();
 		QString elapsed;
@@ -51,4 +54,9 @@ void BachelorThesis::openFile( void )
 	//cvStartWindowThread();
 	cv::namedWindow("VIDEO_CPU", cv::WINDOW_NORMAL );
 	videoReader.open( fileName.toStdString() );
+}
+
+void BachelorThesis::changePlaybackSpeed( int _playbackSpeed )
+{
+	this->playbackSpeed = _playbackSpeed;
 }

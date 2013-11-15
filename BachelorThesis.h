@@ -21,9 +21,12 @@ private:
 	VideoReader videoReader;
 	Timer timer;
 
-	public slots:
-		void loadImage( void );
-		void openFile( void );
+	int playbackSpeed;
+
+public slots:
+	void loadImage( void );
+	void openFile( void );
+	void changePlaybackSpeed( int _playbackSpeed );
 };
 
 #endif // BACHELORTHESIS_H

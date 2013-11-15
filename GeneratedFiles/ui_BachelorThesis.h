@@ -18,6 +18,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -29,8 +30,10 @@ class Ui_BachelorThesisClass
 public:
     QAction *actionOpen_File;
     QAction *actionExit;
+    QAction *actionVerticalSlider;
     QWidget *centralWidget;
     QLabel *label;
+    QSlider *verticalSlider;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -47,11 +50,21 @@ public:
         actionOpen_File->setObjectName(QStringLiteral("actionOpen_File"));
         actionExit = new QAction(BachelorThesisClass);
         actionExit->setObjectName(QStringLiteral("actionExit"));
+        actionVerticalSlider = new QAction(BachelorThesisClass);
+        actionVerticalSlider->setObjectName(QStringLiteral("actionVerticalSlider"));
+        actionVerticalSlider->setCheckable(true);
         centralWidget = new QWidget(BachelorThesisClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(10, 20, 261, 16));
+        verticalSlider = new QSlider(centralWidget);
+        verticalSlider->setObjectName(QStringLiteral("verticalSlider"));
+        verticalSlider->setGeometry(QRect(240, 20, 22, 461));
+        verticalSlider->setMinimum(1);
+        verticalSlider->setMaximum(20);
+        verticalSlider->setOrientation(Qt::Vertical);
+        verticalSlider->setTickInterval(1);
         BachelorThesisClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BachelorThesisClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -87,6 +100,7 @@ public:
         BachelorThesisClass->setWindowTitle(QApplication::translate("BachelorThesisClass", "BachelorThesis", 0));
         actionOpen_File->setText(QApplication::translate("BachelorThesisClass", "Open File.", 0));
         actionExit->setText(QApplication::translate("BachelorThesisClass", "Exit", 0));
+        actionVerticalSlider->setText(QApplication::translate("BachelorThesisClass", "verticalSlider", 0));
         label->setText(QApplication::translate("BachelorThesisClass", "No File loaded.", 0));
         menuFile->setTitle(QApplication::translate("BachelorThesisClass", "File", 0));
         menuEdit->setTitle(QApplication::translate("BachelorThesisClass", "Edit", 0));
