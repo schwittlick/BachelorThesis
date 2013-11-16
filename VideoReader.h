@@ -23,12 +23,18 @@ public:
 	void close( void );
 	bool isOpen( void );
 	cv::Mat getNextImage( void );
+	double getNormalizedProgress( void );
+	int getMaxFrames( void );
+	int getCurrentFrameNr( void );
+	void jumpToFrame( int _frameNr );
 
 private:
 	cv::Mat currentFrame;
 	cv::Mat emptyMat;
 	cv::gpu::GpuMat currentGpuMat;
 	bool wasOpened;
+
+	int maxFrameCount, currentFrameNr;
 
 	int widthLoadedVideo, heightLoadedVideo;
 

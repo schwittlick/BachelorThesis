@@ -17,6 +17,9 @@ void VideoReader::open( std::string fileName )
 	videoCapture.open( fileName );
 	videoReaderGPU.open( fileName );
 
+	maxFrameCount = videoCapture.get( CV_CAP_PROP_FRAME_COUNT );
+	currentFrameNr = 0;
+
 	switch( selectedType )
 	{
 	case Type::CPU:
@@ -52,6 +55,7 @@ cv::Mat VideoReader::getNextImage( void )
 	case Type::CPU:
 		if( videoCapture.isOpened() )
 		{
+			currentFrameNr = videoCapture.get( CV_CAP_PROP_POS_FRAMES );
 			videoCapture >> currentFrame;
 			if( currentFrame.empty() )
 			{
@@ -66,9 +70,19 @@ cv::Mat VideoReader::getNextImage( void )
 		}
 		break;
 	case Type::GPU:
-		videoReaderGPU.read( currentGpuMat );
-		cv::Mat fr( currentGpuMat );
-		fr.copyTo( currentFrame );
+		if( videoReaderGPU.isOpened() )
+		{
+			currentFrameNr++;
+			videoReaderGPU.read( currentGpuMat );
+			cv::Mat fr( currentGpuMat );
+			fr.copyTo( currentFrame );
+		}
+		else
+		{
+			std::cout << "VideoCapture is not opened." << std::endl;
+			currentFrame = emptyMat;
+		}
+
 		break;
 	}
 
@@ -86,4 +100,36 @@ void VideoReader::close( void )
 	videoReaderGPU.close();
 
 	wasOpened = false;
+}
+
+double VideoReader::getNormalizedProgress( void )
+{
+	double progressNormalized;
+
+	progressNormalized = currentFrameNr / ( double )( maxFrameCount );
+
+	return progressNormalized;
+}
+
+int VideoReader::getMaxFrames( void )
+{
+	return maxFrameCount;
+}
+
+int VideoReader::getCurrentFrameNr( void )
+{
+	return currentFrameNr;
+}
+
+void VideoReader::jumpToFrame( int _frameNr )
+{
+	switch( selectedType )
+	{
+	case CPU:
+		videoCapture.set( CV_CAP_PROP_POS_FRAMES, ( double ) _frameNr );
+		break;
+	case GPU:
+		std::cerr << "Can't jump frames when using GPU VideoReader. Doing nothing instead." << std::endl;
+		break;
+	}
 }
