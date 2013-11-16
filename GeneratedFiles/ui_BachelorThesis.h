@@ -19,6 +19,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
@@ -37,6 +38,7 @@ public:
     QSlider *verticalSlider;
     QPushButton *pushButton;
     QSlider *progressBarSlider;
+    QRadioButton *radioButton;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -77,6 +79,9 @@ public:
         progressBarSlider->setMaximum(1);
         progressBarSlider->setSingleStep(1);
         progressBarSlider->setOrientation(Qt::Horizontal);
+        radioButton = new QRadioButton(centralWidget);
+        radioButton->setObjectName(QStringLiteral("radioButton"));
+        radioButton->setGeometry(QRect(200, 20, 151, 17));
         BachelorThesisClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BachelorThesisClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -115,6 +120,7 @@ public:
         actionVerticalSlider->setText(QApplication::translate("BachelorThesisClass", "verticalSlider", 0));
         label->setText(QApplication::translate("BachelorThesisClass", "No File loaded.", 0));
         pushButton->setText(QApplication::translate("BachelorThesisClass", "Play", 0));
+        radioButton->setText(QApplication::translate("BachelorThesisClass", "Background Substraction", 0));
         menuFile->setTitle(QApplication::translate("BachelorThesisClass", "File", 0));
         menuEdit->setTitle(QApplication::translate("BachelorThesisClass", "Edit", 0));
         menuHelp->setTitle(QApplication::translate("BachelorThesisClass", "Help", 0));
