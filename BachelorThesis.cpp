@@ -10,17 +10,12 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 {
 	ui.setupUi(this);
 
-	timer = Timer();
-
-	QTimer * timer = new QTimer( this );
-	connect( timer, SIGNAL( timeout() ), this, SLOT(loadImage() ) );
-	timer->start( 100 );
+	timer = Timer();	
 
 	connect( ui.actionOpen_File, SIGNAL( triggered() ), this, SLOT( openFile() ) );
 	connect( ui.verticalSlider, SIGNAL( valueChanged( int ) ), this, SLOT( changePlaybackSpeed( int ) ) );
-
-
-	std::cout << "QTimer started..";
+	connect( ui.pushButton, SIGNAL( clicked() ), this, SLOT( startVideo() ) );
+	connect( ui.progressBarSlider, SIGNAL( valueChanged( int) ), this, SLOT( jumpToFrame( int ) ) );
 }
 
 BachelorThesis::~BachelorThesis()
@@ -42,9 +37,12 @@ void BachelorThesis::loadImage()
 		
 		cv::imshow( "VIDEO_CPU", loadedImage );
 		timer.stop();
+
 		QString elapsed;
-		elapsed.append( QString( "%1" ).arg( timer.getLatest() ) );
+		elapsed.append( QString( "%1" ).arg( videoReader.getNormalizedProgress() ) );
+
 		ui.label->setText( elapsed );
+		ui.progressBarSlider->setValue( videoReader.getCurrentFrameNr() );
 	}
 }
 
@@ -54,9 +52,24 @@ void BachelorThesis::openFile( void )
 	//cvStartWindowThread();
 	cv::namedWindow("VIDEO_CPU", cv::WINDOW_NORMAL );
 	videoReader.open( fileName.toStdString() );
+	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
 }
 
 void BachelorThesis::changePlaybackSpeed( int _playbackSpeed )
 {
 	this->playbackSpeed = _playbackSpeed;
+}
+
+void BachelorThesis::startVideo( void )
+{
+	QTimer * timer = new QTimer( this );
+	connect( timer, SIGNAL( timeout() ), this, SLOT(loadImage() ) );
+	timer->start( 100 );
+
+	ui.pushButton->setText( QString( "Pause" ) );
+}
+
+void BachelorThesis::jumpToFrame( int _frameNr )
+{
+	videoReader.jumpToFrame( _frameNr );
 }

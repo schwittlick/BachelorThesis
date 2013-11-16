@@ -27,6 +27,8 @@ public slots:
 	void loadImage( void );
 	void openFile( void );
 	void changePlaybackSpeed( int _playbackSpeed );
+	void startVideo( void );
+	void jumpToFrame( int _frameNr );
 };
 
 #endif // BACHELORTHESIS_H
