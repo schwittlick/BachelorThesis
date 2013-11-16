@@ -18,6 +18,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
@@ -34,6 +35,8 @@ public:
     QWidget *centralWidget;
     QLabel *label;
     QSlider *verticalSlider;
+    QPushButton *pushButton;
+    QSlider *progressBarSlider;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -45,7 +48,7 @@ public:
     {
         if (BachelorThesisClass->objectName().isEmpty())
             BachelorThesisClass->setObjectName(QStringLiteral("BachelorThesisClass"));
-        BachelorThesisClass->resize(294, 559);
+        BachelorThesisClass->resize(477, 559);
         actionOpen_File = new QAction(BachelorThesisClass);
         actionOpen_File->setObjectName(QStringLiteral("actionOpen_File"));
         actionExit = new QAction(BachelorThesisClass);
@@ -57,18 +60,27 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(10, 20, 261, 16));
+        label->setGeometry(QRect(40, 20, 81, 16));
         verticalSlider = new QSlider(centralWidget);
         verticalSlider->setObjectName(QStringLiteral("verticalSlider"));
-        verticalSlider->setGeometry(QRect(240, 20, 22, 461));
+        verticalSlider->setGeometry(QRect(420, 40, 22, 151));
         verticalSlider->setMinimum(1);
         verticalSlider->setMaximum(20);
         verticalSlider->setOrientation(Qt::Vertical);
         verticalSlider->setTickInterval(1);
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(40, 40, 75, 23));
+        progressBarSlider = new QSlider(centralWidget);
+        progressBarSlider->setObjectName(QStringLiteral("progressBarSlider"));
+        progressBarSlider->setGeometry(QRect(10, 460, 441, 22));
+        progressBarSlider->setMaximum(1);
+        progressBarSlider->setSingleStep(1);
+        progressBarSlider->setOrientation(Qt::Horizontal);
         BachelorThesisClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BachelorThesisClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 294, 21));
+        menuBar->setGeometry(QRect(0, 0, 477, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -102,6 +114,7 @@ public:
         actionExit->setText(QApplication::translate("BachelorThesisClass", "Exit", 0));
         actionVerticalSlider->setText(QApplication::translate("BachelorThesisClass", "verticalSlider", 0));
         label->setText(QApplication::translate("BachelorThesisClass", "No File loaded.", 0));
+        pushButton->setText(QApplication::translate("BachelorThesisClass", "Play", 0));
         menuFile->setTitle(QApplication::translate("BachelorThesisClass", "File", 0));
         menuEdit->setTitle(QApplication::translate("BachelorThesisClass", "Edit", 0));
         menuHelp->setTitle(QApplication::translate("BachelorThesisClass", "Help", 0));

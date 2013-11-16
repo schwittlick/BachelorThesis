@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_BachelorThesis_t {
-    QByteArrayData data[6];
-    char stringdata[71];
+    QByteArrayData data[9];
+    char stringdata[103];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,10 +34,14 @@ QT_MOC_LITERAL(1, 15, 9),
 QT_MOC_LITERAL(2, 25, 0),
 QT_MOC_LITERAL(3, 26, 8),
 QT_MOC_LITERAL(4, 35, 19),
-QT_MOC_LITERAL(5, 55, 14)
+QT_MOC_LITERAL(5, 55, 14),
+QT_MOC_LITERAL(6, 70, 10),
+QT_MOC_LITERAL(7, 81, 11),
+QT_MOC_LITERAL(8, 93, 8)
     },
     "BachelorThesis\0loadImage\0\0openFile\0"
     "changePlaybackSpeed\0_playbackSpeed\0"
+    "startVideo\0jumpToFrame\0_frameNr\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -47,7 +51,7 @@ static const uint qt_meta_data_BachelorThesis[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -55,14 +59,18 @@ static const uint qt_meta_data_BachelorThesis[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x0a,
-       3,    0,   30,    2, 0x0a,
-       4,    1,   31,    2, 0x0a,
+       1,    0,   39,    2, 0x0a,
+       3,    0,   40,    2, 0x0a,
+       4,    1,   41,    2, 0x0a,
+       6,    0,   44,    2, 0x0a,
+       7,    1,   45,    2, 0x0a,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    8,
 
        0        // eod
 };
@@ -75,6 +83,8 @@ void BachelorThesis::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 0: _t->loadImage(); break;
         case 1: _t->openFile(); break;
         case 2: _t->changePlaybackSpeed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->startVideo(); break;
+        case 4: _t->jumpToFrame((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -105,13 +115,13 @@ int BachelorThesis::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 5)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 5;
     }
     return _id;
 }
