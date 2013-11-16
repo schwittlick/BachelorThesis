@@ -6,6 +6,7 @@
 
 #include "VideoReader.h"
 #include "Timer.h"
+#include "BackgroundSubtractor.h"
 
 class BachelorThesis : public QMainWindow
 {
@@ -15,13 +16,18 @@ public:
 	BachelorThesis(QWidget *parent = 0);
 	~BachelorThesis();
 
+	static void closeFrameWindow( void );
+
 private:
 	Ui::BachelorThesisClass ui;
 
 	VideoReader videoReader;
 	Timer timer;
+	BackgroundSubtractor bg;
+
 
 	int playbackSpeed;
+	bool doBackgroundSubtraction;
 
 public slots:
 	void loadImage( void );
@@ -29,6 +35,7 @@ public slots:
 	void changePlaybackSpeed( int _playbackSpeed );
 	void startVideo( void );
 	void jumpToFrame( int _frameNr );
+	void toggleBackgroundSubtraction( bool _doBackgroundSubtraction );
 };
 
 #endif // BACHELORTHESIS_H

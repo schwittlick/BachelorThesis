@@ -6,7 +6,8 @@
 BachelorThesis::BachelorThesis(QWidget *parent)
 	: QMainWindow(parent),
 	videoReader( VideoReader::Type::CPU ),
-	playbackSpeed( 1 )
+	playbackSpeed( 1 ),
+	doBackgroundSubtraction( false )
 {
 	ui.setupUi(this);
 
@@ -16,6 +17,7 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	connect( ui.verticalSlider, SIGNAL( valueChanged( int ) ), this, SLOT( changePlaybackSpeed( int ) ) );
 	connect( ui.pushButton, SIGNAL( clicked() ), this, SLOT( startVideo() ) );
 	connect( ui.progressBarSlider, SIGNAL( valueChanged( int) ), this, SLOT( jumpToFrame( int ) ) );
+	connect( ui.radioButton, SIGNAL( toggled( bool ) ), this, SLOT( toggleBackgroundSubtraction( bool ) ) );
 }
 
 BachelorThesis::~BachelorThesis()
@@ -30,9 +32,14 @@ void BachelorThesis::loadImage()
 		timer.start();
 		cv::Mat loadedImage = videoReader.getNextImage();
 
-		for( int i = 0; i < playbackSpeed; i++ ) 
+		for( int i = 0; i < playbackSpeed; i++ )
 		{
 			loadedImage = videoReader.getNextImage();
+		}
+
+		if( doBackgroundSubtraction )
+		{
+			bg.applyBGS( loadedImage, BackgroundSubtractor::Type::MOG2 );
 		}
 		
 		cv::imshow( "VIDEO_CPU", loadedImage );
@@ -53,6 +60,8 @@ void BachelorThesis::openFile( void )
 	cv::namedWindow("VIDEO_CPU", cv::WINDOW_NORMAL );
 	videoReader.open( fileName.toStdString() );
 	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
+
+	bg = BackgroundSubtractor();
 }
 
 void BachelorThesis::changePlaybackSpeed( int _playbackSpeed )
@@ -64,7 +73,7 @@ void BachelorThesis::startVideo( void )
 {
 	QTimer * timer = new QTimer( this );
 	connect( timer, SIGNAL( timeout() ), this, SLOT(loadImage() ) );
-	timer->start( 100 );
+	timer->start( 30 );
 
 	ui.pushButton->setText( QString( "Pause" ) );
 }
@@ -72,4 +81,15 @@ void BachelorThesis::startVideo( void )
 void BachelorThesis::jumpToFrame( int _frameNr )
 {
 	videoReader.jumpToFrame( _frameNr );
+}
+
+void BachelorThesis::closeFrameWindow( void )
+{
+	std::cout << "Closing Windows." << std::endl;
+	cvDestroyWindow( "VIDEO_CPU") ;
+}
+
+void BachelorThesis::toggleBackgroundSubtraction( bool _doBackgroundSubtraction )
+{
+	doBackgroundSubtraction = _doBackgroundSubtraction;
 }
