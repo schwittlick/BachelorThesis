@@ -11,6 +11,7 @@
 #include <opencv2/contrib/contrib.hpp>
 #include <opencv2/core/opengl_interop.hpp>
 
+
 class VideoReader
 {
 public:
@@ -27,6 +28,7 @@ public:
 	int getMaxFrames( void );
 	int getCurrentFrameNr( void );
 	void jumpToFrame( int _frameNr );
+	bool isFinished( void );
 
 private:
 	cv::Mat currentFrame;

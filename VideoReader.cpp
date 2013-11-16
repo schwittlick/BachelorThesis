@@ -1,4 +1,5 @@
 #include "VideoReader.h"
+#include "BachelorThesis.h"
 
 
 VideoReader::VideoReader( Type type ) :
@@ -86,6 +87,12 @@ cv::Mat VideoReader::getNextImage( void )
 		break;
 	}
 
+	// check if the video file reached its end and close the reader if it did
+	if( isFinished() )
+	{
+		this->close();
+	}
+
 	return currentFrame;
 }
 
@@ -98,6 +105,8 @@ void VideoReader::close( void )
 {
 	videoCapture.release();
 	videoReaderGPU.close();
+
+	BachelorThesis::closeFrameWindow();
 
 	wasOpened = false;
 }
@@ -131,5 +140,17 @@ void VideoReader::jumpToFrame( int _frameNr )
 	case GPU:
 		std::cerr << "Can't jump frames when using GPU VideoReader. Doing nothing instead." << std::endl;
 		break;
+	}
+}
+
+bool VideoReader::isFinished( void )
+{
+	if( currentFrameNr == maxFrameCount )
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
