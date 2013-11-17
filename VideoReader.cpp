@@ -49,7 +49,7 @@ void VideoReader::open( std::string fileName )
 	wasOpened = true;
 }
 
-cv::Mat VideoReader::getNextImage( void )
+cv::Mat * VideoReader::getNextImage( void )
 {
 	switch( selectedType ) 
 	{
@@ -57,7 +57,9 @@ cv::Mat VideoReader::getNextImage( void )
 		if( videoCapture.isOpened() )
 		{
 			currentFrameNr = videoCapture.get( CV_CAP_PROP_POS_FRAMES );
-			videoCapture >> currentFrame;
+			// this is much faster
+			videoCapture.read( currentFrame );
+			//videoCapture >> currentFrame;
 			if( currentFrame.empty() )
 			{
 				std::cout << "End of the videofile." << std::endl;
@@ -93,7 +95,7 @@ cv::Mat VideoReader::getNextImage( void )
 		this->close();
 	}
 
-	return currentFrame;
+	return &currentFrame;
 }
 
 bool VideoReader::isOpen( void )

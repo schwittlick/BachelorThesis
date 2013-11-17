@@ -23,7 +23,7 @@ public:
 	void open( std::string fileName );
 	void close( void );
 	bool isOpen( void );
-	cv::Mat getNextImage( void );
+	cv::Mat * getNextImage( void );
 	double getNormalizedProgress( void );
 	int getMaxFrames( void );
 	int getCurrentFrameNr( void );
