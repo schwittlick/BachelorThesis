@@ -3,6 +3,7 @@
 
 BackgroundSubtractor::BackgroundSubtractor(void) 
 {
+	cv::gpu::setDevice( 0 );
 	std::cout << "BackgroundSubstractor::BackgroundSubstractor(void)" << std::endl;
 }
 
@@ -11,10 +12,10 @@ BackgroundSubtractor::~BackgroundSubtractor(void)
 {
 }
 
-void BackgroundSubtractor::applyBGS( cv::Mat & image, enum Type method )
+void BackgroundSubtractor::applyBGS( cv::Mat * image, enum Type method )
 {
 	gmg.numInitializationFrames = 40;
-	image.copyTo( frame );
+	image->copyTo( frame );
 	d_frame.upload( frame );
 
 	//int64 start = cv::getTickCount();
@@ -59,6 +60,6 @@ void BackgroundSubtractor::applyBGS( cv::Mat & image, enum Type method )
 
 	}
 
-	fgimg.copyTo( image );
+	fgimg.copyTo( *image );
 	//image = cv::Mat( fgimg );
 }

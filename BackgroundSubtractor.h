@@ -14,7 +14,7 @@ public:
 
 	static enum Type { FGD_STAT, MOG, MOG2, GMG };
 
-	void applyBGS( cv::Mat & image, enum BackgroundSubtractor::Type method );
+	void applyBGS( cv::Mat * image, enum BackgroundSubtractor::Type method );
 
 private:
 	cv::Mat frame;
