@@ -7,6 +7,7 @@
 #include "VideoReader.h"
 #include "Timer.h"
 #include "BackgroundSubtractor.h"
+#include "LukasKanadeOpticalFlow.h"
 
 class BachelorThesis : public QMainWindow
 {
@@ -24,6 +25,7 @@ private:
 	VideoReader videoReader;
 	Timer timer;
 	BackgroundSubtractor bg;
+	LukasKanadeOpticalFlow lkflow;
 
 
 	int playbackSpeed;

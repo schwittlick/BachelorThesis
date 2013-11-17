@@ -1,4 +1,7 @@
 #include "BachelorThesis.h"
+#include "SystemInfo.h"
+
+#include <thread>
 
 #include "QTimer"
 #include "QFileDialog"
@@ -12,6 +15,13 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	ui.setupUi(this);
 
 	timer = Timer();	
+
+
+	cv::gpu::DeviceInfo info( 0 );
+
+	std::cout << "Currently available GPU devices: " << SystemInfo::getAvailableCudaDeviceCount() << " " << info.name() << std::endl;
+	
+	cv::gpu::setDevice( 0 );
 
 	connect( ui.actionOpen_File, SIGNAL( triggered() ), this, SLOT( openFile() ) );
 	connect( ui.verticalSlider, SIGNAL( valueChanged( int ) ), this, SLOT( changePlaybackSpeed( int ) ) );
@@ -30,7 +40,7 @@ void BachelorThesis::loadImage()
 	if( videoReader.isOpen() )
 	{
 		timer.start();
-		cv::Mat loadedImage = videoReader.getNextImage();
+		cv::Mat * loadedImage = videoReader.getNextImage();
 
 		for( int i = 0; i < playbackSpeed; i++ )
 		{
@@ -41,8 +51,13 @@ void BachelorThesis::loadImage()
 		{
 			bg.applyBGS( loadedImage, BackgroundSubtractor::Type::MOG2 );
 		}
+
+		cv::Mat * flow = new cv::Mat();
+
+		flow = lkflow.apply( loadedImage );
 		
-		cv::imshow( "VIDEO_CPU", loadedImage );
+		cv::imshow( "FLOW", *flow );
+		cv::imshow( "VIDEO_CPU", *loadedImage );
 		timer.stop();
 
 		QString elapsed;
@@ -57,7 +72,10 @@ void BachelorThesis::openFile( void )
 {
 	QString fileName = QFileDialog::getOpenFileName( this, tr( "Open File" ), "", tr( "MP4 (*.mp4);; AVI (*.avi)" ) );
 	//cvStartWindowThread();
+
 	cv::namedWindow("VIDEO_CPU", cv::WINDOW_NORMAL );
+	cv::namedWindow( "FLOW", cv::WINDOW_NORMAL );
+
 	videoReader.open( fileName.toStdString() );
 	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
 
