@@ -83,7 +83,7 @@ void hsv2rgb(float h, float s, float v, unsigned char &r, unsigned char &g, unsi
 
 /** This function draws a vector field based on horizontal and vertical flow fields   */
 void drawMotionField(Mat &imgU, Mat &imgV, Mat &imgMotion,
-					 int xSpace, int ySpace, float cutoff, float multiplier, CvScalar color)
+					 int xSpace, int ySpace, float minCutoff, float maxCutoff, float multiplier, CvScalar color)
 {
 	int x = 0, y = 0;
 	float *ptri;
@@ -106,13 +106,14 @@ void drawMotionField(Mat &imgU, Mat &imgV, Mat &imgMotion,
 			angle = atan2(deltaY, deltaX);
 			hyp = sqrt(deltaX*deltaX + deltaY*deltaY);
 
-			if(hyp > cutoff)
+			if( hyp > minCutoff && hyp < maxCutoff )
 			{
 				p1.x = p0.x + cvRound(multiplier*hyp*cos(angle));
 				p1.y = p0.y + cvRound(multiplier*hyp*sin(angle));
 
 				cv::line(imgMotion,p0,p1,color,1,CV_AA,0);
 
+				/*
 				p0.x = p1.x + cvRound(2*cos(angle-M_PI + M_PI/4));
 				p0.y = p1.y + cvRound(2*sin(angle-M_PI + M_PI/4));
 				cv::line( imgMotion, p0, p1, color,1, CV_AA, 0);
@@ -120,6 +121,7 @@ void drawMotionField(Mat &imgU, Mat &imgV, Mat &imgMotion,
 				p0.x = p1.x + cvRound(2*cos(angle-M_PI - M_PI/4));
 				p0.y = p1.y + cvRound(2*sin(angle-M_PI - M_PI/4));
 				cv::line( imgMotion, p0, p1, color,1, CV_AA, 0);
+				*/
 			}
 		}
 	}

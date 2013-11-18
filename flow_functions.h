@@ -32,7 +32,7 @@
 // Declaration of functions
 void hsv2rgb(float h, float s, float v, unsigned char &r, unsigned char &g, unsigned char &b);
 void drawMotionField(cv::Mat &imgU, cv::Mat &imgV, cv::Mat &imgMotion,
-                     int xSpace, int ySpace, float cutoff, float multiplier, CvScalar color);
+                     int xSpace, int ySpace, float minCuoff, float maxCutoff, float multiplier, CvScalar color);
 void drawLegendHSV(cv::Mat &imgColor, int radius, int cx, int cy);
 void drawColorField(cv::Mat &imgU, cv::Mat &imgV, cv::Mat &imgColor);
 
