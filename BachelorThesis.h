@@ -5,11 +5,15 @@
 #include "ui_BachelorThesis.h"
 
 #include "VideoReader.h"
+
 #include "src/misc/Timer.h"
-#include "src\ip\BackgroundSubtractor.h"
+
 #include "src/opticalflow/LukasKanadeOpticalFlow.h"
+
+#include "src/ip/BackgroundSubtractor.h"
 #include "src/ip/Blur.h"
 #include "src/ip/Denoiser.h"
+#include "src/ip/MeanShifter.h"
 
 #include "lukaskanadeopticalflowdialog.h"
 
@@ -31,8 +35,9 @@ private:
 	BackgroundSubtractor bg;
 	LukasKanadeOpticalFlow lkflow;
 	Blur blur;
+	MeanShifter meanshifter;
 
-	LukasKanadeOpticalFLowDialog * se;
+	LukasKanadeOpticalFLowDialog * lukasKanadeOpticalFlowDialog;
 
 	int blurAmount;
 	int playbackSpeed;
@@ -41,6 +46,7 @@ private:
 public slots:
 	void loadImage( void );
 	void openFile( void );
+	void openSampleFile( void );
 	void changePlaybackSpeed( int _playbackSpeed );
 	void startVideo( void );
 	void jumpToFrame( int _frameNr );

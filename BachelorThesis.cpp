@@ -17,7 +17,7 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 
 	timer = Timer();	
 
-	se = new LukasKanadeOpticalFLowDialog( this );
+	lukasKanadeOpticalFlowDialog = new LukasKanadeOpticalFLowDialog( this );
 
 
 	cv::gpu::DeviceInfo info( 0 );
@@ -26,16 +26,17 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	
 	cv::gpu::setDevice( 0 );
 
-	connect( ui.actionOpen_File, SIGNAL( triggered() ), this, SLOT( openFile() ) );
-	connect( ui.verticalSlider, SIGNAL( valueChanged( int ) ), this, SLOT( changePlaybackSpeed( int ) ) );
-	connect( ui.pushButton, SIGNAL( clicked() ), this, SLOT( startVideo() ) );
-	connect( ui.progressBarSlider, SIGNAL( valueChanged( int) ), this, SLOT( jumpToFrame( int ) ) );
-	connect( ui.radioButton, SIGNAL( toggled( bool ) ), this, SLOT( toggleBackgroundSubtraction( bool ) ) );
-	connect( ui.blurSlider, SIGNAL( valueChanged( int ) ), this, SLOT( blurAmountChanged( int ) ) );
+	connect( ui.actionOpen_File,			SIGNAL( triggered() ),				this,	SLOT( openFile() ) );
+	connect( ui.verticalSlider,				SIGNAL( valueChanged( int ) ),		this,	SLOT( changePlaybackSpeed( int ) ) );
+	connect( ui.pushButton,					SIGNAL( clicked() ),				this,	SLOT( startVideo() ) );
+	connect( ui.progressBarSlider,			SIGNAL( valueChanged( int) ),		this,	SLOT( jumpToFrame( int ) ) );
+	connect( ui.radioButton,				SIGNAL( toggled( bool ) ),			this,	SLOT( toggleBackgroundSubtraction( bool ) ) );
+	connect( ui.blurSlider,					SIGNAL( valueChanged( int ) ),		this,	SLOT( blurAmountChanged( int ) ) );
+	connect( ui.actionOpen_Sample,			SIGNAL( triggered() ),				this,	SLOT( openSampleFile() ) );
 	
-	connect( ui.actionPyrLukasKanade, SIGNAL( triggered() ), this, SLOT( openLukasKanadeWindow( ) ) );
+	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				this,	SLOT( openLukasKanadeWindow( ) ) );
 
-	connect( se, SIGNAL( itersValueChanged( int ) ), this, SLOT( changeLKIters( int ) ) );
+	connect( lukasKanadeOpticalFlowDialog,	SIGNAL( itersValueChanged( int ) ), this,	SLOT( changeLKIters( int ) ) );
 }
 
 BachelorThesis::~BachelorThesis()
@@ -62,15 +63,18 @@ void BachelorThesis::loadImage()
 			bg.applyBGS( &imageToProcess, BackgroundSubtractor::Type::MOG2 );
 		}
 
+		MeanShifter::Type meanShifterType = MeanShifter::FILTERING_GPU;
+		meanshifter.applyMeanShift( &imageToProcess, meanShifterType );
+
 		//Denoiser::applyDenoise( &imageToProcess, 1 );
 
 		//Blur::applyBlur( Blur::Type::NORMAL, &imageToProcess, 10 );
 
-		cv::Mat * flow = new cv::Mat();
+		//cv::Mat * flow = new cv::Mat();
 
-		flow = lkflow.apply( &imageToProcess, false );
+		//flow = lkflow.apply( &imageToProcess, false );
 		
-		cv::imshow( "FLOW", *flow );
+		//cv::imshow( "FLOW", *flow );
 		cv::imshow( "VIDEO_CPU", imageToProcess );
 		timer.stop();
 
@@ -87,7 +91,7 @@ void BachelorThesis::openFile( void )
 	QString fileName = QFileDialog::getOpenFileName( this, tr( "Open File" ), "", tr( "MP4 (*.mp4);; AVI (*.avi)" ) );
 	//cvStartWindowThread();
 
-	cv::namedWindow("VIDEO_CPU", cv::WINDOW_NORMAL );
+	cv::namedWindow( "VIDEO_CPU", cv::WINDOW_NORMAL );
 	cv::namedWindow( "FLOW", cv::WINDOW_NORMAL );
 
 	videoReader.open( fileName.toStdString() );
@@ -134,7 +138,7 @@ void BachelorThesis::blurAmountChanged( int _blurAmount )
 
 void BachelorThesis::openLukasKanadeWindow( void )
 {
-	se->show();
+	lukasKanadeOpticalFlowDialog->show();
 }
 
 void BachelorThesis::changeLKIters( int _iters )
@@ -153,4 +157,17 @@ void BachelorThesis::changeLKMaxlevel( int _maxLevel )
 {
 	std::cout << "LKOF: maxLevel: " << _maxLevel << std::endl;
 	this->lkflow.setMaxLevel( _maxLevel );
+}
+
+void BachelorThesis::openSampleFile( void )
+{
+	cv::namedWindow( "VIDEO_CPU", cv::WINDOW_NORMAL );
+	cv::namedWindow( "FLOW", cv::WINDOW_NORMAL );
+
+	std::string fileName = "G:\\DB\\Dropbox\\BA\\code\\BachelorThesis\\BachelorThesis\\Fri_Oct_11_compilation.mp4";
+
+	videoReader.open( fileName );
+	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
+
+	bg = BackgroundSubtractor();
 }
