@@ -6,6 +6,8 @@
 #include "opencv2/gpu/gpu.hpp"
 #include "opencv2/highgui/highgui.hpp"
 
+#include "src/ip/BackgroundSubtractor.h"
+
 class BackgroundSubtractor
 {
 public:

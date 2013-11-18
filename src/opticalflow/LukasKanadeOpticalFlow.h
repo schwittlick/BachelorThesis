@@ -14,7 +14,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/gpu/gpu.hpp>
 
-#include "Timer.h"
+#include "src/misc/Timer.h"
 
 #define NMAX_CHARACTERS 500
 #define SAVE_RESULTS 0
