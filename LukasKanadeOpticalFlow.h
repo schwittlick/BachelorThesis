@@ -14,6 +14,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/gpu/gpu.hpp>
 
+#include "Timer.h"
+
 #define NMAX_CHARACTERS 500
 #define SAVE_RESULTS 0
 
@@ -23,15 +25,22 @@ public:
 	LukasKanadeOpticalFlow(void);
 	~LukasKanadeOpticalFlow(void);
 
-	cv::Mat * apply( cv::Mat * _frame1_rgb_);
+	cv::Mat * apply( cv::Mat * _frame1_rgb_, bool motionOrColorFieldIndicator );
+
+	void setMaxLevel( int _maxLevel );
+	void setWinSize( int _winSize );
+	void setIters( int _iters );
+
+	int getAverageDownUploadTime( void );
+	int getAverageDrawMotionFieldTime( void );
 
 private:
 	// Some global variables for the optical flow
-	const int winSize;// = 11;
-	const int maxLevel;// = 4;
-	const int iters;// = 3; // the lower this is the more it reacts to tiny movements
-	const bool resize_img;// = true;
-	const float rfactor;// = 2.0;
+	int winSize;// = 11;
+	int maxLevel;// = 4;
+	int iters;// = 3; // the lower this is the more it reacts to tiny movements
+	bool resize_img;// = true;
+	float rfactor;// = 2.0;
 
 	cv::gpu::PyrLKOpticalFlow dflow;
 	cv::gpu::GpuMat frame0GPU, frame1GPU, uGPU, vGPU;
@@ -43,6 +52,13 @@ private:
 	char cad[NMAX_CHARACTERS];
 
 	bool isInitialized;
+	Timer downloadUploadTimer;
+	Timer drawFlowTimer;
+	void resizeAndSetupRescources( cv::Mat * mat );
+	void drawFlow( bool motionOrColorField );
+	cv::Mat * returnDrawnMotionFlow( bool motionOrColorField );
+	void resizeNewImage( void );
+
 
 };
 

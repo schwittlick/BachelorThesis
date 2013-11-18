@@ -12,6 +12,9 @@ public:
 	LukasKanadeOpticalFLowDialog(QWidget *parent = 0);
 	~LukasKanadeOpticalFLowDialog();
 
+signals:
+	void itersValueChanged( int _iters );
+
 private:
 	Ui::LukasKanadeOpticalFLowDialog ui;
 };
