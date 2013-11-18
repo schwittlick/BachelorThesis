@@ -5,11 +5,11 @@
 #include "ui_BachelorThesis.h"
 
 #include "VideoReader.h"
-#include "Timer.h"
-#include "BackgroundSubtractor.h"
-#include "LukasKanadeOpticalFlow.h"
-#include "Blur.h"
-#include "Denoiser.h"
+#include "src/misc/Timer.h"
+#include "src\ip\BackgroundSubtractor.h"
+#include "src/opticalflow/LukasKanadeOpticalFlow.h"
+#include "src/ip/Blur.h"
+#include "src/ip/Denoiser.h"
 
 #include "lukaskanadeopticalflowdialog.h"
 

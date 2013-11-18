@@ -1,5 +1,5 @@
 #include "BachelorThesis.h"
-#include "SystemInfo.h"
+#include "src/misc/SystemInfo.h"
 
 #include <thread>
 
