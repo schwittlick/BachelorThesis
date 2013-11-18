@@ -47,6 +47,10 @@ public slots:
 	void toggleBackgroundSubtraction( bool _doBackgroundSubtraction );
 	void blurAmountChanged( int _blurAmount );
 	void openLukasKanadeWindow( void );
+
+	void changeLKIters( int _iters );
+	void changeLKMaxlevel( int _maxLevel );
+	void changeLKWinSize( int _winSize );
 };
 
 #endif // BACHELORTHESIS_H

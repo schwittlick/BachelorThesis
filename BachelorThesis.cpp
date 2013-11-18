@@ -17,6 +17,8 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 
 	timer = Timer();	
 
+	se = new LukasKanadeOpticalFLowDialog( this );
+
 
 	cv::gpu::DeviceInfo info( 0 );
 
@@ -30,11 +32,10 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	connect( ui.progressBarSlider, SIGNAL( valueChanged( int) ), this, SLOT( jumpToFrame( int ) ) );
 	connect( ui.radioButton, SIGNAL( toggled( bool ) ), this, SLOT( toggleBackgroundSubtraction( bool ) ) );
 	connect( ui.blurSlider, SIGNAL( valueChanged( int ) ), this, SLOT( blurAmountChanged( int ) ) );
-
-	//se = new SecondTestWidget( this );
-	//se->show();
 	
 	connect( ui.actionPyrLukasKanade, SIGNAL( triggered() ), this, SLOT( openLukasKanadeWindow( ) ) );
+
+	connect( se, SIGNAL( itersValueChanged( int ) ), this, SLOT( changeLKIters( int ) ) );
 }
 
 BachelorThesis::~BachelorThesis()
@@ -61,13 +62,13 @@ void BachelorThesis::loadImage()
 			bg.applyBGS( &imageToProcess, BackgroundSubtractor::Type::MOG2 );
 		}
 
-		Denoiser::applyDenoise( &imageToProcess, 1 );
+		//Denoiser::applyDenoise( &imageToProcess, 1 );
 
 		//Blur::applyBlur( Blur::Type::NORMAL, &imageToProcess, 10 );
 
 		cv::Mat * flow = new cv::Mat();
 
-		flow = lkflow.apply( &imageToProcess );
+		flow = lkflow.apply( &imageToProcess, false );
 		
 		cv::imshow( "FLOW", *flow );
 		cv::imshow( "VIDEO_CPU", imageToProcess );
@@ -133,6 +134,23 @@ void BachelorThesis::blurAmountChanged( int _blurAmount )
 
 void BachelorThesis::openLukasKanadeWindow( void )
 {
-	se = new LukasKanadeOpticalFLowDialog();
 	se->show();
+}
+
+void BachelorThesis::changeLKIters( int _iters )
+{
+	std::cout << "LKOF: iters: " << _iters << std::endl;
+	this->lkflow.setIters( _iters );
+}
+
+void BachelorThesis::changeLKWinSize( int _winSize )
+{
+	std::cout << "LKOF: winSize: " << _winSize << std::endl;
+	this->lkflow.setWinSize( _winSize );
+}
+
+void BachelorThesis::changeLKMaxlevel( int _maxLevel )
+{
+	std::cout << "LKOF: maxLevel: " << _maxLevel << std::endl;
+	this->lkflow.setMaxLevel( _maxLevel );
 }
