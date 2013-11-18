@@ -8,6 +8,10 @@
 #include "Timer.h"
 #include "BackgroundSubtractor.h"
 #include "LukasKanadeOpticalFlow.h"
+#include "Blur.h"
+#include "Denoiser.h"
+
+#include "lukaskanadeopticalflowdialog.h"
 
 class BachelorThesis : public QMainWindow
 {
@@ -26,8 +30,11 @@ private:
 	Timer timer;
 	BackgroundSubtractor bg;
 	LukasKanadeOpticalFlow lkflow;
+	Blur blur;
 
+	LukasKanadeOpticalFLowDialog * se;
 
+	int blurAmount;
 	int playbackSpeed;
 	bool doBackgroundSubtraction;
 
@@ -38,6 +45,8 @@ public slots:
 	void startVideo( void );
 	void jumpToFrame( int _frameNr );
 	void toggleBackgroundSubtraction( bool _doBackgroundSubtraction );
+	void blurAmountChanged( int _blurAmount );
+	void openLukasKanadeWindow( void );
 };
 
 #endif // BACHELORTHESIS_H

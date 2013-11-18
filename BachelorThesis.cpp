@@ -10,7 +10,8 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	: QMainWindow(parent),
 	videoReader( VideoReader::Type::CPU ),
 	playbackSpeed( 1 ),
-	doBackgroundSubtraction( false )
+	doBackgroundSubtraction( false ),
+	blurAmount( 1 )
 {
 	ui.setupUi(this);
 
@@ -28,6 +29,12 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	connect( ui.pushButton, SIGNAL( clicked() ), this, SLOT( startVideo() ) );
 	connect( ui.progressBarSlider, SIGNAL( valueChanged( int) ), this, SLOT( jumpToFrame( int ) ) );
 	connect( ui.radioButton, SIGNAL( toggled( bool ) ), this, SLOT( toggleBackgroundSubtraction( bool ) ) );
+	connect( ui.blurSlider, SIGNAL( valueChanged( int ) ), this, SLOT( blurAmountChanged( int ) ) );
+
+	//se = new SecondTestWidget( this );
+	//se->show();
+	
+	connect( ui.actionPyrLukasKanade, SIGNAL( triggered() ), this, SLOT( openLukasKanadeWindow( ) ) );
 }
 
 BachelorThesis::~BachelorThesis()
@@ -41,23 +48,29 @@ void BachelorThesis::loadImage()
 	{
 		timer.start();
 		cv::Mat * loadedImage = videoReader.getNextImage();
+		cv::Mat imageToProcess = loadedImage->clone();
 
 		for( int i = 0; i < playbackSpeed; i++ )
 		{
 			loadedImage = videoReader.getNextImage();
+			imageToProcess = loadedImage->clone();
 		}
 
 		if( doBackgroundSubtraction )
 		{
-			bg.applyBGS( loadedImage, BackgroundSubtractor::Type::MOG2 );
+			bg.applyBGS( &imageToProcess, BackgroundSubtractor::Type::MOG2 );
 		}
+
+		Denoiser::applyDenoise( &imageToProcess, 1 );
+
+		//Blur::applyBlur( Blur::Type::NORMAL, &imageToProcess, 10 );
 
 		cv::Mat * flow = new cv::Mat();
 
-		flow = lkflow.apply( loadedImage );
+		flow = lkflow.apply( &imageToProcess );
 		
 		cv::imshow( "FLOW", *flow );
-		cv::imshow( "VIDEO_CPU", *loadedImage );
+		cv::imshow( "VIDEO_CPU", imageToProcess );
 		timer.stop();
 
 		QString elapsed;
@@ -110,4 +123,16 @@ void BachelorThesis::closeFrameWindow( void )
 void BachelorThesis::toggleBackgroundSubtraction( bool _doBackgroundSubtraction )
 {
 	doBackgroundSubtraction = _doBackgroundSubtraction;
+}
+
+void BachelorThesis::blurAmountChanged( int _blurAmount )
+{
+	std::cout << "BlurAmount changed to " << _blurAmount << std::endl;
+	this->blurAmount = _blurAmount;
+}
+
+void BachelorThesis::openLukasKanadeWindow( void )
+{
+	se = new LukasKanadeOpticalFLowDialog();
+	se->show();
 }
