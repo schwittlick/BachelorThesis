@@ -51,18 +51,92 @@
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;MeanShifter.h&quot;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;MeanShifter::MeanShifter(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="classMeanShifter.html#a80c85bac2c3f863f36866290939f144a">    4</a></span>&#160;<a class="code" href="classMeanShifter.html#a80c85bac2c3f863f36866290939f144a">MeanShifter::MeanShifter</a>(<span class="keywordtype">void</span>)</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;{</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;}</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;        <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.push_back( Timer() );</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;}</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;MeanShifter::~MeanShifter(<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;}</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classMeanShifter.html#aa64b8e1a982595f8d9c7a5916d2965e9">   10</a></span>&#160;<a class="code" href="classMeanShifter.html#aa64b8e1a982595f8d9c7a5916d2965e9">MeanShifter::~MeanShifter</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;}</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classMeanShifter.html#a62e03b70cae59f41bcc20a11764aef4c">   14</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classMeanShifter.html#a62e03b70cae59f41bcc20a11764aef4c">MeanShifter::applyMeanShift</a>( cv::Mat * image, <span class="keyword">enum</span> <a class="code" href="classMeanShifter.html#a4e40d429f6681a4a0798abcc653020b1">Type</a> type )</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keywordflow">switch</span>( type )</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keywordflow">case</span> Type::FILTERING_CPU:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::FILTERING_CPU ).start();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                <a class="code" href="classMeanShifter.html#aa153d82aa1e5c3f47e150bfdbf2b314a">pyrMeanShiftFiltering_CPU</a>( image );</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::FILTERING_CPU ).stop();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::FILTERING_CPU ).store();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordflow">case</span> Type::FILTERING_GPU:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::FILTERING_GPU ).start();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                <a class="code" href="classMeanShifter.html#aee9a81e1f1dfead46d21debfbef49d56">applyMeanShiftFiltering_GPU</a>( image );</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::FILTERING_GPU ).start();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::FILTERING_GPU ).start();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordflow">case</span> Type::PROC:</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::PROC ).start();</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                <a class="code" href="classMeanShifter.html#ae613ba4721e819d57187e0de479408bc">applyMeanShiftProc_GPU</a>( image );</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::PROC ).start();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::PROC ).start();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">case</span> Type::SEGMENTATION_GPU:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::SEGMENTATION_GPU ).start();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                <a class="code" href="classMeanShifter.html#a3e60e07721e089ccad792fc338970a69">applyMeanShiftSegmentation_GPU</a>( image );</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::SEGMENTATION_GPU ).start();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( Type::SEGMENTATION_GPU ).start();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classMeanShifter.html#aee9a81e1f1dfead46d21debfbef49d56">   45</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classMeanShifter.html#aee9a81e1f1dfead46d21debfbef49d56">MeanShifter::applyMeanShiftFiltering_GPU</a>( cv::Mat * image )</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;{</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        cv::cvtColor( *image, *image, CV_BGR2BGRA );</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="classMeanShifter.html#a41c2335f765bbc84c64e9587d2599edc">gpu_image_src</a>.upload( *image );</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        cv::gpu::meanShiftFiltering( <a class="code" href="classMeanShifter.html#a41c2335f765bbc84c64e9587d2599edc">gpu_image_src</a>, gpu_image_dst, 20, 20 );</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        gpu_image_dst.download( *image );</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classMeanShifter.html#a3e60e07721e089ccad792fc338970a69">   53</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classMeanShifter.html#a3e60e07721e089ccad792fc338970a69">MeanShifter::applyMeanShiftSegmentation_GPU</a>( cv::Mat * image )</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;{</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        cv::cvtColor( *image, *image, CV_BGR2BGRA );</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="classMeanShifter.html#a41c2335f765bbc84c64e9587d2599edc">gpu_image_src</a>.upload( *image );</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        cv::gpu::meanShiftSegmentation(<a class="code" href="classMeanShifter.html#a41c2335f765bbc84c64e9587d2599edc">gpu_image_src</a>, *image, 20, 20, 5 );</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classMeanShifter.html#aa153d82aa1e5c3f47e150bfdbf2b314a">   60</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classMeanShifter.html#aa153d82aa1e5c3f47e150bfdbf2b314a">MeanShifter::pyrMeanShiftFiltering_CPU</a>( cv::Mat * image )</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;{</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        cv::cvtColor( *image, *image, CV_BGR2BGRA );</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        cv::pyrMeanShiftFiltering( *image, *image, 20, 20, 5 );</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classMeanShifter.html#ae613ba4721e819d57187e0de479408bc">   66</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classMeanShifter.html#ae613ba4721e819d57187e0de479408bc">MeanShifter::applyMeanShiftProc_GPU</a>( cv::Mat * image )</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        std::cout &lt;&lt; <span class="stringliteral">&quot;TODO -&gt; using specially found points to apply the meanshifting on&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classMeanShifter.html#a343866060f457c7a5e822fa80188230c">   71</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="classMeanShifter.html#a343866060f457c7a5e822fa80188230c">MeanShifter::getAverageElapsedTime</a>( <span class="keyword">enum</span> <a class="code" href="classMeanShifter.html#a4e40d429f6681a4a0798abcc653020b1">Type</a> type )</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;{</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">timers</a>.at( type ).getAverageTime();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
+<div class="ttc" id="classMeanShifter_html_a62e03b70cae59f41bcc20a11764aef4c"><div class="ttname"><a href="classMeanShifter.html#a62e03b70cae59f41bcc20a11764aef4c">MeanShifter::applyMeanShift</a></div><div class="ttdeci">void applyMeanShift(cv::Mat *image, enum Type type)</div><div class="ttdoc">actually applies a meanshift filter technique on the passed image pointer with the technique indicate...</div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8cpp_source.html#l00014">MeanShifter.cpp:14</a></div></div>
+<div class="ttc" id="classMeanShifter_html_adc11ef67a5d482c6fe3623a9edd79261"><div class="ttname"><a href="classMeanShifter.html#adc11ef67a5d482c6fe3623a9edd79261">MeanShifter::timers</a></div><div class="ttdeci">std::vector&lt; Timer &gt; timers</div><div class="ttdoc">vector holding the different timers to benchmark the different types of mean shifts ...</div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8h_source.html#l00043">MeanShifter.h:43</a></div></div>
+<div class="ttc" id="classMeanShifter_html_aa153d82aa1e5c3f47e150bfdbf2b314a"><div class="ttname"><a href="classMeanShifter.html#aa153d82aa1e5c3f47e150bfdbf2b314a">MeanShifter::pyrMeanShiftFiltering_CPU</a></div><div class="ttdeci">void pyrMeanShiftFiltering_CPU(cv::Mat *image)</div><div class="ttdoc">uses pyrMeanShiftFilterin on the CPU </div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8cpp_source.html#l00060">MeanShifter.cpp:60</a></div></div>
+<div class="ttc" id="classMeanShifter_html_a4e40d429f6681a4a0798abcc653020b1"><div class="ttname"><a href="classMeanShifter.html#a4e40d429f6681a4a0798abcc653020b1">MeanShifter::Type</a></div><div class="ttdeci">Type</div><div class="ttdoc">the different meanshifter techniques available </div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8h_source.html#l00029">MeanShifter.h:29</a></div></div>
+<div class="ttc" id="classMeanShifter_html_a41c2335f765bbc84c64e9587d2599edc"><div class="ttname"><a href="classMeanShifter.html#a41c2335f765bbc84c64e9587d2599edc">MeanShifter::gpu_image_src</a></div><div class="ttdeci">cv::gpu::GpuMat gpu_image_src</div><div class="ttdoc">global gpu mats, which are necessary to compute gpu methods, since they need to be uploaded to the gp...</div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8h_source.html#l00046">MeanShifter.h:46</a></div></div>
+<div class="ttc" id="classMeanShifter_html_a343866060f457c7a5e822fa80188230c"><div class="ttname"><a href="classMeanShifter.html#a343866060f457c7a5e822fa80188230c">MeanShifter::getAverageElapsedTime</a></div><div class="ttdeci">double getAverageElapsedTime(enum Type type)</div><div class="ttdoc">a benchmark function. </div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8cpp_source.html#l00071">MeanShifter.cpp:71</a></div></div>
+<div class="ttc" id="classMeanShifter_html_aee9a81e1f1dfead46d21debfbef49d56"><div class="ttname"><a href="classMeanShifter.html#aee9a81e1f1dfead46d21debfbef49d56">MeanShifter::applyMeanShiftFiltering_GPU</a></div><div class="ttdeci">void applyMeanShiftFiltering_GPU(cv::Mat *image)</div><div class="ttdoc">uses meanShiftFiltering on the GPU </div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8cpp_source.html#l00045">MeanShifter.cpp:45</a></div></div>
+<div class="ttc" id="classMeanShifter_html_aa64b8e1a982595f8d9c7a5916d2965e9"><div class="ttname"><a href="classMeanShifter.html#aa64b8e1a982595f8d9c7a5916d2965e9">MeanShifter::~MeanShifter</a></div><div class="ttdeci">~MeanShifter(void)</div><div class="ttdoc">This is the MeanShifter destructor. </div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8cpp_source.html#l00010">MeanShifter.cpp:10</a></div></div>
+<div class="ttc" id="classMeanShifter_html_ae613ba4721e819d57187e0de479408bc"><div class="ttname"><a href="classMeanShifter.html#ae613ba4721e819d57187e0de479408bc">MeanShifter::applyMeanShiftProc_GPU</a></div><div class="ttdeci">void applyMeanShiftProc_GPU(cv::Mat *image)</div><div class="ttdoc">creates a meanShift procedure only being applied to certain points </div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8cpp_source.html#l00066">MeanShifter.cpp:66</a></div></div>
+<div class="ttc" id="classMeanShifter_html_a3e60e07721e089ccad792fc338970a69"><div class="ttname"><a href="classMeanShifter.html#a3e60e07721e089ccad792fc338970a69">MeanShifter::applyMeanShiftSegmentation_GPU</a></div><div class="ttdeci">void applyMeanShiftSegmentation_GPU(cv::Mat *image)</div><div class="ttdoc">uses meanShiftSegmentation on the GPU </div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8cpp_source.html#l00053">MeanShifter.cpp:53</a></div></div>
+<div class="ttc" id="classMeanShifter_html_a80c85bac2c3f863f36866290939f144a"><div class="ttname"><a href="classMeanShifter.html#a80c85bac2c3f863f36866290939f144a">MeanShifter::MeanShifter</a></div><div class="ttdeci">MeanShifter(void)</div><div class="ttdoc">This is the MeanShifter constructor. </div><div class="ttdef"><b>Definition:</b> <a href="MeanShifter_8cpp_source.html#l00004">MeanShifter.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2013 15:48:10 for Mantid by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 18 2013 19:04:13 for Mantid by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
