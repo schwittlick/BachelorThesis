@@ -3,7 +3,10 @@
 
 MeanShifter::MeanShifter(void)
 {
-	timers.push_back( Timer() );
+	for( int i = 0; i < 4; i++ ) 
+	{
+		timers.push_back( Timer() );
+	}
 }
 
 
