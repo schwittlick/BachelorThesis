@@ -1,7 +1,10 @@
 #include "MeanShifter.h"
 
 
-MeanShifter::MeanShifter(void)
+MeanShifter::MeanShifter(void) :
+	spacialWindowRadius( 20 ),
+	colorWindowRadius( 20 ),
+	minimumSegmentSize( 5 )
 {
 	for( int i = 0; i < 4; i++ ) 
 	{
@@ -42,6 +45,19 @@ void MeanShifter::applyMeanShift( cv::Mat * image, enum Type type )
 		timers.at( Type::SEGMENTATION_GPU ).start();
 		timers.at( Type::SEGMENTATION_GPU ).start();
 		break;
+	}
+}
+
+void MeanShifter::applyMeanShiftFilteringGpuOnly( cv::gpu::GpuMat * gpu_image )
+{
+	if( gpu_image->type() == CV_8UC4 )
+	{
+		cv::gpu::meanShiftFiltering( * gpu_image, *gpu_image, 20, 20 );
+	}
+	else
+	{
+		std::cerr << "The cv::gpu::GpuMat.type() needs to be CV_8UC4." << std::endl;
+		// TODO: throw some sort of exception when this happens
 	}
 }
 

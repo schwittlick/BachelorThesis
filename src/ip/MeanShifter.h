@@ -33,6 +33,12 @@ public:
 	//! @param type the type of meanshifting which is going to be applied
 	void applyMeanShift( cv::Mat * image, enum Type type );
 
+	//! this apploes a meanshift filter on the passed cv::gpu::GpuMat with the selected meanshift-type.
+	//! by passind a cv::gpu::GpuMat the image data doesn't need to be down-/uploaded to/from the host to process it. this makes the
+	//! entire process a lot faster.
+	//! @param gpu_image a pointer to the image to be processed. it _NEEDS_ to be in BGRA/CV_8UC4 format. check the opencv documentation for this issue: http://docs.opencv.org/modules/gpu/doc/image_processing.html
+	void applyMeanShiftFilteringGpuOnly( cv::gpu::GpuMat * gpu_image );
+
 	//! a benchmark function. it returns the amount of milliseconds a technique took to compute. the type of which the benchmark is returned is indicated by the passed parameter
 	//! @param type indicates the type of meanshift you want the elapsed time benchmark of
 	//! @return the time each processing of the meanshift took in average in milliseconds
@@ -44,6 +50,12 @@ private:
 
 	//! global gpu mats, which are necessary to compute gpu methods, since they need to be uploaded to the gpu
 	cv::gpu::GpuMat gpu_image_src, gpu_image_dst;
+
+
+	int spacialWindowRadius, colorWindowRadius;
+	
+	//! only being applied with MeanShifter::Type::SEGMENTATION_GPU. smaller segments are merged.
+	int minimumSegmentSize;
 
 	//! uses meanShiftFiltering on the GPU
 	//! @param image a pointer to the image, on which the meanshift is going to be applied on. 
