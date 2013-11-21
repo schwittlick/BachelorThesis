@@ -13,13 +13,13 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
@@ -43,14 +43,16 @@ public:
     QAction *actionGaussian_Blur;
     QAction *actionMedian_Blur;
     QAction *actionNormal_Blur;
+    QAction *actionOpen_Sample;
     QWidget *centralWidget;
     QLabel *label;
     QSlider *verticalSlider;
     QPushButton *pushButton;
     QSlider *progressBarSlider;
-    QRadioButton *radioButton;
     QSlider *blurSlider;
     QLabel *label_2;
+    QCheckBox *checkBox;
+    QCheckBox *checkBox_2;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -94,6 +96,8 @@ public:
         actionMedian_Blur->setObjectName(QStringLiteral("actionMedian_Blur"));
         actionNormal_Blur = new QAction(BachelorThesisClass);
         actionNormal_Blur->setObjectName(QStringLiteral("actionNormal_Blur"));
+        actionOpen_Sample = new QAction(BachelorThesisClass);
+        actionOpen_Sample->setObjectName(QStringLiteral("actionOpen_Sample"));
         centralWidget = new QWidget(BachelorThesisClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         label = new QLabel(centralWidget);
@@ -115,9 +119,6 @@ public:
         progressBarSlider->setMaximum(1);
         progressBarSlider->setSingleStep(1);
         progressBarSlider->setOrientation(Qt::Horizontal);
-        radioButton = new QRadioButton(centralWidget);
-        radioButton->setObjectName(QStringLiteral("radioButton"));
-        radioButton->setGeometry(QRect(200, 20, 151, 17));
         blurSlider = new QSlider(centralWidget);
         blurSlider->setObjectName(QStringLiteral("blurSlider"));
         blurSlider->setGeometry(QRect(50, 130, 160, 22));
@@ -126,6 +127,12 @@ public:
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setGeometry(QRect(60, 100, 81, 16));
+        checkBox = new QCheckBox(centralWidget);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+        checkBox->setGeometry(QRect(200, 80, 161, 17));
+        checkBox_2 = new QCheckBox(centralWidget);
+        checkBox_2->setObjectName(QStringLiteral("checkBox_2"));
+        checkBox_2->setGeometry(QRect(200, 100, 141, 17));
         BachelorThesisClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BachelorThesisClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -156,6 +163,7 @@ public:
         menuBar->addAction(menuEdit->menuAction());
         menuBar->addAction(menuHelp->menuAction());
         menuFile->addAction(actionOpen_File);
+        menuFile->addAction(actionOpen_Sample);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuEdit->addAction(menuOptical_Flow->menuAction());
@@ -194,10 +202,12 @@ public:
         actionGaussian_Blur->setText(QApplication::translate("BachelorThesisClass", "Gaussian Blur", 0));
         actionMedian_Blur->setText(QApplication::translate("BachelorThesisClass", "Median Blur", 0));
         actionNormal_Blur->setText(QApplication::translate("BachelorThesisClass", "Normal Blur", 0));
+        actionOpen_Sample->setText(QApplication::translate("BachelorThesisClass", "Open Sample", 0));
         label->setText(QApplication::translate("BachelorThesisClass", "No File loaded.", 0));
         pushButton->setText(QApplication::translate("BachelorThesisClass", "Play", 0));
-        radioButton->setText(QApplication::translate("BachelorThesisClass", "Background Substraction", 0));
         label_2->setText(QApplication::translate("BachelorThesisClass", "Blur Amount", 0));
+        checkBox->setText(QApplication::translate("BachelorThesisClass", "Background Subtraction", 0));
+        checkBox_2->setText(QApplication::translate("BachelorThesisClass", "Meanshift Filtering", 0));
         menuFile->setTitle(QApplication::translate("BachelorThesisClass", "File", 0));
         menuEdit->setTitle(QApplication::translate("BachelorThesisClass", "Edit", 0));
         menuOptical_Flow->setTitle(QApplication::translate("BachelorThesisClass", "Optical Flow", 0));

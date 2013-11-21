@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BachelorThesis.cpp" />
+    <ClCompile Include="FeatureDetector.cpp" />
     <ClCompile Include="src\ip\BackgroundSubtractor.cpp" />
     <ClCompile Include="src\ip\Blur.cpp" />
     <ClCompile Include="src\opticalflow\BroxOpticalFlow.cpp" />
@@ -579,6 +580,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FeatureDetector.h" />
     <ClInclude Include="src\ip\Denoiser.h" />
     <ClInclude Include="GeneratedFiles\ui_lukaskanadeopticalflowdialog.h" />
     <ClInclude Include="src\ip\MeanShifter.h" />

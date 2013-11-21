@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{2922d347-afbf-4120-9367-11eed9199476}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{0a391550-e580-403e-ba38-0c680acd88b8}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Header Files\opticalflow">
+      <UniqueIdentifier>{89c41716-1262-452c-958e-061713a6c869}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\opticalflow">
+      <UniqueIdentifier>{6298e2da-e0a3-4367-9e2a-117b1674f9ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ip">
+      <UniqueIdentifier>{61ee2c27-b896-44ae-9560-e2c3bc8e22b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ip">
+      <UniqueIdentifier>{af48ca6b-3d77-4b13-ad65-58dfdb90f1fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\misc">
+      <UniqueIdentifier>{005bd639-8735-42d7-bebf-91abe6902ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\misc">
+      <UniqueIdentifier>{d1ad95f1-9f67-4207-880e-2df4952c7624}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BachelorThesis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BachelorThesis.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BachelorThesis.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_BachelorThesis.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VideoReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lukaskanadeopticalflowdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_lukaskanadeopticalflowdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_lukaskanadeopticalflowdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\BackgroundSubtractor.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\Denoiser.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\Blur.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="src\misc\Console.cpp">
+      <Filter>Source Files\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\misc\SystemInfo.cpp">
+      <Filter>Source Files\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\misc\Timer.cpp">
+      <Filter>Source Files\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\BroxOpticalFlow.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\FarnebackOpticalFlow.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\flow_functions.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\LukasKanadeOpticalFlow.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\MeanShifter.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureDetector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="BachelorThesis.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="BachelorThesis.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="BachelorThesis.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_BachelorThesis.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="VideoReader.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="lukaskanadeopticalflowdialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="lukaskanadeopticalflowdialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\BackgroundSubtractor.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\Blur.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\misc\Console.h">
+      <Filter>Header Files\misc</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\misc\SystemInfo.h">
+      <Filter>Header Files\misc</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\misc\Timer.h">
+      <Filter>Header Files\misc</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\opticalflow\BroxOpticalFlow.h">
+      <Filter>Header Files\opticalflow</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\opticalflow\FarnebackOpticalFlow.h">
+      <Filter>Header Files\opticalflow</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\opticalflow\flow_functions.h">
+      <Filter>Header Files\opticalflow</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\opticalflow\LukasKanadeOpticalFlow.h">
+      <Filter>Header Files\opticalflow</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BachelorThesis.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_lukaskanadeopticalflowdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ip\MeanShifter.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ip\Denoiser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
