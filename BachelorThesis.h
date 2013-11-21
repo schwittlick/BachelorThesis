@@ -17,6 +17,9 @@
 
 #include "lukaskanadeopticalflowdialog.h"
 
+#include "opencv2/ocl/ocl.hpp"
+#include "opencv2/core/opengl_interop.hpp"
+
 class BachelorThesis : public QMainWindow
 {
 	Q_OBJECT
@@ -41,7 +44,9 @@ private:
 
 	int blurAmount;
 	int playbackSpeed;
+
 	bool doBackgroundSubtraction;
+	bool doMeanShiftFiltering;
 
 public slots:
 	void loadImage( void );
@@ -51,6 +56,7 @@ public slots:
 	void startVideo( void );
 	void jumpToFrame( int _frameNr );
 	void toggleBackgroundSubtraction( bool _doBackgroundSubtraction );
+	void toggleMeanShiftFiltering( bool _doMeanShiftFiltering );
 	void blurAmountChanged( int _blurAmount );
 	void openLukasKanadeWindow( void );
 

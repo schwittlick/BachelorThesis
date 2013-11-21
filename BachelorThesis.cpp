@@ -8,9 +8,10 @@
 
 BachelorThesis::BachelorThesis(QWidget *parent)
 	: QMainWindow(parent),
-	videoReader( VideoReader::Type::CPU ),
+	videoReader( VideoReader::Type::GPU ),
 	playbackSpeed( 1 ),
 	doBackgroundSubtraction( false ),
+	doMeanShiftFiltering( false ),
 	blurAmount( 1 )
 {
 	ui.setupUi(this);
@@ -21,6 +22,7 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 
 
 	cv::gpu::DeviceInfo info( 0 );
+	//std::cout << "Device name:" << cv::ocl::Context::getContext()->getDeviceInfo().deviceName << std::endl;
 
 	std::cout << "Currently available GPU devices: " << SystemInfo::getAvailableCudaDeviceCount() << " " << info.name() << std::endl;
 	
@@ -29,8 +31,10 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	connect( ui.actionOpen_File,			SIGNAL( triggered() ),				this,	SLOT( openFile() ) );
 	connect( ui.verticalSlider,				SIGNAL( valueChanged( int ) ),		this,	SLOT( changePlaybackSpeed( int ) ) );
 	connect( ui.pushButton,					SIGNAL( clicked() ),				this,	SLOT( startVideo() ) );
-	connect( ui.progressBarSlider,			SIGNAL( valueChanged( int) ),		this,	SLOT( jumpToFrame( int ) ) );
-	connect( ui.radioButton,				SIGNAL( toggled( bool ) ),			this,	SLOT( toggleBackgroundSubtraction( bool ) ) );
+	// TODO: fix this, it should only call this slot if the slider is moved by hand
+	//connect( ui.progressBarSlider,			SIGNAL( valueChanged( int) ),		this,	SLOT( jumpToFrame( int ) ) );
+	connect( ui.checkBox,					SIGNAL( toggled( bool ) ),			this,	SLOT( toggleBackgroundSubtraction( bool ) ) );
+	connect( ui.checkBox_2,					SIGNAL( toggled( bool ) ),			this,	SLOT( toggleMeanShiftFiltering( bool ) ) );
 	connect( ui.blurSlider,					SIGNAL( valueChanged( int ) ),		this,	SLOT( blurAmountChanged( int ) ) );
 	connect( ui.actionOpen_Sample,			SIGNAL( triggered() ),				this,	SLOT( openSampleFile() ) );
 	
@@ -49,22 +53,34 @@ void BachelorThesis::loadImage()
 	if( videoReader.isOpen() )
 	{
 		timer.start();
-		cv::Mat * loadedImage = videoReader.getNextImage();
-		cv::Mat imageToProcess = loadedImage->clone();
+		//cv::Mat * loadedImage = videoReader.getNextImage();
+		//cv::Mat imageToProcess = loadedImage->clone();
+		cv::gpu::GpuMat * imageToProcess;
 
 		for( int i = 0; i < playbackSpeed; i++ )
 		{
-			loadedImage = videoReader.getNextImage();
-			imageToProcess = loadedImage->clone();
+			//loadedImage = videoReader.getNextImage();
+			imageToProcess = videoReader.getNextImage_GPU();
 		}
 
+		//cv::gpu::resize( *imageToProcess, *imageToProcess, cv::Size( 320, 240 ) );
+
+		//imageToProcess = loadedImage->clone();
+		
+		if( doMeanShiftFiltering )
+		{
+			MeanShifter::Type meanshifterType = MeanShifter::FILTERING_GPU;
+			meanshifter.applyMeanShiftFilteringGpuOnly( imageToProcess );
+		}
+		 
 		if( doBackgroundSubtraction )
 		{
-			bg.applyBGS( &imageToProcess, BackgroundSubtractor::Type::MOG2 );
+			//bg.applyBGS( &imageToProcess, BackgroundSubtractor::Type::MOG2 );
+			bg.applyBGS( imageToProcess, BackgroundSubtractor::Type::MOG2 );
 		}
 
-		MeanShifter::Type meanShifterType = MeanShifter::FILTERING_GPU;
-		meanshifter.applyMeanShift( &imageToProcess, meanShifterType );
+		//MeanShifter::Type meanShifterType = MeanShifter::FILTERING_GPU;
+		//meanshifter.applyMeanShift( &imageToProcess, meanShifterType );
 
 		//Denoiser::applyDenoise( &imageToProcess, 1 );
 
@@ -75,9 +91,11 @@ void BachelorThesis::loadImage()
 		//flow = lkflow.apply( &imageToProcess, false );
 		
 		//cv::imshow( "FLOW", *flow );
-		cv::imshow( "VIDEO_CPU", imageToProcess );
+		cv::imshow( "VIDEO_GPU", *imageToProcess );
 		timer.stop();
-
+		timer.store();
+		std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
+		std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
 		QString elapsed;
 		elapsed.append( QString( "%1" ).arg( videoReader.getNormalizedProgress() ) );
 
@@ -91,7 +109,7 @@ void BachelorThesis::openFile( void )
 	QString fileName = QFileDialog::getOpenFileName( this, tr( "Open File" ), "", tr( "MP4 (*.mp4);; AVI (*.avi)" ) );
 	//cvStartWindowThread();
 
-	cv::namedWindow( "VIDEO_CPU", cv::WINDOW_NORMAL );
+	cv::namedWindow( "VIDEO_GPU", cv::WINDOW_OPENGL );
 	cv::namedWindow( "FLOW", cv::WINDOW_NORMAL );
 
 	videoReader.open( fileName.toStdString() );
@@ -122,7 +140,7 @@ void BachelorThesis::jumpToFrame( int _frameNr )
 void BachelorThesis::closeFrameWindow( void )
 {
 	std::cout << "Closing Windows." << std::endl;
-	cvDestroyWindow( "VIDEO_CPU") ;
+	cvDestroyWindow( "VIDEO_GPU") ;
 }
 
 void BachelorThesis::toggleBackgroundSubtraction( bool _doBackgroundSubtraction )
@@ -161,7 +179,7 @@ void BachelorThesis::changeLKMaxlevel( int _maxLevel )
 
 void BachelorThesis::openSampleFile( void )
 {
-	cv::namedWindow( "VIDEO_CPU", cv::WINDOW_NORMAL );
+	cv::namedWindow( "VIDEO_GPU", cv::WINDOW_OPENGL );
 	cv::namedWindow( "FLOW", cv::WINDOW_NORMAL );
 
 	std::string fileName = "G:\\DB\\Dropbox\\BA\\code\\BachelorThesis\\BachelorThesis\\Fri_Oct_11_compilation.mp4";
@@ -170,4 +188,9 @@ void BachelorThesis::openSampleFile( void )
 	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
 
 	bg = BackgroundSubtractor();
+}
+
+void BachelorThesis::toggleMeanShiftFiltering( bool _doMeanShiftFiltering )
+{
+	this->doMeanShiftFiltering = _doMeanShiftFiltering;
 }
