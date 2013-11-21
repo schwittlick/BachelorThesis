@@ -15,17 +15,18 @@ VideoReader::~VideoReader(void)
 
 void VideoReader::open( std::string fileName )
 {
-	videoCapture.open( fileName );
-	videoReaderGPU.open( fileName );
 
-	maxFrameCount = videoCapture.get( CV_CAP_PROP_FRAME_COUNT );
-	currentFrameNr = 0;
+	
 
 	switch( selectedType )
 	{
 	case Type::CPU:
+		videoCapture.open( fileName );
+		
 		if( videoCapture.isOpened() )
 		{
+			maxFrameCount = videoCapture.get( CV_CAP_PROP_FRAME_COUNT );
+			currentFrameNr = 0;
 			videoCapture >> currentFrame;
 			widthLoadedVideo = currentFrame.size().width;
 			heightLoadedVideo = currentFrame.size().height;
@@ -33,6 +34,7 @@ void VideoReader::open( std::string fileName )
 
 		break;
 	case Type::GPU:
+		videoReaderGPU.open( fileName );
 		if( videoReaderGPU.isOpened() )
 		{
 			videoReaderGPU.read( currentGpuMat );
@@ -155,4 +157,22 @@ bool VideoReader::isFinished( void )
 	{
 		return false;
 	}
+}
+
+cv::gpu::GpuMat * VideoReader::getNextImage_GPU( void )
+{
+	if( videoReaderGPU.isOpened() )
+	{
+		currentFrameNr++;
+		videoReaderGPU.read( currentGpuMat );
+		//cv::Mat fr( currentGpuMat );
+		//fr.copyTo( currentFrame );
+	}
+	else
+	{
+		std::cout << "VideoCapture is not opened." << std::endl;
+		//currentFrame = emptyMat;
+		
+	}
+	return &currentGpuMat;
 }
