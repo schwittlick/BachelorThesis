@@ -99,3 +99,19 @@ long Timer::getLatest(void)
 {
         return elapsedMillis;
 }
+
+std::string Timer::getAverageTimeStdString( void )
+{
+	std::stringstream strs;
+	strs << std::fixed << std::setprecision( 15 ) << getAverageTime();
+	std::string str = strs.str();
+	return str;
+}
+
+std::string Timer::getLatestStdString( void )
+{
+	std::stringstream strs;
+	strs << std::fixed << std::setprecision( 15 ) << getLatest();
+	std::string str = strs.str();
+	return str;
+}

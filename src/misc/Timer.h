@@ -1,8 +1,12 @@
 #pragma once
 
-#include <vector>
-#include <ctime>
-#include <iostream>
+#include < vector >
+#include < ctime >
+#include < iostream >
+#include < string >
+#include < iostream >
+#include < iomanip >
+#include < sstream >
 
 class Timer
 {
@@ -18,6 +22,9 @@ public:
 	double getAverageTime(void); // returns and calculates the average time from the stored elapsed times
 	void setVerbose(bool verbose); // toggles the terminal logging on/off
 	void clear(void);// clears the stored times
+
+	std::string getAverageTimeStdString( void );
+	std::string getLatestStdString( void );
 
 private:
 	bool verbose; // terminal logging on/off
