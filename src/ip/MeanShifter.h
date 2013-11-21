@@ -44,6 +44,27 @@ public:
 	//! @return the time each processing of the meanshift took in average in milliseconds
 	double getAverageElapsedTime( enum Type type );
 
+	//! sets the spacial window radius
+	//! @param _spacialWindowRadius the new spacial window radius being used
+	void setSpacialWindowRadius( int _spacialWindowRadius );
+
+	//! sets the color window radius
+	//! @param _colorWindowRadius the new color window radius being used
+	void setColorWindowRadius( int _colorWindowRadius );
+
+	//! sets the minimum segment size 
+	//! @param _minimumSegmentSize the new minimum size of segments being used
+	void setMinimumSegmentSize( int _minimumSegmentSize );
+
+	//! @return the spacial window radius currently being used
+	int getSpacialWindowRadius( void );
+
+	//! @return the color window radius currently being used
+	int getColorWindowRadius( void );
+
+	//! @return the minimum segment size currently being used.
+	int getMinimumSegmentSize( void );
+
 private:
 	//! vector holding the different timers to benchmark the different types of mean shifts
 	std::vector< Timer > timers;

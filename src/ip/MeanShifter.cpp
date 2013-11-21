@@ -91,3 +91,33 @@ double MeanShifter::getAverageElapsedTime( enum Type type )
 {
 	return timers.at( type ).getAverageTime();
 }
+
+void MeanShifter::setSpacialWindowRadius( int _spacialWindowRadius )
+{
+	this->spacialWindowRadius = _spacialWindowRadius;
+}
+
+void MeanShifter::setColorWindowRadius( int _colorWindowRadius )
+{
+	this->colorWindowRadius = _colorWindowRadius;
+}
+
+void MeanShifter::setMinimumSegmentSize( int _minimumSegmentSize )
+{
+	this->minimumSegmentSize = _minimumSegmentSize;
+}
+
+int MeanShifter::getSpacialWindowRadius( void )
+{
+	return spacialWindowRadius;
+}
+
+int MeanShifter::getColorWindowRadius( void )
+{
+	return colorWindowRadius;
+}
+
+int MeanShifter::getMinimumSegmentSize( void )
+{
+	return minimumSegmentSize;
+}
