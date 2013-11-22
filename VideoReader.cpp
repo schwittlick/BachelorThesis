@@ -110,8 +110,6 @@ void VideoReader::close( void )
 	videoCapture.release();
 	videoReaderGPU.close();
 
-	BachelorThesis::closeFrameWindow();
-
 	wasOpened = false;
 }
 
@@ -173,6 +171,7 @@ cv::gpu::GpuMat * VideoReader::getNextImage_GPU( void )
 		std::cout << "VideoCapture is not opened." << std::endl;
 		//currentFrame = emptyMat;
 		
+		wasOpened = false;
 	}
 	return &currentGpuMat;
 }
