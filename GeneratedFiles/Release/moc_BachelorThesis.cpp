@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_BachelorThesis_t {
-    QByteArrayData data[23];
-    char stringdata[343];
+    QByteArrayData data[24];
+    char stringdata[366];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -46,12 +46,13 @@ QT_MOC_LITERAL(13, 195, 21),
 QT_MOC_LITERAL(14, 217, 17),
 QT_MOC_LITERAL(15, 235, 11),
 QT_MOC_LITERAL(16, 247, 21),
-QT_MOC_LITERAL(17, 269, 13),
-QT_MOC_LITERAL(18, 283, 6),
-QT_MOC_LITERAL(19, 290, 16),
-QT_MOC_LITERAL(20, 307, 9),
-QT_MOC_LITERAL(21, 317, 15),
-QT_MOC_LITERAL(22, 333, 8)
+QT_MOC_LITERAL(17, 269, 22),
+QT_MOC_LITERAL(18, 292, 13),
+QT_MOC_LITERAL(19, 306, 6),
+QT_MOC_LITERAL(20, 313, 16),
+QT_MOC_LITERAL(21, 330, 9),
+QT_MOC_LITERAL(22, 340, 15),
+QT_MOC_LITERAL(23, 356, 8)
     },
     "BachelorThesis\0loadImage\0\0openFile\0"
     "openSampleFile\0changePlaybackSpeed\0"
@@ -60,9 +61,9 @@ QT_MOC_LITERAL(22, 333, 8)
     "_doBackgroundSubtraction\0"
     "toggleMeanShiftFiltering\0_doMeanShiftFiltering\0"
     "blurAmountChanged\0_blurAmount\0"
-    "openLukasKanadeWindow\0changeLKIters\0"
-    "_iters\0changeLKMaxlevel\0_maxLevel\0"
-    "changeLKWinSize\0_winSize\0"
+    "openLukasKanadeWindow\0openHardwareInfoDialog\0"
+    "changeLKIters\0_iters\0changeLKMaxlevel\0"
+    "_maxLevel\0changeLKWinSize\0_winSize\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -72,7 +73,7 @@ static const uint qt_meta_data_BachelorThesis[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -80,19 +81,20 @@ static const uint qt_meta_data_BachelorThesis[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   79,    2, 0x0a,
-       3,    0,   80,    2, 0x0a,
-       4,    0,   81,    2, 0x0a,
-       5,    1,   82,    2, 0x0a,
-       7,    0,   85,    2, 0x0a,
-       8,    1,   86,    2, 0x0a,
-      10,    1,   89,    2, 0x0a,
-      12,    1,   92,    2, 0x0a,
-      14,    1,   95,    2, 0x0a,
-      16,    0,   98,    2, 0x0a,
-      17,    1,   99,    2, 0x0a,
-      19,    1,  102,    2, 0x0a,
-      21,    1,  105,    2, 0x0a,
+       1,    0,   84,    2, 0x0a,
+       3,    0,   85,    2, 0x0a,
+       4,    0,   86,    2, 0x0a,
+       5,    1,   87,    2, 0x0a,
+       7,    0,   90,    2, 0x0a,
+       8,    1,   91,    2, 0x0a,
+      10,    1,   94,    2, 0x0a,
+      12,    1,   97,    2, 0x0a,
+      14,    1,  100,    2, 0x0a,
+      16,    0,  103,    2, 0x0a,
+      17,    0,  104,    2, 0x0a,
+      18,    1,  105,    2, 0x0a,
+      20,    1,  108,    2, 0x0a,
+      22,    1,  111,    2, 0x0a,
 
  // slots: parameters
     QMetaType::Void,
@@ -105,9 +107,10 @@ static const uint qt_meta_data_BachelorThesis[] = {
     QMetaType::Void, QMetaType::Bool,   13,
     QMetaType::Void, QMetaType::Int,   15,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   18,
-    QMetaType::Void, QMetaType::Int,   20,
-    QMetaType::Void, QMetaType::Int,   22,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   19,
+    QMetaType::Void, QMetaType::Int,   21,
+    QMetaType::Void, QMetaType::Int,   23,
 
        0        // eod
 };
@@ -127,9 +130,10 @@ void BachelorThesis::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 7: _t->toggleMeanShiftFiltering((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 8: _t->blurAmountChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 9: _t->openLukasKanadeWindow(); break;
-        case 10: _t->changeLKIters((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 11: _t->changeLKMaxlevel((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 12: _t->changeLKWinSize((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 10: _t->openHardwareInfoDialog(); break;
+        case 11: _t->changeLKIters((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->changeLKMaxlevel((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->changeLKWinSize((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -160,13 +164,13 @@ int BachelorThesis::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 13)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 13;
+        _id -= 14;
     }
     return _id;
 }

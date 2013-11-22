@@ -23,6 +23,7 @@
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -44,15 +45,17 @@ public:
     QAction *actionMedian_Blur;
     QAction *actionNormal_Blur;
     QAction *actionOpen_Sample;
+    QAction *actionHardware_Info;
     QWidget *centralWidget;
+    QVBoxLayout *verticalLayout;
     QLabel *label;
-    QSlider *verticalSlider;
     QPushButton *pushButton;
-    QSlider *progressBarSlider;
-    QSlider *blurSlider;
-    QLabel *label_2;
+    QSlider *verticalSlider;
     QCheckBox *checkBox;
     QCheckBox *checkBox_2;
+    QLabel *label_2;
+    QSlider *blurSlider;
+    QSlider *progressBarSlider;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -98,41 +101,63 @@ public:
         actionNormal_Blur->setObjectName(QStringLiteral("actionNormal_Blur"));
         actionOpen_Sample = new QAction(BachelorThesisClass);
         actionOpen_Sample->setObjectName(QStringLiteral("actionOpen_Sample"));
+        actionHardware_Info = new QAction(BachelorThesisClass);
+        actionHardware_Info->setObjectName(QStringLiteral("actionHardware_Info"));
         centralWidget = new QWidget(BachelorThesisClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        verticalLayout = new QVBoxLayout(centralWidget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(40, 20, 81, 16));
+
+        verticalLayout->addWidget(label);
+
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
+
         verticalSlider = new QSlider(centralWidget);
         verticalSlider->setObjectName(QStringLiteral("verticalSlider"));
-        verticalSlider->setGeometry(QRect(420, 40, 22, 151));
         verticalSlider->setMinimum(1);
         verticalSlider->setMaximum(20);
         verticalSlider->setOrientation(Qt::Vertical);
         verticalSlider->setTickInterval(1);
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(40, 40, 75, 23));
+
+        verticalLayout->addWidget(verticalSlider);
+
+        checkBox = new QCheckBox(centralWidget);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+
+        verticalLayout->addWidget(checkBox);
+
+        checkBox_2 = new QCheckBox(centralWidget);
+        checkBox_2->setObjectName(QStringLiteral("checkBox_2"));
+
+        verticalLayout->addWidget(checkBox_2);
+
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        verticalLayout->addWidget(label_2);
+
+        blurSlider = new QSlider(centralWidget);
+        blurSlider->setObjectName(QStringLiteral("blurSlider"));
+        blurSlider->setMaximum(20);
+        blurSlider->setOrientation(Qt::Horizontal);
+
+        verticalLayout->addWidget(blurSlider);
+
         progressBarSlider = new QSlider(centralWidget);
         progressBarSlider->setObjectName(QStringLiteral("progressBarSlider"));
-        progressBarSlider->setGeometry(QRect(10, 460, 441, 22));
         progressBarSlider->setMaximum(1);
         progressBarSlider->setSingleStep(1);
         progressBarSlider->setOrientation(Qt::Horizontal);
-        blurSlider = new QSlider(centralWidget);
-        blurSlider->setObjectName(QStringLiteral("blurSlider"));
-        blurSlider->setGeometry(QRect(50, 130, 160, 22));
-        blurSlider->setMaximum(20);
-        blurSlider->setOrientation(Qt::Horizontal);
-        label_2 = new QLabel(centralWidget);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(60, 100, 81, 16));
-        checkBox = new QCheckBox(centralWidget);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
-        checkBox->setGeometry(QRect(200, 80, 161, 17));
-        checkBox_2 = new QCheckBox(centralWidget);
-        checkBox_2->setObjectName(QStringLiteral("checkBox_2"));
-        checkBox_2->setGeometry(QRect(200, 100, 141, 17));
+
+        verticalLayout->addWidget(progressBarSlider);
+
         BachelorThesisClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BachelorThesisClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -180,6 +205,7 @@ public:
         menuBlur->addAction(actionGaussian_Blur);
         menuBlur->addAction(actionMedian_Blur);
         menuBlur->addAction(actionNormal_Blur);
+        menuHelp->addAction(actionHardware_Info);
 
         retranslateUi(BachelorThesisClass);
 
@@ -203,11 +229,12 @@ public:
         actionMedian_Blur->setText(QApplication::translate("BachelorThesisClass", "Median Blur", 0));
         actionNormal_Blur->setText(QApplication::translate("BachelorThesisClass", "Normal Blur", 0));
         actionOpen_Sample->setText(QApplication::translate("BachelorThesisClass", "Open Sample", 0));
+        actionHardware_Info->setText(QApplication::translate("BachelorThesisClass", "Hardware Info", 0));
         label->setText(QApplication::translate("BachelorThesisClass", "No File loaded.", 0));
         pushButton->setText(QApplication::translate("BachelorThesisClass", "Play", 0));
-        label_2->setText(QApplication::translate("BachelorThesisClass", "Blur Amount", 0));
         checkBox->setText(QApplication::translate("BachelorThesisClass", "Background Subtraction", 0));
         checkBox_2->setText(QApplication::translate("BachelorThesisClass", "Meanshift Filtering", 0));
+        label_2->setText(QApplication::translate("BachelorThesisClass", "Blur Amount", 0));
         menuFile->setTitle(QApplication::translate("BachelorThesisClass", "File", 0));
         menuEdit->setTitle(QApplication::translate("BachelorThesisClass", "Edit", 0));
         menuOptical_Flow->setTitle(QApplication::translate("BachelorThesisClass", "Optical Flow", 0));
