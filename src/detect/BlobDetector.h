@@ -21,6 +21,7 @@ public:
 
 	std::vector< cv::KeyPoint > detect( cv::Mat * image );
 
+	std::vector< cv::KeyPoint > keypoints;
 	cv::SimpleBlobDetector::Params params;
 	cv::FeatureDetector * blob_detect;
 };
