@@ -24,6 +24,8 @@ void ProcessingPipeline::start( void )
 
 	//fea.processGoodFeaturesToTrack_CPU( &im );
 
+	flowBM.calc( &im );
+
 	currentImage.upload( im );
 
 	//fea.processHOGDetection_GPU( &currentImage );

@@ -5,6 +5,7 @@
 
 #include "FeatureDetector.h"
 #include "src/ip/StandardImageProcessor.h"
+#include "OpticalFlowFarneback.h"
 
 class ProcessingPipeline
 {
@@ -20,5 +21,6 @@ private:
 	cv::gpu::GpuMat currentImage;
 	FeatureDetector fea;
 	StandardImageProcessor improc;
+	OpticalFlowFarneback flowBM;
 };
 
