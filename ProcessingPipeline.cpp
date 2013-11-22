@@ -17,7 +17,16 @@ void ProcessingPipeline::addImage( cv::gpu::GpuMat * imageToBeProcessed )
 
 void ProcessingPipeline::start( void )
 {
+	cv::Mat im;
+	this->currentImage.download( im );
 
+	//improc.makeBinary( &this->currentImage );
+
+	//fea.processGoodFeaturesToTrack_CPU( &im );
+
+	currentImage.upload( im );
+
+	//fea.processHOGDetection_GPU( &currentImage );
 }
 
 cv::gpu::GpuMat ProcessingPipeline::getFinishedImage( void )
