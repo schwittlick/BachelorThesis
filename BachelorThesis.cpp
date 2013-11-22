@@ -19,12 +19,7 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	timer = Timer();	
 
 	lukasKanadeOpticalFlowDialog = new LukasKanadeOpticalFLowDialog( this );
-
-
-	cv::gpu::DeviceInfo info( 0 );
-	//std::cout << "Device name:" << cv::ocl::Context::getContext()->getDeviceInfo().deviceName << std::endl;
-
-	std::cout << "Currently available GPU devices: " << SystemInfo::getAvailableCudaDeviceCount() << " " << info.name() << std::endl;
+	hardwareInfoDialog = new HardwareInfoDialog( this );
 	
 	cv::gpu::setDevice( 0 );
 
@@ -39,13 +34,16 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	connect( ui.actionOpen_Sample,			SIGNAL( triggered() ),				this,	SLOT( openSampleFile() ) );
 	
 	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				this,	SLOT( openLukasKanadeWindow( ) ) );
+	connect( ui.actionHardware_Info,		SIGNAL( triggered() ),				this,	SLOT( openHardwareInfoDialog() ) );
 
 	connect( lukasKanadeOpticalFlowDialog,	SIGNAL( itersValueChanged( int ) ), this,	SLOT( changeLKIters( int ) ) );
+	
 }
 
 BachelorThesis::~BachelorThesis()
 {
-
+	delete hardwareInfoDialog;
+	delete lukasKanadeOpticalFlowDialog;
 }
 
 void BachelorThesis::loadImage() 
@@ -53,45 +51,20 @@ void BachelorThesis::loadImage()
 	if( videoReader.isOpen() )
 	{
 		timer.start();
-		//cv::Mat * loadedImage = videoReader.getNextImage();
-		//cv::Mat imageToProcess = loadedImage->clone();
 		cv::gpu::GpuMat * imageToProcess;
+		cv::gpu::GpuMat finishedImage;
 
 		for( int i = 0; i < playbackSpeed; i++ )
 		{
-			//loadedImage = videoReader.getNextImage();
 			imageToProcess = videoReader.getNextImage_GPU();
 		}
 
-		//cv::gpu::resize( *imageToProcess, *imageToProcess, cv::Size( 320, 240 ) );
+		pipeline.addImage( imageToProcess );
+		pipeline.start();
+		finishedImage = pipeline.getFinishedImage();
 
-		//imageToProcess = loadedImage->clone();
-		
-		if( doMeanShiftFiltering )
-		{
-			MeanShifter::Type meanshifterType = MeanShifter::FILTERING_GPU;
-			meanshifter.applyMeanShiftFilteringGpuOnly( imageToProcess );
-		}
-		 
-		if( doBackgroundSubtraction )
-		{
-			//bg.applyBGS( &imageToProcess, BackgroundSubtractor::Type::MOG2 );
-			bg.applyBGS( imageToProcess, BackgroundSubtractor::Type::MOG2 );
-		}
+		frameHandler.display( &finishedImage, 0 );
 
-		//MeanShifter::Type meanShifterType = MeanShifter::FILTERING_GPU;
-		//meanshifter.applyMeanShift( &imageToProcess, meanShifterType );
-
-		//Denoiser::applyDenoise( &imageToProcess, 1 );
-
-		//Blur::applyBlur( Blur::Type::NORMAL, &imageToProcess, 10 );
-
-		//cv::Mat * flow = new cv::Mat();
-
-		//flow = lkflow.apply( &imageToProcess, false );
-		
-		//cv::imshow( "FLOW", *flow );
-		cv::imshow( "VIDEO_GPU", *imageToProcess );
 		timer.stop();
 		timer.store();
 		std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
@@ -102,20 +75,21 @@ void BachelorThesis::loadImage()
 		ui.label->setText( elapsed );
 		ui.progressBarSlider->setValue( videoReader.getCurrentFrameNr() );
 	}
+	else
+	{
+		// if the file/stream is not opened then all windows should be closed
+		frameHandler.closeAllWindows();
+	}
 }
 
 void BachelorThesis::openFile( void )
 {
 	QString fileName = QFileDialog::getOpenFileName( this, tr( "Open File" ), "", tr( "MP4 (*.mp4);; AVI (*.avi)" ) );
-	//cvStartWindowThread();
 
-	cv::namedWindow( "VIDEO_GPU", cv::WINDOW_OPENGL );
-	cv::namedWindow( "FLOW", cv::WINDOW_NORMAL );
+	frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
 
 	videoReader.open( fileName.toStdString() );
 	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
-
-	bg = BackgroundSubtractor();
 }
 
 void BachelorThesis::changePlaybackSpeed( int _playbackSpeed )
@@ -137,12 +111,6 @@ void BachelorThesis::jumpToFrame( int _frameNr )
 	videoReader.jumpToFrame( _frameNr );
 }
 
-void BachelorThesis::closeFrameWindow( void )
-{
-	std::cout << "Closing Windows." << std::endl;
-	cvDestroyWindow( "VIDEO_GPU") ;
-}
-
 void BachelorThesis::toggleBackgroundSubtraction( bool _doBackgroundSubtraction )
 {
 	doBackgroundSubtraction = _doBackgroundSubtraction;
@@ -162,35 +130,38 @@ void BachelorThesis::openLukasKanadeWindow( void )
 void BachelorThesis::changeLKIters( int _iters )
 {
 	std::cout << "LKOF: iters: " << _iters << std::endl;
-	this->lkflow.setIters( _iters );
+	//this->lkflow.setIters( _iters );
 }
 
 void BachelorThesis::changeLKWinSize( int _winSize )
 {
 	std::cout << "LKOF: winSize: " << _winSize << std::endl;
-	this->lkflow.setWinSize( _winSize );
+	//this->lkflow.setWinSize( _winSize );
 }
 
 void BachelorThesis::changeLKMaxlevel( int _maxLevel )
 {
 	std::cout << "LKOF: maxLevel: " << _maxLevel << std::endl;
-	this->lkflow.setMaxLevel( _maxLevel );
+	//this->lkflow.setMaxLevel( _maxLevel );
 }
 
 void BachelorThesis::openSampleFile( void )
 {
-	cv::namedWindow( "VIDEO_GPU", cv::WINDOW_OPENGL );
-	cv::namedWindow( "FLOW", cv::WINDOW_NORMAL );
+	frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
 
 	std::string fileName = "G:\\DB\\Dropbox\\BA\\code\\BachelorThesis\\BachelorThesis\\Fri_Oct_11_compilation.mp4";
 
 	videoReader.open( fileName );
 	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
 
-	bg = BackgroundSubtractor();
 }
 
 void BachelorThesis::toggleMeanShiftFiltering( bool _doMeanShiftFiltering )
 {
 	this->doMeanShiftFiltering = _doMeanShiftFiltering;
+}
+
+void BachelorThesis::openHardwareInfoDialog( void )
+{
+	this->hardwareInfoDialog->show();
 }

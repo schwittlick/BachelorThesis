@@ -7,15 +7,14 @@
 #include "VideoReader.h"
 
 #include "src/misc/Timer.h"
+#include "src/misc/FrameHandler.h"
 
 #include "src/opticalflow/LukasKanadeOpticalFlow.h"
 
-#include "src/ip/BackgroundSubtractor.h"
-#include "src/ip/Blur.h"
-#include "src/ip/Denoiser.h"
-#include "src/ip/MeanShifter.h"
+#include "ProcessingPipeline.h"
 
 #include "lukaskanadeopticalflowdialog.h"
+#include "hardwareinfodialog.h"
 
 #include "opencv2/ocl/ocl.hpp"
 #include "opencv2/core/opengl_interop.hpp"
@@ -33,14 +32,14 @@ public:
 private:
 	Ui::BachelorThesisClass ui;
 
+	ProcessingPipeline pipeline;
+
 	VideoReader videoReader;
 	Timer timer;
-	BackgroundSubtractor bg;
-	LukasKanadeOpticalFlow lkflow;
-	Blur blur;
-	MeanShifter meanshifter;
+	FrameHandler frameHandler;
 
 	LukasKanadeOpticalFLowDialog * lukasKanadeOpticalFlowDialog;
+	HardwareInfoDialog * hardwareInfoDialog;
 
 	int blurAmount;
 	int playbackSpeed;
@@ -59,6 +58,7 @@ public slots:
 	void toggleMeanShiftFiltering( bool _doMeanShiftFiltering );
 	void blurAmountChanged( int _blurAmount );
 	void openLukasKanadeWindow( void );
+	void openHardwareInfoDialog( void );
 
 	void changeLKIters( int _iters );
 	void changeLKMaxlevel( int _maxLevel );
