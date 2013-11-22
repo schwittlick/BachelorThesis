@@ -23,6 +23,7 @@
 //=============================================================================
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/gpu/gpu.hpp>
 
 #define M_PI 3.14159265358979323846
 
