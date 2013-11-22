@@ -52,7 +52,7 @@ void MeanShifter::applyMeanShiftFilteringGpuOnly( cv::gpu::GpuMat * gpu_image )
 {
 	if( gpu_image->type() == CV_8UC4 )
 	{
-		cv::gpu::meanShiftFiltering( * gpu_image, *gpu_image, 20, 20 );
+		cv::gpu::meanShiftFiltering( * gpu_image, *gpu_image, spacialWindowRadius, colorWindowRadius );
 	}
 	else
 	{
@@ -65,7 +65,7 @@ void MeanShifter::applyMeanShiftFiltering_GPU( cv::Mat * image )
 {
 	cv::cvtColor( *image, *image, CV_BGR2BGRA );
 	gpu_image_src.upload( *image );
-	cv::gpu::meanShiftFiltering( gpu_image_src, gpu_image_dst, 20, 20 );
+	cv::gpu::meanShiftFiltering( gpu_image_src, gpu_image_dst, spacialWindowRadius, colorWindowRadius );
 	gpu_image_dst.download( *image );
 }
 
@@ -73,13 +73,13 @@ void MeanShifter::applyMeanShiftSegmentation_GPU( cv::Mat * image )
 {
 	cv::cvtColor( *image, *image, CV_BGR2BGRA );
 	gpu_image_src.upload( *image );
-	cv::gpu::meanShiftSegmentation(gpu_image_src, *image, 20, 20, 5 );
+	cv::gpu::meanShiftSegmentation(gpu_image_src, *image, spacialWindowRadius, colorWindowRadius, minimumSegmentSize );
 }
 
 void MeanShifter::pyrMeanShiftFiltering_CPU( cv::Mat * image )
 {
 	cv::cvtColor( *image, *image, CV_BGR2BGRA );
-	cv::pyrMeanShiftFiltering( *image, *image, 20, 20, 5 );
+	cv::pyrMeanShiftFiltering( *image, *image, spacialWindowRadius, colorWindowRadius, minimumSegmentSize );
 }
 
 void MeanShifter::applyMeanShiftProc_GPU( cv::Mat * image )
