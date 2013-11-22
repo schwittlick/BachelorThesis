@@ -4,7 +4,6 @@
 BackgroundSubtractor::BackgroundSubtractor(void) 
 {
 	cv::gpu::setDevice( 0 );
-	std::cout << "BackgroundSubstractor::BackgroundSubstractor(void)" << std::endl;
 }
 
 
