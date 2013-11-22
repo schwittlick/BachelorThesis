@@ -25,7 +25,8 @@ public:
 	LukasKanadeOpticalFlow(void);
 	~LukasKanadeOpticalFlow(void);
 
-	cv::Mat * apply( cv::Mat * _frame1_rgb_, bool motionOrColorFieldIndicator );
+	cv::Mat apply( cv::Mat * _frame1_rgb_, bool motionOrColorFieldIndicator );
+	void apply( cv::gpu::GpuMat *_gpu_frame );
 
 	void setMaxLevel( int _maxLevel );
 	void setWinSize( int _winSize );
@@ -42,10 +43,14 @@ private:
 	bool resize_img;// = true;
 	float rfactor;// = 2.0;
 
-	cv::gpu::PyrLKOpticalFlow dflow;
-	cv::gpu::GpuMat frame0GPU, frame1GPU, uGPU, vGPU;
-	cv::Mat frame0_rgb_, frame1_rgb_, frame0_rgb, frame1_rgb, frame0, frame1;
-	cv::Mat imgU, imgV;
+	cv::gpu::GpuMat last_gpu_frame;
+
+	cv::gpu::PyrLKOpticalFlow dflow_lukaskanade;
+	//cv::gpu::BroxOpticalFlow dflow_brox;
+	//cv::gpu::FarnebackOpticalFlow dflow_farneback;
+	cv::gpu::GpuMat previousFrameGPU, currentFrameGPU, uGPU, vGPU;
+	cv::Mat frame0_rgb_, newFrameCPU, frame0_rgb, frameToCompute, previousFrameCPU, currentFrameCPU;
+	cv::Mat uCPU, vCPU;
 	cv::Mat motion_flow, flow_rgb;
 	int nframes, width, height;
 	double t1, t2, tdflow, tvis;
@@ -55,9 +60,12 @@ private:
 	Timer downloadUploadTimer;
 	Timer drawFlowTimer;
 	void resizeAndSetupRescources( cv::Mat * mat );
+	void resizeAndSetupRescources_GPU( cv::gpu::GpuMat * gpu_mat );
 	void drawFlow( bool motionOrColorField );
-	cv::Mat * returnDrawnMotionFlow( bool motionOrColorField );
-	void resizeNewImage( void );
+	cv::Mat returnDrawnMotionFlow( bool motionOrColorField );
+	void resizeAndConvertToGray( void );
+	void drawMotionField_GPU(cv::gpu::GpuMat &imgU, cv::gpu::GpuMat &imgV, cv::gpu::GpuMat &imgMotion,
+		int xSpace, int ySpace, float minCutoff, float maxCutoff, float multiplier, CvScalar color);
 
 
 };
