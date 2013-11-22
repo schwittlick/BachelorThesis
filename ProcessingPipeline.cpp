@@ -20,13 +20,15 @@ void ProcessingPipeline::start( void )
 	cv::Mat im;
 	this->currentImage.download( im );
 
-	//improc.makeBinary( &this->currentImage );
+	bgs.applyBGS( &currentImage, BackgroundSubtractor::Type::MOG2 );
+
+	improc.makeBinary( &this->currentImage );
 
 	//fea.processGoodFeaturesToTrack_CPU( &im );
 
-	flowBM.calc( &im );
+	//flowFarneback.calc( &im );
 
-	currentImage.upload( im );
+	//currentImage.upload( im );
 
 	//fea.processHOGDetection_GPU( &currentImage );
 }
