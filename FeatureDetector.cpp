@@ -11,7 +11,7 @@ FeatureDetector::~FeatureDetector(void)
 {
 }
 
-void FeatureDetector::processGoodFeaturesToTrack_CPU( cv::Mat * _image )
+std::vector< cv::Point2f > FeatureDetector::processGoodFeaturesToTrack_CPU( cv::Mat * _image )
 {
 	cv::Mat imageGrayScale;
 	if( _image->channels() == 3 )
@@ -23,7 +23,7 @@ void FeatureDetector::processGoodFeaturesToTrack_CPU( cv::Mat * _image )
 		cv::cvtColor( *_image, imageGrayScale, CV_BGRA2GRAY );
 	}
 
-	int maxCorners = 500;
+	int maxCorners = 300;
 	double qualityLevel = 0.01;
 	double minDistance = 5;
 	int blockSize = 3;
@@ -36,7 +36,9 @@ void FeatureDetector::processGoodFeaturesToTrack_CPU( cv::Mat * _image )
 
 	std::cout << "Size: " << featurePoints.size() << std::endl;
 
-	this->drawPoints( _image );
+	//this->drawPoints( _image );
+
+	return featurePoints;
 }
 
 void FeatureDetector::processGoodFeaturesToTrack_GPU( cv::gpu::GpuMat * _gpu_image )

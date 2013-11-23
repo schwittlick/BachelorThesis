@@ -16,7 +16,7 @@ public:
 	FeatureDetector(void);
 	~FeatureDetector(void);
 
-	void processGoodFeaturesToTrack_CPU( cv::Mat * _image );
+	std::vector< cv::Point2f > processGoodFeaturesToTrack_CPU( cv::Mat * _image );
 	void processGoodFeaturesToTrack_GPU( cv::gpu::GpuMat * _gpu_image );
 	void processFASTFeatureDetection_GPU( cv::Mat * _image );
 	void processHarrisCornerDetection_CPU( cv::Mat * _image );
