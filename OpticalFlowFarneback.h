@@ -26,7 +26,7 @@ public:
 	OpticalFlowFarneback(void);
 	~OpticalFlowFarneback(void);
 
-	std::vector< cv::Point > calc( cv::Mat * image );
+	void calc( cv::Mat * image );
 	void drawOptFlowMap(const cv::Mat& flow, cv::Mat& cflowmap, int step, double scale, const cv::Scalar& color);
 
 private:

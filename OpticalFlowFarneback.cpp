@@ -11,11 +11,9 @@ OpticalFlowFarneback::~OpticalFlowFarneback(void)
 {
 }
 
-std::vector< cv::Point > OpticalFlowFarneback::calc( cv::Mat * image )
+void OpticalFlowFarneback::calc( cv::Mat * image )
 {
-	//cv::calcOpticalFlowPyrLK( previousImage, *image, , )
 	std::cout << "Started FarnebackOpticalFlow." << std::endl;
-	std::vector< cv::Point > poitsn;
 
 	std::cout << "Original Type of to copy to " << image->type() << std::endl;
 
@@ -54,7 +52,6 @@ std::vector< cv::Point > OpticalFlowFarneback::calc( cv::Mat * image )
 
 	bgr.copyTo( *image );
 
-	return poitsn;
 }
 
 void OpticalFlowFarneback::drawOptFlowMap( const cv::Mat& flow, cv::Mat& cflowmap, int step, double scale, const cv::Scalar& color )
