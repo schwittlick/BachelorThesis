@@ -43,8 +43,8 @@ void OpticalFlowLukaskanade::calc( cv::Mat * image )
 	*/
 	
 
-	previousPoints = currentPoints;
-	//std::swap( previousPoints, currentPoints );
+	//previousPoints = currentPoints;
+	std::swap( previousPoints, currentPoints );
 	image->copyTo( previousImage );
 
 	drawFlow( image );
@@ -56,7 +56,7 @@ void OpticalFlowLukaskanade::computeGoodFeaturesToTrack( cv::Mat * image )
 {
 	//currentPoints.clear();
 	currentPoints = featureDetector.processGoodFeaturesToTrack_CPU( image );
-	if( counter % 100 == 0 ) 
+	if( counter % 5 == 0 ) 
 	{
 		previousPoints = currentPoints;
 		//firstTime = false;
@@ -66,10 +66,39 @@ void OpticalFlowLukaskanade::computeGoodFeaturesToTrack( cv::Mat * image )
 void OpticalFlowLukaskanade::drawFlow( cv::Mat * image )
 {
 	//cv::cvtColor( *image, *image, CV_GRAY2RGB );
+	boatPointsLeftToRight.clear();
+	boatPointsRightToLeft.clear();
 	for( auto it = currentPoints.begin(), it2 = previousPoints.begin(); it != currentPoints.end(); ++it, ++it2 )
 	{
 		cv::Point2f current = *it;
 		cv::Point2f prev = *it2;
-		cv::line( *image, current, prev, cv::Scalar( 0, 0, 255 ), 5, 8, 0 );
+		float distancex = current.x - prev.x;
+		if( (distancex > 4 && distancex < 500 )  ) 
+		{
+			//cv::line( *image, current, prev, cv::Scalar( 0, 0, 255 ), 4, 8, 0 );
+			boatPointsLeftToRight.push_back( current );
+			boatPointsLeftToRight.push_back( prev );
+		} else if ( distancex < -4 && distancex > -500 )
+		{
+			//cv::line( *image, current, prev, cv::Scalar( 0, 255, 0 ), 4, 8, 0 );
+			boatPointsRightToLeft.push_back( current );
+			boatPointsRightToLeft.push_back( prev );
+		}
+		//cv::point( *image, current, prev, cv::Scalar( 0, 0, 255 ), 5, 8, 0 );
+		//cv::circle( *image, *it, 5, cv::Scalar( 255, 0, 0 ), 1, 8, 0 );
+		//cv::circle( *image, *it2, 3, cv::Scalar( 0, 255, 0 ), 1, 8, 0 );
+		
+	}
+	std::cout << "Now Finding boudning box for " << boatPointsLeftToRight.size() << " ponts." << std::endl;
+	if( boatPointsLeftToRight.size() > 4 ) 
+	{
+		r = cv::boundingRect( boatPointsLeftToRight );
+		cv::rectangle( *image, r, cv::Scalar( 255, 255, 0 ), 2, 8, 0 );
+	}
+
+	if( boatPointsRightToLeft.size() > 4 ) 
+	{
+		r = cv::boundingRect( boatPointsRightToLeft );
+		cv::rectangle( *image, r, cv::Scalar( 0, 255, 255 ), 2, 8, 0 );
 	}
 }

@@ -45,5 +45,7 @@ private:
 
 	bool firstTime;
 	int counter;
+	std::vector< cv::Point2f > boatPointsLeftToRight, boatPointsRightToLeft;
+	cv::Rect r;
 };
 
