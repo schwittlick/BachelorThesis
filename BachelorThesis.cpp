@@ -5,6 +5,7 @@
 
 #include "QTimer"
 #include "QFileDialog"
+#include "QLabel"
 
 BachelorThesis::BachelorThesis(QWidget *parent)
 	: QMainWindow(parent),
@@ -20,6 +21,14 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 
 	lukasKanadeOpticalFlowDialog = new LukasKanadeOpticalFLowDialog( this );
 	hardwareInfoDialog = new HardwareInfoDialog( this );
+	imageProcessorWidget = new ImageProcessorWidget( this );
+	imageProcessorWidget->show();
+
+	
+	//image.setText( QString( "whut" ) );
+	//image.setParent( this );
+	image.setWindowTitle( QString( "VideoStream" ) );
+	image.show();
 	
 	cv::gpu::setDevice( 0 );
 
@@ -44,6 +53,7 @@ BachelorThesis::~BachelorThesis()
 {
 	delete hardwareInfoDialog;
 	delete lukasKanadeOpticalFlowDialog;
+	delete imageProcessorWidget;
 }
 
 void BachelorThesis::loadImage() 
@@ -63,12 +73,17 @@ void BachelorThesis::loadImage()
 		pipeline.start();
 		finishedImage = pipeline.getFinishedImage();
 
-		frameHandler.display( &finishedImage, 0 );
-
+		//frameHandler.display( &finishedImage, 0 );
+		QPixmap imagePixmap = QPixmap::fromImage( this->mat2QImage( cv::Mat( finishedImage ) ) );
+		image.setPixmap( imagePixmap );
+		image.setMaximumHeight( imagePixmap.size().height() );
+		image.setMaximumWidth( imagePixmap.size().width() );
+		//image.setSizeIncrement( imagePixmap.size().width(), imagePixmap.size().height() );
+		image.adjustSize();
 		timer.stop();
 		timer.store();
-		std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
-		std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
+		//std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
+		//std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
 		QString elapsed;
 		elapsed.append( QString( "%1" ).arg( videoReader.getNormalizedProgress() ) );
 
@@ -78,7 +93,9 @@ void BachelorThesis::loadImage()
 	else
 	{
 		// if the file/stream is not opened then all windows should be closed
-		frameHandler.closeAllWindows();
+		//frameHandler.closeAllWindows();
+		image.close();
+		//videoReader.close();
 	}
 }
 
@@ -86,8 +103,8 @@ void BachelorThesis::openFile( void )
 {
 	QString fileName = QFileDialog::getOpenFileName( this, tr( "Open File" ), "", tr( "MP4 (*.mp4);; AVI (*.avi)" ) );
 
-	frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
-
+	//frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
+	image.show();
 	videoReader.open( fileName.toStdString() );
 	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
 }
@@ -147,8 +164,8 @@ void BachelorThesis::changeLKMaxlevel( int _maxLevel )
 
 void BachelorThesis::openSampleFile( void )
 {
-	frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
-
+	//frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
+	image.show();
 	std::string fileName = "G:\\DB\\Dropbox\\BA\\code\\BachelorThesis\\BachelorThesis\\Fri_Oct_11_compilation.mp4";
 
 	videoReader.open( fileName );
@@ -164,4 +181,14 @@ void BachelorThesis::toggleMeanShiftFiltering( bool _doMeanShiftFiltering )
 void BachelorThesis::openHardwareInfoDialog( void )
 {
 	this->hardwareInfoDialog->show();
+}
+
+QImage BachelorThesis::mat2QImage( cv::Mat const& src )
+{
+	cv::Mat temp; // make the same cv::Mat
+	cvtColor(src, temp,CV_BGR2RGB); // cvtColor Makes a copt, that what i need
+	QImage dest((uchar*) temp.data, temp.cols, temp.rows, temp.step, QImage::Format_RGB888);
+	QImage dest2(dest);
+	dest2.detach(); // enforce deep copy
+	return dest2;
 }

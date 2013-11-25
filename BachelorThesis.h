@@ -15,6 +15,7 @@
 
 #include "lukaskanadeopticalflowdialog.h"
 #include "hardwareinfodialog.h"
+#include "imageprocessorwidget.h"
 
 #include "opencv2/ocl/ocl.hpp"
 #include "opencv2/core/opengl_interop.hpp"
@@ -30,9 +31,13 @@ public:
 	static void closeFrameWindow( void );
 
 private:
+	QImage mat2QImage( cv::Mat const& src );
+
+
 	Ui::BachelorThesisClass ui;
 
 	ProcessingPipeline pipeline;
+	QLabel image;
 
 	VideoReader videoReader;
 	Timer timer;
@@ -40,6 +45,7 @@ private:
 
 	LukasKanadeOpticalFLowDialog * lukasKanadeOpticalFlowDialog;
 	HardwareInfoDialog * hardwareInfoDialog;
+	ImageProcessorWidget * imageProcessorWidget;
 
 	int blurAmount;
 	int playbackSpeed;
