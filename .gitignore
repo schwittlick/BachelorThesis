@@ -1,3 +1,4 @@
 *.tlog
 *.res
 *.lastbuildstate
+*.unsuccessfulbuild
