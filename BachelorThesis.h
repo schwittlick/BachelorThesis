@@ -7,7 +7,6 @@
 #include "VideoReader.h"
 
 #include "src/misc/Timer.h"
-#include "src/misc/FrameHandler.h"
 
 #include "src/opticalflow/LukasKanadeOpticalFlow.h"
 
@@ -41,7 +40,6 @@ private:
 
 	VideoReader videoReader;
 	Timer timer;
-	FrameHandler frameHandler;
 
 	LukasKanadeOpticalFLowDialog * lukasKanadeOpticalFlowDialog;
 	HardwareInfoDialog * hardwareInfoDialog;
