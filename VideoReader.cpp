@@ -16,7 +16,7 @@ VideoReader::~VideoReader(void)
 void VideoReader::open( std::string fileName )
 {
 
-	
+	std::cout << "VideoReader::open" << std::endl;
 
 	switch( selectedType )
 	{
@@ -111,6 +111,8 @@ void VideoReader::close( void )
 	videoReaderGPU.close();
 
 	wasOpened = false;
+
+	std::cout << "VideoReader::close" << std::endl;
 }
 
 double VideoReader::getNormalizedProgress( void )
@@ -159,6 +161,7 @@ bool VideoReader::isFinished( void )
 
 cv::gpu::GpuMat * VideoReader::getNextImage_GPU( void )
 {
+	//std::cout << "VideoReader::getNextImage_GPU:-> GPU Videoreader: " << videoReaderGPU.isOpened() << std::endl;
 	if( videoReaderGPU.isOpened() )
 	{
 		currentFrameNr++;
@@ -168,10 +171,13 @@ cv::gpu::GpuMat * VideoReader::getNextImage_GPU( void )
 	}
 	else
 	{
-		std::cout << "VideoCapture is not opened." << std::endl;
+		std::cout << "Can't get new GPUImage, since the VideoReader is not opened. Closing.." << std::endl;
 		//currentFrame = emptyMat;
+		if( wasOpened )
+		{
+			close();
+		}
 		
-		wasOpened = false;
 	}
 	return &currentGpuMat;
 }
