@@ -11,5 +11,6 @@ int main(int argc, char *argv[])
 
 	BachelorThesis w;
 	w.show();
+
 	return a.exec();
 }
