@@ -122,9 +122,6 @@
     <ClCompile Include="src\detect\BlobDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\misc\FrameHandler.cpp">
-      <Filter>Source Files\misc</Filter>
-    </ClCompile>
     <ClCompile Include="hardwareinfodialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -135,6 +132,27 @@
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="ProcessingPipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="imageprocessorwidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_imageprocessorwidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_imageprocessorwidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="OpticalFlowSF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpticalFlowLukaskanade.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="OpticalFlowFarneback.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="DualTVL1OpticalFlow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -193,6 +211,12 @@
     <CustomBuild Include="hardwareinfodialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="imageprocessorwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="imageprocessorwidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BachelorThesis.rc" />
@@ -216,13 +240,25 @@
     <ClInclude Include="src\detect\BlobDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\misc\FrameHandler.h">
-      <Filter>Header Files\misc</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_hardwareinfodialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="ProcessingPipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpticalFlowFarneback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_imageprocessorwidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpticalFlowLukaskanade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpticalFlowSF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DualTVL1OpticalFlow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
