@@ -89,9 +89,9 @@ void LukasKanadeOpticalFlow::apply( cv::gpu::GpuMat * _gpu_frame )
 	dflow_lukaskanade.dense( last_gpu_frame, *_gpu_frame, uGPU, vGPU );
 	_gpu_frame->copyTo( last_gpu_frame );
 	std::cout << "color type of gpuimage: " << _gpu_frame->type() << std::endl;
-	cv::gpu::cvtColor( *_gpu_frame, *_gpu_frame, CV_GRAY2BGR );
+	cv::gpu::cvtColor( *_gpu_frame, *_gpu_frame, CV_GRAY2BGRA );
 	std::cout << "color type of gpuimage: " << _gpu_frame->type() << std::endl;
-	drawMotionField_GPU( uGPU, vGPU, *_gpu_frame, 10, 10, 0.0, 40.0, 1.0, CV_RGB( 230, 230, 230 ) );
+	//drawMotionField_GPU( uGPU, vGPU, *_gpu_frame, 10, 10, 0.0, 40.0, 1.0, CV_RGB( 230, 230, 230 ) );
 }
 
 /** This function draws a vector field based on horizontal and vertical flow fields   */
