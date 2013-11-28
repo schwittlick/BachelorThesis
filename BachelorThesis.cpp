@@ -6,6 +6,8 @@
 #include "QTimer"
 #include "QFileDialog"
 #include "QLabel"
+#include "QRectF"
+#include "QPainter"
 
 BachelorThesis::BachelorThesis(QWidget *parent)
 	: QMainWindow(parent),
@@ -27,8 +29,9 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	
 	//image.setText( QString( "whut" ) );
 	//image.setParent( this );
-	image.setWindowTitle( QString( "VideoStream" ) );
-	image.show();
+	//imageLabel.setParent( this );
+	imageLabel.setWindowTitle( QString( "VideoStream" ) );
+	imageLabel.show();
 	
 	cv::gpu::setDevice( 0 );
 
@@ -46,6 +49,8 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	connect( ui.actionHardware_Info,		SIGNAL( triggered() ),				this,	SLOT( openHardwareInfoDialog() ) );
 
 	connect( lukasKanadeOpticalFlowDialog,	SIGNAL( itersValueChanged( int ) ), this,	SLOT( changeLKIters( int ) ) );
+
+	connect( &imageLabel, SIGNAL( setRoi( int, int, int, int ) ), this, SLOT( setRoi( int, int, int, int ) ) );
 	
 }
 
@@ -68,22 +73,45 @@ void BachelorThesis::loadImage()
 		{
 			imageToProcess = videoReader.getNextImage_GPU();
 		}
+		QRect roi = imageLabel.getRoi();
 
-		pipeline.addImage( imageToProcess );
+		// get roi from image
+		if( roi.isEmpty() || roi.width() >= imageToProcess->cols || roi.height() >= imageToProcess->rows )
+		{
+			roi = QRect( 0, 0, imageToProcess->cols, imageToProcess->rows );
+		} 
+		cv::gpu::GpuMat section( roi.width(), roi.height(), imageToProcess->type() );
+		QRect selectedRect = QRect( roi.x(), roi.y(), roi.width(), roi.height() );
+		cv::Rect cvSelectedRect = cv::Rect( selectedRect.x(), selectedRect.y(), selectedRect.width(), selectedRect.height() );
+		std::cout << "section: x=" << section.cols << " y=" << section.rows << std::endl;
+		std::cout << "cvSelectedRect: x=" << cvSelectedRect.width << " y:" << cvSelectedRect.height << std::endl;
+		//imageToProcess->copyTo( section( cvSelectedRect ) );
+		cv::gpu::GpuMat tempMat = *imageToProcess;
+		//*imageToProcess( cvSelectedRect).copyTo( section );
+		tempMat(cvSelectedRect).copyTo( section );
+		pipeline.addImage( &section );
 		pipeline.start();
 		finishedImage = pipeline.getFinishedImage();
 
+		cv::gpu::GpuMat tempMat2 = *imageToProcess;
+		finishedImage.copyTo( tempMat2( cv::Rect( roi.x(), roi.y(), roi.width(), roi.height() ) ) );
+		
+
 		//frameHandler.display( &finishedImage, 0 );
-		QPixmap imagePixmap = QPixmap::fromImage( this->mat2QImage( cv::Mat( finishedImage ) ) );
-		image.setPixmap( imagePixmap );
-		image.setMaximumHeight( imagePixmap.size().height() );
-		image.setMaximumWidth( imagePixmap.size().width() );
+		QPixmap imagePixmap = QPixmap::fromImage( this->mat2QImage( cv::Mat( tempMat2 ) ) );
+		//QPixmap map( QSize( 200, 200 ) );
+		//painter.set
+		
+		
+		imageLabel.setPixmap( imagePixmap );
+		imageLabel.setMaximumHeight( tempMat2.cols );
+		imageLabel.setMaximumWidth( tempMat2.rows );
 		//image.setSizeIncrement( imagePixmap.size().width(), imagePixmap.size().height() );
-		image.adjustSize();
+		imageLabel.adjustSize();
 		timer.stop();
 		timer.store();
-		//std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
-		//std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
+		std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
+		std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
 		QString elapsed;
 		elapsed.append( QString( "%1" ).arg( videoReader.getNormalizedProgress() ) );
 
@@ -94,7 +122,7 @@ void BachelorThesis::loadImage()
 	{
 		// if the file/stream is not opened then all windows should be closed
 		//frameHandler.closeAllWindows();
-		image.close();
+		imageLabel.close();
 		//videoReader.close();
 	}
 }
@@ -104,7 +132,7 @@ void BachelorThesis::openFile( void )
 	QString fileName = QFileDialog::getOpenFileName( this, tr( "Open File" ), "", tr( "MP4 (*.mp4);; AVI (*.avi)" ) );
 
 	//frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
-	image.show();
+	imageLabel.show();
 	videoReader.open( fileName.toStdString() );
 	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
 }
@@ -165,7 +193,7 @@ void BachelorThesis::changeLKMaxlevel( int _maxLevel )
 void BachelorThesis::openSampleFile( void )
 {
 	//frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
-	image.show();
+	imageLabel.show();
 	std::string fileName = "G:\\DB\\Dropbox\\BA\\code\\BachelorThesis\\BachelorThesis\\Fri_Oct_11_compilation.mp4";
 
 	videoReader.open( fileName );
@@ -191,4 +219,10 @@ QImage BachelorThesis::mat2QImage( cv::Mat const& src )
 	QImage dest2(dest);
 	dest2.detach(); // enforce deep copy
 	return dest2;
+}
+
+void BachelorThesis::setRoi( int x, int y, int w, int h )
+{
+	this->roi.setRoi( x, y, w, h );
+	std::cout << "I GOT A NEW ROI" << std::endl;
 }

@@ -15,6 +15,9 @@
 #include "lukaskanadeopticalflowdialog.h"
 #include "hardwareinfodialog.h"
 #include "imageprocessorwidget.h"
+#include "imagedisplaylabel.h"
+
+#include "ROI.h"
 
 #include "opencv2/ocl/ocl.hpp"
 #include "opencv2/core/opengl_interop.hpp"
@@ -36,7 +39,9 @@ private:
 	Ui::BachelorThesisClass ui;
 
 	ProcessingPipeline pipeline;
-	QLabel image;
+	//QLabel image;
+	ImageDisplayLabel imageLabel;
+	ROI roi;
 
 	VideoReader videoReader;
 	Timer timer;
@@ -67,6 +72,8 @@ public slots:
 	void changeLKIters( int _iters );
 	void changeLKMaxlevel( int _maxLevel );
 	void changeLKWinSize( int _winSize );
+
+	void setRoi( int x, int y, int w, int h );
 };
 
 #endif // BACHELORTHESIS_H
