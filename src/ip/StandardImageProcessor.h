@@ -11,16 +11,34 @@
 #include "opencv2/highgui/highgui.hpp"
 #include <opencv2/objdetect/objdetect.hpp>
 
-#include "src/detect/BlobDetector.h"
-
 class StandardImageProcessor
 {
 public:
 	StandardImageProcessor(void);
 	~StandardImageProcessor(void);
 
-	void makeBinary( cv::gpu::GpuMat * gpuImage );
-	BlobDetector det;
-	std::vector< cv::KeyPoint > points;
+	void binary( cv::gpu::GpuMat * image, int threshold );
+
+	void open( cv::gpu::GpuMat * image );
+	void open( cv::gpu::GpuMat * image, int iterations );
+	void close( cv::gpu::GpuMat * image );
+	void close( cv::gpu::GpuMat * image, int iterations );
+	void dilate( cv::gpu::GpuMat * image );
+	void dilate( cv::gpu::GpuMat * image, int iterations );
+	void erode( cv::gpu::GpuMat * image );
+	void erode( cv::gpu::GpuMat * image, int iterations );
+
+	void gradient( cv::gpu::GpuMat * image );
+	void gradient( cv::gpu::GpuMat * image, int iterations );
+	void topHat( cv::gpu::GpuMat * image );
+	void topHat( cv::gpu::GpuMat * image, int iterations );
+	void blackHat( cv::gpu::GpuMat * image );
+	void blackHat( cv::gpu::GpuMat * image, int iterations );	
+
+	void setKernelSize( int _kernelSize );
+
+private:
+	int kernelSize;
+	cv::Mat kernel;
 };
 
