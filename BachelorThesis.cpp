@@ -15,8 +15,10 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	playbackSpeed( 1 ),
 	doBackgroundSubtraction( false ),
 	doMeanShiftFiltering( false ),
-	blurAmount( 1 )
+	blurAmount( 1 ),
+	isMouseButtonDown( false )
 {
+
 	ui.setupUi(this);
 
 	timer = Timer();	
@@ -26,12 +28,11 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	imageProcessorWidget = new ImageProcessorWidget( this );
 	imageProcessorWidget->show();
 
-	
-	//image.setText( QString( "whut" ) );
-	//image.setParent( this );
-	//imageLabel.setParent( this );
-	imageLabel.setWindowTitle( QString( "VideoStream" ) );
-	imageLabel.show();
+	// passes all events for the videoLabel to this class and handles them via a eventfilter
+	ui.videoLabel->installEventFilter( this );
+	origin = QPoint( 0, 0 );
+	roiSelector = new QRubberBand(QRubberBand::Rectangle, ui.videoLabel);
+	roiSelector->setGeometry(QRect(QPoint( 0, 0 ), QPoint( 720, 576 ) ).normalized());
 	
 	cv::gpu::setDevice( 0 );
 
@@ -49,9 +50,6 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	connect( ui.actionHardware_Info,		SIGNAL( triggered() ),				this,	SLOT( openHardwareInfoDialog() ) );
 
 	connect( lukasKanadeOpticalFlowDialog,	SIGNAL( itersValueChanged( int ) ), this,	SLOT( changeLKIters( int ) ) );
-
-	connect( &imageLabel, SIGNAL( setRoi( int, int, int, int ) ), this, SLOT( setRoi( int, int, int, int ) ) );
-	
 }
 
 BachelorThesis::~BachelorThesis()
@@ -59,6 +57,7 @@ BachelorThesis::~BachelorThesis()
 	delete hardwareInfoDialog;
 	delete lukasKanadeOpticalFlowDialog;
 	delete imageProcessorWidget;
+	delete roiSelector;
 }
 
 void BachelorThesis::loadImage() 
@@ -69,13 +68,15 @@ void BachelorThesis::loadImage()
 		cv::gpu::GpuMat * imageToProcess;
 		cv::gpu::GpuMat finishedImage;
 
+		// loading new frames. the amount of skipped frames is indicated by playbackSpeed
 		for( int i = 0; i < playbackSpeed; i++ )
 		{
 			imageToProcess = videoReader.getNextImage_GPU();
 		}
-		QRect roi = imageLabel.getRoi();
 
-		// get roi from image
+		// get the selected area
+		QRect roi = roiSelector->geometry();
+
 		if( roi.isEmpty() || roi.width() >= imageToProcess->cols || roi.height() >= imageToProcess->rows )
 		{
 			roi = QRect( 0, 0, imageToProcess->cols, imageToProcess->rows );
@@ -83,11 +84,9 @@ void BachelorThesis::loadImage()
 		cv::gpu::GpuMat section( roi.width(), roi.height(), imageToProcess->type() );
 		QRect selectedRect = QRect( roi.x(), roi.y(), roi.width(), roi.height() );
 		cv::Rect cvSelectedRect = cv::Rect( selectedRect.x(), selectedRect.y(), selectedRect.width(), selectedRect.height() );
-		std::cout << "section: x=" << section.cols << " y=" << section.rows << std::endl;
-		std::cout << "cvSelectedRect: x=" << cvSelectedRect.width << " y:" << cvSelectedRect.height << std::endl;
-		//imageToProcess->copyTo( section( cvSelectedRect ) );
+
 		cv::gpu::GpuMat tempMat = *imageToProcess;
-		//*imageToProcess( cvSelectedRect).copyTo( section );
+
 		tempMat(cvSelectedRect).copyTo( section );
 		pipeline.addImage( &section );
 		pipeline.start();
@@ -96,22 +95,16 @@ void BachelorThesis::loadImage()
 		cv::gpu::GpuMat tempMat2 = *imageToProcess;
 		finishedImage.copyTo( tempMat2( cv::Rect( roi.x(), roi.y(), roi.width(), roi.height() ) ) );
 		
-
-		//frameHandler.display( &finishedImage, 0 );
 		QPixmap imagePixmap = QPixmap::fromImage( this->mat2QImage( cv::Mat( tempMat2 ) ) );
-		//QPixmap map( QSize( 200, 200 ) );
-		//painter.set
 		
-		
-		imageLabel.setPixmap( imagePixmap );
-		imageLabel.setMaximumHeight( tempMat2.cols );
-		imageLabel.setMaximumWidth( tempMat2.rows );
-		//image.setSizeIncrement( imagePixmap.size().width(), imagePixmap.size().height() );
-		imageLabel.adjustSize();
+		ui.videoLabel->setPixmap( imagePixmap );
+		ui.videoLabel->setMaximumHeight( tempMat2.cols );
+		ui.videoLabel->setMaximumWidth( tempMat2.rows );
+		ui.videoLabel->adjustSize();
 		timer.stop();
 		timer.store();
-		std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
-		std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
+		//std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
+		//std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
 		QString elapsed;
 		elapsed.append( QString( "%1" ).arg( videoReader.getNormalizedProgress() ) );
 
@@ -120,11 +113,8 @@ void BachelorThesis::loadImage()
 	}
 	else
 	{
-		// if the file/stream is not opened then all windows should be closed
-		//frameHandler.closeAllWindows();
-		imageLabel.close();
-		//videoReader.close();
-	}
+		// no new frame. do nothing
+ 	}
 }
 
 void BachelorThesis::openFile( void )
@@ -132,7 +122,7 @@ void BachelorThesis::openFile( void )
 	QString fileName = QFileDialog::getOpenFileName( this, tr( "Open File" ), "", tr( "MP4 (*.mp4);; AVI (*.avi)" ) );
 
 	//frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
-	imageLabel.show();
+	//imageLabel.show();
 	videoReader.open( fileName.toStdString() );
 	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
 }
@@ -193,7 +183,7 @@ void BachelorThesis::changeLKMaxlevel( int _maxLevel )
 void BachelorThesis::openSampleFile( void )
 {
 	//frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
-	imageLabel.show();
+	//imageLabel.show();
 	std::string fileName = "G:\\DB\\Dropbox\\BA\\code\\BachelorThesis\\BachelorThesis\\Fri_Oct_11_compilation.mp4";
 
 	videoReader.open( fileName );
@@ -221,8 +211,32 @@ QImage BachelorThesis::mat2QImage( cv::Mat const& src )
 	return dest2;
 }
 
-void BachelorThesis::setRoi( int x, int y, int w, int h )
+bool BachelorThesis::eventFilter( QObject *watched, QEvent *e )
 {
-	this->roi.setRoi( x, y, w, h );
-	std::cout << "I GOT A NEW ROI" << std::endl;
+	if( watched == ui.videoLabel )
+	{
+		QMouseEvent *me = static_cast < QMouseEvent* >( e );
+		switch( e->type() )
+		{
+
+		case QEvent::MouseButtonPress:
+			origin = me->pos();
+			roiSelector->setGeometry(QRect(origin, QSize()));
+			roiSelector->show();
+
+			isMouseButtonDown = true;
+			return true;
+		case QEvent::MouseMove:
+			if( isMouseButtonDown )
+			{
+				roiSelector->setGeometry(QRect(origin, me->pos()).normalized());
+			}
+			return true;
+		case QEvent::MouseButtonRelease:
+			roiSelector->hide();
+			isMouseButtonDown = false;
+			return true;
+		}
+	}
+	return QWidget::eventFilter(watched, e);
 }

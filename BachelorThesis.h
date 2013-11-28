@@ -2,6 +2,7 @@
 #define BACHELORTHESIS_H
 
 #include <QtWidgets/QMainWindow>
+#include "QMouseEvent"
 #include "ui_BachelorThesis.h"
 
 #include "VideoReader.h"
@@ -39,9 +40,6 @@ private:
 	Ui::BachelorThesisClass ui;
 
 	ProcessingPipeline pipeline;
-	//QLabel image;
-	ImageDisplayLabel imageLabel;
-	ROI roi;
 
 	VideoReader videoReader;
 	Timer timer;
@@ -55,6 +53,12 @@ private:
 
 	bool doBackgroundSubtraction;
 	bool doMeanShiftFiltering;
+
+	QRubberBand * roiSelector;
+	QPoint origin;
+	bool isMouseButtonDown;
+
+	bool eventFilter(QObject *watched, QEvent *e);
 
 public slots:
 	void loadImage( void );
@@ -72,8 +76,6 @@ public slots:
 	void changeLKIters( int _iters );
 	void changeLKMaxlevel( int _maxLevel );
 	void changeLKWinSize( int _winSize );
-
-	void setRoi( int x, int y, int w, int h );
 };
 
 #endif // BACHELORTHESIS_H
