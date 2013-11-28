@@ -16,9 +16,6 @@
 #include "lukaskanadeopticalflowdialog.h"
 #include "hardwareinfodialog.h"
 #include "imageprocessorwidget.h"
-#include "imagedisplaylabel.h"
-
-#include "ROI.h"
 
 #include "opencv2/ocl/ocl.hpp"
 #include "opencv2/core/opengl_interop.hpp"
@@ -35,7 +32,6 @@ public:
 
 private:
 	QImage mat2QImage( cv::Mat const& src );
-
 
 	Ui::BachelorThesisClass ui;
 
@@ -57,7 +53,9 @@ private:
 	QRubberBand * roiSelector;
 	QPoint origin;
 	bool isMouseButtonDown;
+	bool isVideoPaused;
 
+	void adjustRoiSize( const QRect & srcRoi, QRect & dstRoi, const QPoint & maxSize );
 	bool eventFilter(QObject *watched, QEvent *e);
 
 public slots:

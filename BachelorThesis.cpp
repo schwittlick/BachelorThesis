@@ -16,7 +16,8 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	doBackgroundSubtraction( false ),
 	doMeanShiftFiltering( false ),
 	blurAmount( 1 ),
-	isMouseButtonDown( false )
+	isMouseButtonDown( false ),
+	isVideoPaused( true )
 {
 
 	ui.setupUi(this);
@@ -33,7 +34,7 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	origin = QPoint( 0, 0 );
 	roiSelector = new QRubberBand(QRubberBand::Rectangle, ui.videoLabel);
 	roiSelector->setGeometry(QRect(QPoint( 0, 0 ), QPoint( 720, 576 ) ).normalized());
-	
+
 	cv::gpu::setDevice( 0 );
 
 	connect( ui.actionOpen_File,			SIGNAL( triggered() ),				this,	SLOT( openFile() ) );
@@ -45,7 +46,7 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	connect( ui.checkBox_2,					SIGNAL( toggled( bool ) ),			this,	SLOT( toggleMeanShiftFiltering( bool ) ) );
 	connect( ui.blurSlider,					SIGNAL( valueChanged( int ) ),		this,	SLOT( blurAmountChanged( int ) ) );
 	connect( ui.actionOpen_Sample,			SIGNAL( triggered() ),				this,	SLOT( openSampleFile() ) );
-	
+
 	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				this,	SLOT( openLukasKanadeWindow( ) ) );
 	connect( ui.actionHardware_Info,		SIGNAL( triggered() ),				this,	SLOT( openHardwareInfoDialog() ) );
 
@@ -62,49 +63,54 @@ BachelorThesis::~BachelorThesis()
 
 void BachelorThesis::loadImage() 
 {
-	if( videoReader.isOpen() )
+	if( videoReader.isOpen() && !isVideoPaused )
 	{
 		timer.start();
-		cv::gpu::GpuMat * imageToProcess;
-		cv::gpu::GpuMat finishedImage;
+		cv::gpu::GpuMat * originalImage;
+		cv::gpu::GpuMat processedImage;
 
 		// loading new frames. the amount of skipped frames is indicated by playbackSpeed
 		for( int i = 0; i < playbackSpeed; i++ )
 		{
-			imageToProcess = videoReader.getNextImage_GPU();
+			originalImage = videoReader.getNextImage_GPU();
 		}
 
 		// get the selected area
+		QPoint maxSize( originalImage->cols, originalImage->rows );
 		QRect roi = roiSelector->geometry();
 
-		if( roi.isEmpty() || roi.width() >= imageToProcess->cols || roi.height() >= imageToProcess->rows )
-		{
-			roi = QRect( 0, 0, imageToProcess->cols, imageToProcess->rows );
-		} 
-		cv::gpu::GpuMat section( roi.width(), roi.height(), imageToProcess->type() );
-		QRect selectedRect = QRect( roi.x(), roi.y(), roi.width(), roi.height() );
-		cv::Rect cvSelectedRect = cv::Rect( selectedRect.x(), selectedRect.y(), selectedRect.width(), selectedRect.height() );
+		// adjust the roisize according to the maximum dimensions
+		adjustRoiSize( roiSelector->geometry(), roi, maxSize );
 
-		cv::gpu::GpuMat tempMat = *imageToProcess;
-
+		// initializes a new section gpumat with the size of the roi and the imagetype of the incoming image
+		cv::gpu::GpuMat section( roi.width(), roi.height(), originalImage->type() );
+		// init a cv::Rect with the properties of the ROI
+		cv::Rect cvSelectedRect = cv::Rect( roi.x(), roi.y(), roi.width(), roi.height() );
+		// a new local copy of the current image
+		cv::gpu::GpuMat tempMat = *originalImage;
+		// select a part of this new image ( position and size is stored in the passed cv::Rect) and copy this to the new image
 		tempMat(cvSelectedRect).copyTo( section );
+		// add the cropped image to the processing pipeline
 		pipeline.addImage( &section );
+		// start the pipeline ( do the processing )
 		pipeline.start();
-		finishedImage = pipeline.getFinishedImage();
-
-		cv::gpu::GpuMat tempMat2 = *imageToProcess;
-		finishedImage.copyTo( tempMat2( cv::Rect( roi.x(), roi.y(), roi.width(), roi.height() ) ) );
-		
-		QPixmap imagePixmap = QPixmap::fromImage( this->mat2QImage( cv::Mat( tempMat2 ) ) );
-		
+		// get the processed image
+		processedImage = pipeline.getFinishedImage();
+		// make a local copy of the entire unprocessed original image
+		cv::gpu::GpuMat finalImage = *originalImage;
+		// copy the processed image into the original image, exactly at the location of the ROI
+		processedImage.copyTo( finalImage( cvSelectedRect ) );
+		// convert the cv::gpu::GpuMat into a QPixmap
+		QPixmap imagePixmap = QPixmap::fromImage( this->mat2QImage( cv::Mat( finalImage ) ) );
+		// display the QPixmap onto the label
 		ui.videoLabel->setPixmap( imagePixmap );
-		ui.videoLabel->setMaximumHeight( tempMat2.cols );
-		ui.videoLabel->setMaximumWidth( tempMat2.rows );
+		ui.videoLabel->setMaximumHeight( finalImage.cols );
+		ui.videoLabel->setMaximumWidth( finalImage.rows );
 		ui.videoLabel->adjustSize();
 		timer.stop();
 		timer.store();
 		//std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
-		//std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
+		std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
 		QString elapsed;
 		elapsed.append( QString( "%1" ).arg( videoReader.getNormalizedProgress() ) );
 
@@ -114,15 +120,12 @@ void BachelorThesis::loadImage()
 	else
 	{
 		// no new frame. do nothing
- 	}
+	}
 }
 
 void BachelorThesis::openFile( void )
 {
 	QString fileName = QFileDialog::getOpenFileName( this, tr( "Open File" ), "", tr( "MP4 (*.mp4);; AVI (*.avi)" ) );
-
-	//frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
-	//imageLabel.show();
 	videoReader.open( fileName.toStdString() );
 	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
 }
@@ -138,7 +141,16 @@ void BachelorThesis::startVideo( void )
 	connect( timer, SIGNAL( timeout() ), this, SLOT(loadImage() ) );
 	timer->start( 30 );
 
-	ui.pushButton->setText( QString( "Pause" ) );
+	isVideoPaused = !isVideoPaused;
+	if( isVideoPaused )
+	{
+		ui.pushButton->setText( QString( "Play" ) );
+	}
+	else
+	{
+		ui.pushButton->setText( QString( "Pause" ) );
+	}
+
 }
 
 void BachelorThesis::jumpToFrame( int _frameNr )
@@ -239,4 +251,30 @@ bool BachelorThesis::eventFilter( QObject *watched, QEvent *e )
 		}
 	}
 	return QWidget::eventFilter(watched, e);
+}
+
+void BachelorThesis::adjustRoiSize( const QRect & srcRoi, QRect & dstRoi, const QPoint & maxSize )
+{
+	dstRoi = srcRoi;
+	if( srcRoi.x() < 0 )
+	{
+		dstRoi.setLeft( 0 );
+	}
+	if( srcRoi.y() < 0 )
+	{
+		dstRoi.setTop( 0 );
+	}
+	if( srcRoi.right() >= maxSize.x() )
+	{
+		dstRoi.setRight( maxSize.x() - 2 );
+	}
+
+	if( srcRoi.bottom() >= maxSize.y() )
+	{
+		dstRoi.setBottom( maxSize.y() - 2 );
+	}
+	if( srcRoi.isEmpty() )
+	{
+		dstRoi = QRect( 0, 0, maxSize.x(), maxSize.y() );
+	}
 }
