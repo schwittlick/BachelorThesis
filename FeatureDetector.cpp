@@ -131,3 +131,10 @@ void FeatureDetector::processSurfFeatureDetection_CPU( cv::Mat * _image )
 	img_matches.copyTo( *_image );
 	
 }
+
+void FeatureDetector::processBlobDetection( cv::gpu::GpuMat * _image )
+{
+	cv::Mat im;
+	_image->download( im );
+	points = det.detect( &im );
+}

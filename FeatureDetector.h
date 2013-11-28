@@ -10,6 +10,9 @@
 #include "opencv2/gpu/gpu.hpp"
 #include "opencv2/nonfree/features2d.hpp"
 
+#include "src/detect/BlobDetector.h"
+
+
 class FeatureDetector
 {
 public:
@@ -27,6 +30,7 @@ public:
 	void processSIFTFeatureDetection_GPU( cv::Mat * _image );
 	void processHOGDetection_GPU( cv::gpu::GpuMat * _image );
 	void processHOGDetection_CPU( cv::Mat * _image );
+	void processBlobDetection( cv::gpu::GpuMat * _image );
 
 	void drawPoints( cv::Mat * imageToDrawOn );
 
@@ -34,6 +38,9 @@ private:
 	std::vector< cv::Point2f > featurePoints;
 	cv::Mat previousMat;
 	cv::gpu::GpuMat previousGpuMat;
+
+	BlobDetector det;
+	std::vector< cv::KeyPoint > points;
 
 	void processPreCornerDetect( cv::Mat * _image );
 };
