@@ -24,6 +24,8 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 
 	timer = Timer();	
 
+	pipeline = new ProcessingPipeline( );
+
 	lukasKanadeOpticalFlowDialog = new LukasKanadeOpticalFLowDialog( this );
 	hardwareInfoDialog = new HardwareInfoDialog( this );
 	imageProcessorWidget = new ImageProcessorWidget( this );
@@ -37,20 +39,22 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 
 	cv::gpu::setDevice( 0 );
 
-	connect( ui.actionOpen_File,			SIGNAL( triggered() ),				this,	SLOT( openFile() ) );
-	connect( ui.verticalSlider,				SIGNAL( valueChanged( int ) ),		this,	SLOT( changePlaybackSpeed( int ) ) );
-	connect( ui.pushButton,					SIGNAL( clicked() ),				this,	SLOT( startVideo() ) );
+	connect( ui.actionOpen_File,			SIGNAL( triggered() ),				this,		SLOT( openFile() ) );
+	connect( ui.verticalSlider,				SIGNAL( valueChanged( int ) ),		this,		SLOT( changePlaybackSpeed( int ) ) );
+	connect( ui.pushButton,					SIGNAL( clicked() ),				this,		SLOT( startVideo() ) );
 	// TODO: fix this, it should only call this slot if the slider is moved by hand
 	//connect( ui.progressBarSlider,			SIGNAL( valueChanged( int) ),		this,	SLOT( jumpToFrame( int ) ) );
-	connect( ui.checkBox,					SIGNAL( toggled( bool ) ),			this,	SLOT( toggleBackgroundSubtraction( bool ) ) );
-	connect( ui.checkBox_2,					SIGNAL( toggled( bool ) ),			this,	SLOT( toggleMeanShiftFiltering( bool ) ) );
-	connect( ui.blurSlider,					SIGNAL( valueChanged( int ) ),		this,	SLOT( blurAmountChanged( int ) ) );
-	connect( ui.actionOpen_Sample,			SIGNAL( triggered() ),				this,	SLOT( openSampleFile() ) );
+	connect( ui.checkBox,					SIGNAL( toggled( bool ) ),			this,		SLOT( toggleBackgroundSubtraction( bool ) ) );
+	connect( ui.checkBox_2,					SIGNAL( toggled( bool ) ),			this,		SLOT( toggleMeanShiftFiltering( bool ) ) );
+	connect( ui.blurSlider,					SIGNAL( valueChanged( int ) ),		this,		SLOT( blurAmountChanged( int ) ) );
+	connect( ui.actionOpen_Sample,			SIGNAL( triggered() ),				this,		SLOT( openSampleFile() ) );
 
-	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				this,	SLOT( openLukasKanadeWindow( ) ) );
-	connect( ui.actionHardware_Info,		SIGNAL( triggered() ),				this,	SLOT( openHardwareInfoDialog() ) );
+	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				this,		SLOT( openLukasKanadeWindow( ) ) );
+	connect( ui.actionHardware_Info,		SIGNAL( triggered() ),				this,		SLOT( openHardwareInfoDialog() ) );
 
-	connect( lukasKanadeOpticalFlowDialog,	SIGNAL( itersValueChanged( int ) ), this,	SLOT( changeLKIters( int ) ) );
+	connect( lukasKanadeOpticalFlowDialog,	SIGNAL( itersValueChanged( int ) ), this,		SLOT( changeLKIters( int ) ) );
+
+	connect( imageProcessorWidget,			SIGNAL( checkBoxClicked( int ) ),	(QObject*)pipeline,	SLOT( checkBoxClicked( int ) ) );
 }
 
 BachelorThesis::~BachelorThesis()
@@ -59,6 +63,7 @@ BachelorThesis::~BachelorThesis()
 	delete lukasKanadeOpticalFlowDialog;
 	delete imageProcessorWidget;
 	delete roiSelector;
+	delete pipeline;
 }
 
 void BachelorThesis::loadImage() 
@@ -91,11 +96,11 @@ void BachelorThesis::loadImage()
 		// select a part of this new image ( position and size is stored in the passed cv::Rect) and copy this to the new image
 		tempMat(cvSelectedRect).copyTo( section );
 		// add the cropped image to the processing pipeline
-		pipeline.addImage( &section );
+		pipeline->addImage( &section );
 		// start the pipeline ( do the processing )
-		pipeline.start();
+		pipeline->start();
 		// get the processed image
-		processedImage = pipeline.getFinishedImage();
+		processedImage = pipeline->getFinishedImage();
 		// make a local copy of the entire unprocessed original image
 		cv::gpu::GpuMat finalImage = *originalImage;
 		// copy the processed image into the original image, exactly at the location of the ROI

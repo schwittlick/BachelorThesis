@@ -35,7 +35,7 @@ private:
 
 	Ui::BachelorThesisClass ui;
 
-	ProcessingPipeline pipeline;
+	ProcessingPipeline * pipeline;
 
 	VideoReader videoReader;
 	Timer timer;
