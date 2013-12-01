@@ -5,9 +5,12 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalLibraryDirectories>C:\opencv-2.6\opencv.git\tags\2.4.7\build\install\x64\vc10\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\opencv-2.4\build\install\x64\vc10\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>opencv_core247.lib;opencv_imgproc247.lib;opencv_highgui247.lib;opencv_ml247.lib;opencv_gpu247.lib;opencv_video247.lib;opencv_features2d247.lib;opencv_calib3d247.lib;opencv_objdetect247.lib;opencv_contrib247.lib;opencv_legacy247.lib;opencv_flann247.lib;opencv_nonfree247.lib;opencv_photo247.lib;opencv_stitching247.lib;opencv_superres247.lib;opencv_videostab247.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\opencv-2.4\build\install\include</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

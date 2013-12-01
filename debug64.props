@@ -5,11 +5,11 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories> $(OPENCV_DIR)\..\..\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\opencv-2.4\build\install\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opencv_core247d.lib;opencv_imgproc247d.lib;opencv_highgui247d.lib;opencv_ml247d.lib;opencv_gpu247d.lib;opencv_video247d.lib;opencv_features2d247d.lib;opencv_calib3d247d.lib;opencv_objdetect247d.lib;opencv_contrib247d.lib;opencv_legacy247d.lib;opencv_flann247d.lib;opencv_nonfree247d.lib;opencv_photo247d.lib;opencv_stitching247d.lib;opencv_superres247d.lib;opencv_videostab247d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OPENCV_DIR)\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_core247d.lib;opencv_imgproc247d.lib;opencv_highgui247d.lib;opencv_ml247d.lib;opencv_gpu247d.lib;opencv_video247d.lib;opencv_features2d247d.lib;opencv_calib3d247d.lib;opencv_objdetect247d.lib;opencv_contrib247d.lib;opencv_legacy247d.lib;opencv_flann247d.lib;opencv_nonfree247d.lib;opencv_photo247d.lib;opencv_stitching247d.lib;opencv_superres247d.lib;opencv_videostab247d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\opencv-2.4\build\install\x64\vc10\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
