@@ -2,13 +2,15 @@
 #include "flow_functions.h"
 
 
-LukasKanadeOpticalFlow::LukasKanadeOpticalFlow(void) :
+LukasKanadeOpticalFlow::LukasKanadeOpticalFlow( QWidget *parent ) :
+	QWidget( parent ),
 	isInitialized( false ),
 	winSize( 11 ),
 	maxLevel( 4 ),
 	iters( 3 ),
 	resize_img( true ),
-	rfactor( 2.0 )
+	rfactor( 2.0 ),
+	isShowView( false )
 	//downloadUploadTimer(),
 	//drawFlowTimer()
 {
@@ -18,6 +20,12 @@ LukasKanadeOpticalFlow::LukasKanadeOpticalFlow(void) :
 	dflow_lukaskanade.maxLevel = maxLevel;
 	dflow_lukaskanade.winSize = cv::Size(winSize,winSize);
 	dflow_lukaskanade.iters = iters;
+
+	lukasKanadeOpticalFlowDialog = new LukasKanadeOpticalFLowDialog( ( QWidget * ) this );
+	//lukasKanadeOpticalFlowDialog->show();
+
+	connect( lukasKanadeOpticalFlowDialog, SIGNAL( maxLevelValueChanged( int ) ), this, SLOT( maxLevelChanged( int ) ) );
+	connect( lukasKanadeOpticalFlowDialog, SIGNAL( itersValueChanged( int ) ), this, SLOT( itersChanged( int ) ) );
 
 	cv::gpu::setDevice( 0 );
 
@@ -78,23 +86,96 @@ cv::Mat LukasKanadeOpticalFlow::apply( cv::Mat * _frame1_rgb_, bool motionOrColo
 
 void LukasKanadeOpticalFlow::apply( cv::gpu::GpuMat * _gpu_frame )
 {
-	if( isInitialized == false )
+	// create new local copy
+	cv::gpu::GpuMat newMat;
+	// convert to 8bit greyscale
+	cv::gpu::cvtColor( *_gpu_frame, newMat, CV_BGRA2GRAY );
+
+	if( newMat.size() != last_gpu_frame.size() )
 	{
-		//last_gpu_frame = cv::gpu::GpuMat( cv::Size( 720, 576 ), CV_8UC4 );
-		_gpu_frame->copyTo( last_gpu_frame );
-		cv::gpu::cvtColor( last_gpu_frame, last_gpu_frame, CV_BGRA2GRAY );
-		isInitialized = true;
+		// if the roi was resized, resie the last_gpu_frame, too
+		last_gpu_frame = cv::gpu::GpuMat( newMat.rows, newMat.cols, CV_8UC1 );
 	}
-	cv::gpu::cvtColor( *_gpu_frame, *_gpu_frame, CV_BGRA2GRAY );
-	dflow_lukaskanade.dense( last_gpu_frame, *_gpu_frame, uGPU, vGPU );
-	_gpu_frame->copyTo( last_gpu_frame );
-	std::cout << "color type of gpuimage: " << _gpu_frame->type() << std::endl;
-	cv::gpu::cvtColor( *_gpu_frame, *_gpu_frame, CV_GRAY2BGRA );
-	std::cout << "color type of gpuimage: " << _gpu_frame->type() << std::endl;
-	//drawMotionField_GPU( uGPU, vGPU, *_gpu_frame, 10, 10, 0.0, 40.0, 1.0, CV_RGB( 230, 230, 230 ) );
+	
+	if( last_gpu_frame.type() == newMat.type() ) 
+	{
+		// do the flow calculation
+		dflow_lukaskanade.dense( last_gpu_frame, newMat, uGPU, vGPU );
+	}
+	// copy the current frame to the last frame, necessary for computing the next flow
+	newMat.copyTo( last_gpu_frame );
+
+	cv::Mat uMat( uGPU );
+	cv::Mat vMat( vGPU ); 
+	std::cout << "neMat type:" << newMat.type() << std::endl;
+	cv::gpu::cvtColor( newMat, newMat, CV_GRAY2BGR );
+
+	cv::Mat drawMat( newMat.rows, newMat.cols, newMat.type() );
+
+	
+	//drawMotionField_GPU( uGPU, vGPU, newMat, 10, 10, 0.0, 40.0, 1.0, CV_RGB( 230, 230, 230 ) );
+	drawColorField( uMat, vMat, drawMat );
+	//drawMotionField( uMat, vMat, drawMat, 10, 10, 20, 100, 1.0, cv::Scalar( 255, 0, 0 ) );
+
+	cv::cvtColor( drawMat, drawMat, CV_BGR2RGBA );
+
+	_gpu_frame->upload( drawMat );
+	//newMat.copyTo( *_gpu_frame );
 }
 
-/** This function draws a vector field based on horizontal and vertical flow fields   */
+void LukasKanadeOpticalFlow::drawMotionField_GPU(cv::gpu::GpuMat &imgU, cv::gpu::GpuMat &imgV, cv::gpu::GpuMat &imgMotion,
+					 int xSpace, int ySpace, float minCutoff, float maxCutoff, float multiplier, CvScalar color)
+{
+	cv::Mat uMat( imgU );
+	cv::Mat vMat( imgV );
+	cv::Mat drawMat(cv::Size( imgU.size().width, imgU.size().height), CV_8UC3 );
+	int x = 0, y = 0;
+	float *ptri;
+	float deltaX = 0.0, deltaY = 0.0, angle = 0.0, hyp = 0.0;
+	cv::Point p0, p1;
+
+	for( y = ySpace; y < uMat.rows; y += ySpace )
+	{
+		for(x = xSpace; x < uMat.cols; x += xSpace )
+		{
+			p0.x = x;
+			p0.y = y;
+
+			ptri = uMat.ptr<float>(y);
+			deltaX = ptri[x];
+
+			ptri = vMat.ptr<float>(y);
+			deltaY = ptri[x];
+
+			angle = atan2(deltaY, deltaX);
+			hyp = sqrt(deltaX*deltaX + deltaY*deltaY);
+
+			if( hyp > minCutoff && hyp < maxCutoff )
+			{
+				p1.x = p0.x + cvRound(multiplier*hyp*cos(angle));
+				p1.y = p0.y + cvRound(multiplier*hyp*sin(angle));
+
+				cv::line(drawMat,p0,p1,color,1,CV_AA,0);
+
+				/*
+				p0.x = p1.x + cvRound(2*cos(angle-M_PI + M_PI/4));
+				p0.y = p1.y + cvRound(2*sin(angle-M_PI + M_PI/4));
+				cv::line( imgMotion, p0, p1, color,1, CV_AA, 0);
+
+				p0.x = p1.x + cvRound(2*cos(angle-M_PI - M_PI/4));
+				p0.y = p1.y + cvRound(2*sin(angle-M_PI - M_PI/4));
+				cv::line( imgMotion, p0, p1, color,1, CV_AA, 0);
+				*/
+			}
+		}
+	}
+
+	imgMotion.upload( drawMat );
+}
+
+
+/*
+/** This function draws a vector field based on horizontal and vertical flow fields   
 void LukasKanadeOpticalFlow::drawMotionField_GPU(cv::gpu::GpuMat &imgU, cv::gpu::GpuMat &imgV, cv::gpu::GpuMat &imgMotion,
 					 int xSpace, int ySpace, float minCutoff, float maxCutoff, float multiplier, CvScalar color)
 {
@@ -145,32 +226,28 @@ void LukasKanadeOpticalFlow::drawMotionField_GPU(cv::gpu::GpuMat &imgU, cv::gpu:
 				p0.x = p1.x + cvRound(2*cos(angle-M_PI - M_PI/4));
 				p0.y = p1.y + cvRound(2*sin(angle-M_PI - M_PI/4));
 				cv::line( imgMotion, p0, p1, color,1, CV_AA, 0);
-				*/
+				
 			}
 		}
 	}
-	std::cout << "Done iterating" << std::endl;
-	std::cout << "drawmat type : " << drawMat.type() << std::endl;
-	std::cout << "imgmotion type: " << imgMotion.type() << std::endl;
 	imgMotion.upload( drawMat );
 }
+*/
 
 void LukasKanadeOpticalFlow::setIters( int _iters )
 {
+	dflow_lukaskanade.releaseMemory();
 	this->iters = _iters;
 	this->dflow_lukaskanade.iters = this->iters;
-}
-
-void LukasKanadeOpticalFlow::setWinSize( int _winSize )
-{
-	this->winSize = _winSize;
-	this->dflow_lukaskanade.winSize = cv::Size( this->winSize, this->winSize );
+	this->dflow_lukaskanade.maxLevel = this->maxLevel;
 }
 
 void LukasKanadeOpticalFlow::setMaxLevel( int _maxLevel )
 {
+	dflow_lukaskanade.releaseMemory();
 	this->maxLevel = _maxLevel;
 	this->dflow_lukaskanade.maxLevel = this->maxLevel;
+	this->dflow_lukaskanade.iters = this->iters;
 }
 
 void LukasKanadeOpticalFlow::resizeAndSetupRescources( cv::Mat * mat )
@@ -286,4 +363,40 @@ void LukasKanadeOpticalFlow::resizeAndSetupRescources_GPU( cv::gpu::GpuMat * gpu
 
 	// Convert the image to grey and float
 	cvtColor(frameToCompute,currentFrameCPU,CV_BGR2GRAY);
+}
+
+void LukasKanadeOpticalFlow::maxLevelChanged( int _newMaxLevel )
+{
+	std::cout << "LukasKanadeOpticalFlow::maxLevelChanged to :" << _newMaxLevel << std::endl;
+	this->setMaxLevel( _newMaxLevel );
+}
+
+void LukasKanadeOpticalFlow::itersChanged( int _newIters )
+{
+	std::cout << "LukasKanadeOpticalFlow::itersChanged to:" << _newIters << std::endl;
+	this->setIters( _newIters );
+}
+
+void LukasKanadeOpticalFlow::openConfig( void )
+{
+	this->lukasKanadeOpticalFlowDialog->show();
+	this->lukasKanadeOpticalFlowDialog->setFocus();
+}
+
+void LukasKanadeOpticalFlow::closeConfig( void )
+{
+	this->lukasKanadeOpticalFlowDialog->close();
+}
+
+void LukasKanadeOpticalFlow::toggleViewDisplay()
+{
+	isShowView = !isShowView;
+	if( isShowView )
+	{
+		lukasKanadeOpticalFlowDialog->show();
+	}
+	else
+	{
+		lukasKanadeOpticalFlowDialog->close();
+	}
 }

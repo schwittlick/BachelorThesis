@@ -25,7 +25,7 @@ class BachelorThesis : public QMainWindow
 	Q_OBJECT
 
 public:
-	BachelorThesis(QWidget *parent = 0);
+	BachelorThesis( QWidget *parent = 0 );
 	~BachelorThesis();
 
 	static void closeFrameWindow( void );
@@ -40,7 +40,6 @@ private:
 	VideoReader videoReader;
 	Timer timer;
 
-	LukasKanadeOpticalFLowDialog * lukasKanadeOpticalFlowDialog;
 	HardwareInfoDialog * hardwareInfoDialog;
 	ImageProcessorWidget * imageProcessorWidget;
 
@@ -68,7 +67,6 @@ public slots:
 	void toggleBackgroundSubtraction( bool _doBackgroundSubtraction );
 	void toggleMeanShiftFiltering( bool _doMeanShiftFiltering );
 	void blurAmountChanged( int _blurAmount );
-	void openLukasKanadeWindow( void );
 	void openHardwareInfoDialog( void );
 
 	void changeLKIters( int _iters );

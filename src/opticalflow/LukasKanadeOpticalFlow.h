@@ -16,32 +16,50 @@
 
 #include "src/misc/Timer.h"
 
+#include "src/opticalflow/flow_functions.h"
+#include "lukaskanadeopticalflowdialog.h"
+
+#include "QObject"
+#include "QWidget"
+
 #define NMAX_CHARACTERS 500
 #define SAVE_RESULTS 0
 
-class LukasKanadeOpticalFlow
+class LukasKanadeOpticalFlow : public QWidget
 {
+	Q_OBJECT
 public:
-	LukasKanadeOpticalFlow(void);
+	LukasKanadeOpticalFlow( QWidget *parent = 0 );
 	~LukasKanadeOpticalFlow(void);
 
 	cv::Mat apply( cv::Mat * _frame1_rgb_, bool motionOrColorFieldIndicator );
 	void apply( cv::gpu::GpuMat *_gpu_frame );
 
 	void setMaxLevel( int _maxLevel );
-	void setWinSize( int _winSize );
 	void setIters( int _iters );
 
 	int getAverageDownUploadTime( void );
 	int getAverageDrawMotionFieldTime( void );
 
+	void toggleViewDisplay();
+	
+
+public slots:
+	void maxLevelChanged( int _newMaxLevel );
+	void itersChanged( int _newIters );
+	void openConfig( void );
+	void closeConfig( void );
+
 private:
+	bool isShowView;
 	// Some global variables for the optical flow
 	int winSize;// = 11;
 	int maxLevel;// = 4;
 	int iters;// = 3; // the lower this is the more it reacts to tiny movements
 	bool resize_img;// = true;
 	float rfactor;// = 2.0;
+
+	LukasKanadeOpticalFLowDialog * lukasKanadeOpticalFlowDialog;
 
 	cv::gpu::GpuMat last_gpu_frame;
 
@@ -66,7 +84,7 @@ private:
 	void resizeAndConvertToGray( void );
 	void drawMotionField_GPU(cv::gpu::GpuMat &imgU, cv::gpu::GpuMat &imgV, cv::gpu::GpuMat &imgMotion,
 		int xSpace, int ySpace, float minCutoff, float maxCutoff, float multiplier, CvScalar color);
-
+	
 
 };
 

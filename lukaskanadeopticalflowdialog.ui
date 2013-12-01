@@ -7,156 +7,74 @@
     <x>0</x>
     <y>0</y>
     <width>404</width>
-    <height>445</height>
+    <height>144</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>LukasKanadeOpticalFLowDialog</string>
   </property>
-  <widget class="QSlider" name="itersSlider">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>30</y>
-     <width>261</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="minimum">
-    <number>1</number>
-   </property>
-   <property name="maximum">
-    <number>20</number>
-   </property>
-   <property name="value">
-    <number>3</number>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QSlider" name="winSizeSlider">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>70</y>
-     <width>261</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="minimum">
-    <number>1</number>
-   </property>
-   <property name="maximum">
-    <number>30</number>
-   </property>
-   <property name="value">
-    <number>11</number>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QSlider" name="maxLevelSlider">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>110</y>
-     <width>261</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="minimum">
-    <number>1</number>
-   </property>
-   <property name="maximum">
-    <number>20</number>
-   </property>
-   <property name="value">
-    <number>4</number>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QLabel" name="itersLabel">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>46</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>iters</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="winSizeLabel">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>70</y>
-     <width>46</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>winSize</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="maxLevelLabel">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>110</y>
-     <width>46</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>maxLevel</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="itersValueLabel">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>30</y>
-     <width>46</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>3</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="winSizeValueLabel">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>70</y>
-     <width>46</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>11</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="maxLevelValueLabel">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>110</y>
-     <width>46</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>4</string>
-   </property>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="itersValueLabel">
+     <property name="text">
+      <string>3</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="itersLabel">
+     <property name="text">
+      <string>iters</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QSlider" name="itersSlider">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>20</number>
+     </property>
+     <property name="value">
+      <number>3</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="maxLevelValueLabel">
+     <property name="text">
+      <string>4</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="maxLevelLabel">
+     <property name="text">
+      <string>maxLevel</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QSlider" name="maxLevelSlider">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>20</number>
+     </property>
+     <property name="value">
+      <number>4</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -190,22 +108,6 @@
     <hint type="destinationlabel">
      <x>372</x>
      <y>116</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>winSizeSlider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>winSizeValueLabel</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>210</x>
-     <y>80</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>372</x>
-     <y>76</y>
     </hint>
    </hints>
   </connection>

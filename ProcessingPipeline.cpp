@@ -1,9 +1,11 @@
 #include "ProcessingPipeline.h"
 
-ProcessingPipeline::ProcessingPipeline() : 
-	minSurfaceArea( 2000 )
-{
+ProcessingPipeline::ProcessingPipeline( QWidget *parent ) : 
+	QWidget( parent ),
+	minSurfaceArea( 2000 ),
+	flowKanadeGPU( parent )
 
+{
 	doImageProcessingTask.push_back( false );
 	doImageProcessingTask.push_back( false );
 	doImageProcessingTask.push_back( false );
@@ -12,6 +14,11 @@ ProcessingPipeline::ProcessingPipeline() :
 	doImageProcessingTask.push_back( false );
 	doImageProcessingTask.push_back( false );
 	std::cout << "doImageProcessingTask.size=" << doImageProcessingTask.size() << std::endl;
+
+	//connect( this, SIGNAL( openLukasKanadeConfig() ), ( QWidget * )  flowKanadeGPU , SLOT( openConfig() ) );
+	//connect( this, SIGNAL( closeLukasKanadeConfig() ), ( QWidget * )  flowKanadeGPU , SLOT( closeConfig() ) );
+	connect( this, SIGNAL( toggleDialogDisplay() ), this, SLOT( toggleLukasKanadeDialogDisplay() ) );
+
 }
 
 ProcessingPipeline::~ProcessingPipeline(void)
@@ -57,19 +64,23 @@ void ProcessingPipeline::start( void )
 			improc.gradient( &currentImage );
 		}
 	}
-	//bgs.applyBGS( &currentImage, BackgroundSubtractor::Type::MOG2 );
-	//this->currentImage.download( im );
-
-	//improc.makeBinary( &this->currentImage );
-
-	//fea.processGoodFeaturesToTrack_CPU( &im );
-	//cv::Mat im;
-	//currentImage.download( im );
-	//flowFarneback.calc( &im );
-	//currentImage.upload( im );
+	
+	bool doFarneback = false;
+	if( doFarneback )
+	{
+		cv::Mat im;
+		currentImage.download( im );
+		flowFarneback.calc( &im );
+		currentImage.upload( im );
+	}
+	
+	bool doKanade = true;
+	if( doKanade )
+	{
+		flowKanadeGPU.apply( &currentImage );
+	}
 	//flowKanade.calc( &im );
 
-	flowKanadeGPU.apply( &currentImage );
 
 	//cv::Mat flow;
 	//flowKanadeGPU.apply( &currentImage );
@@ -78,7 +89,6 @@ void ProcessingPipeline::start( void )
 	//std::cout << "startin." << std::endl;
 	//flowSF.calc( &im );
 	//cv::Mat flow;
-	cv::gpu::GpuMat flowGpu;
 	
 	//flow = flowTvl1.calc( &im );
 	//flowGpu = flowTvl1.calcGPU( &currentImage );
@@ -124,4 +134,9 @@ bool ProcessingPipeline::getTaskTodo( int taskId )
 void ProcessingPipeline::checkBoxClicked( int id )
 {
 	setTaskTodo( id, !getTaskTodo( id ) );
+}
+
+void ProcessingPipeline::toggleLukasKanadeDialogDisplay( void )
+{
+	flowKanadeGPU.toggleViewDisplay();
 }

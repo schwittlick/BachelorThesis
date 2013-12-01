@@ -18,13 +18,14 @@
 
 #include "src/opticalflow/LukasKanadeOpticalFlow.h"
 
+#include "QWidget"
+#include "QObject"
 
-
-class ProcessingPipeline : QObject
+class ProcessingPipeline : public QWidget
 {
 	Q_OBJECT
 public:
-	ProcessingPipeline( void );
+	ProcessingPipeline( QWidget *parent = 0 );
 	~ProcessingPipeline(void);
 
 	void addImage( cv::gpu::GpuMat * imageToBeProcessed );
@@ -36,6 +37,9 @@ public:
 
 public slots:
 	void checkBoxClicked( int id );
+	void toggleLukasKanadeDialogDisplay( void );
+signals:
+	void toggleDialogDisplay( void );
 
 private:
 	cv::gpu::GpuMat currentImage;

@@ -14,6 +14,7 @@ public:
 
 signals:
 	void itersValueChanged( int _iters );
+	void maxLevelValueChanged( int _maxLevel );
 
 private:
 	Ui::LukasKanadeOpticalFLowDialog ui;

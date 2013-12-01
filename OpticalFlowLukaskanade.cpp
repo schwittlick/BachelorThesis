@@ -17,6 +17,14 @@ OpticalFlowLukaskanade::~OpticalFlowLukaskanade(void)
 
 void OpticalFlowLukaskanade::calc( cv::Mat * image )
 {
+
+	if( image->size() != previousImage.size() )
+	{
+		std::cout << "New Image size: x=" << image->cols << " y=" << image->rows << std::endl;
+		std::cout << "Previsous size: x= " << previousImage.cols << " y=" << previousImage.rows << std::endl;
+		previousImage = cv::Mat::zeros( image->rows, image->cols, CV_8UC4 );
+	}
+
 	computeGoodFeaturesToTrack( image );
 	
 
