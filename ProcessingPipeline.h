@@ -18,11 +18,13 @@
 
 #include "src/opticalflow/LukasKanadeOpticalFlow.h"
 
+
+
 class ProcessingPipeline : QObject
 {
 	Q_OBJECT
 public:
-	ProcessingPipeline( );
+	ProcessingPipeline( void );
 	~ProcessingPipeline(void);
 
 	void addImage( cv::gpu::GpuMat * imageToBeProcessed );
@@ -46,6 +48,7 @@ private:
 	DualTVL1OpticalFlow flowTvl1;
 
 	LukasKanadeOpticalFlow flowKanadeGPU;
+	
 
 	int minSurfaceArea;
 

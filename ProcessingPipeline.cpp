@@ -3,15 +3,7 @@
 ProcessingPipeline::ProcessingPipeline() : 
 	minSurfaceArea( 2000 )
 {
-	/*
-	doImageProcessingTask.assign( 0, false );
-	doImageProcessingTask.assign( 1, false );
-	doImageProcessingTask.assign( 2, false );
-	doImageProcessingTask.assign( 3, false );
-	doImageProcessingTask.assign( 4, false );
-	doImageProcessingTask.assign( 5, false );
-	doImageProcessingTask.assign( 6, false );
-	*/
+
 	doImageProcessingTask.push_back( false );
 	doImageProcessingTask.push_back( false );
 	doImageProcessingTask.push_back( false );
@@ -64,13 +56,6 @@ void ProcessingPipeline::start( void )
 		{
 			improc.gradient( &currentImage );
 		}
-		//improc.binary( &currentImage, 100 );
-		//improc.erode( &currentImage );
-		//improc.topHat( &currentImage );
-		//improc.open( &currentImage, 2 );
-		//improc.gradient( &currentImage );
-		//improc.topHat( &currentImage, 10 );
-		//bgs.applyBGS( &currentImage, BackgroundSubtractor::Type::MOG2 );
 	}
 	//bgs.applyBGS( &currentImage, BackgroundSubtractor::Type::MOG2 );
 	//this->currentImage.download( im );
@@ -78,16 +63,26 @@ void ProcessingPipeline::start( void )
 	//improc.makeBinary( &this->currentImage );
 
 	//fea.processGoodFeaturesToTrack_CPU( &im );
-
+	//cv::Mat im;
+	//currentImage.download( im );
 	//flowFarneback.calc( &im );
+	//currentImage.upload( im );
+	//flowKanade.calc( &im );
+
+	flowKanadeGPU.apply( &currentImage );
+
+	//cv::Mat flow;
+	//flowKanadeGPU.apply( &currentImage );
+	
 	//flowKanade.calc( &im );
 	//std::cout << "startin." << std::endl;
 	//flowSF.calc( &im );
 	//cv::Mat flow;
-	//cv::gpu::GpuMat flowGpu;
-	//flow = flowKanadeGPU.apply( &im, false );
+	cv::gpu::GpuMat flowGpu;
+	
 	//flow = flowTvl1.calc( &im );
 	//flowGpu = flowTvl1.calcGPU( &currentImage );
+	//flowGpu.copyTo( currentImage );
 
 	//std::cout << "finished." << std::endl;
 
