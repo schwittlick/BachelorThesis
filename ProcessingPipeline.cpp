@@ -64,6 +64,8 @@ void ProcessingPipeline::start( void )
 			improc.gradient( &currentImage );
 		}
 	}
+
+	//
 	
 	bool doFarneback = false;
 	if( doFarneback )
@@ -73,12 +75,53 @@ void ProcessingPipeline::start( void )
 		flowFarneback.calc( &im );
 		currentImage.upload( im );
 	}
-	
-	bool doKanade = true;
+	// median filter, block matching
+	// geschwindigkeitsberechnung anhand von 2 linien
+	// meanshift filtering
+	// pyrup, pyrdown
+	bool doKanade = false;
 	if( doKanade )
 	{
 		flowKanadeGPU.apply( &currentImage );
 	}
+
+
+	bool doMedian = false;
+	if( doMedian )
+	{
+		cv::Mat im;
+		currentImage.download( im );
+		cv::medianBlur( im, im, 11 );
+		
+		currentImage.upload( im );
+	}
+
+	bool doGaussianBlur = false;
+	if( doGaussianBlur )
+	{
+		cv::gpu::GaussianBlur( currentImage, currentImage, cv::Size( 13, 13 ), 0 );
+	}
+
+	bool doBiliteralFilter = false;
+	if( doBiliteralFilter )
+	{
+		cv::Mat im;
+		currentImage.download( im );
+		cv::cvtColor( im, im, CV_BGRA2GRAY );
+		cv::Mat out;
+		cv::bilateralFilter( im, out, 0, 171, 3, 0 );
+		cv::cvtColor( out, out, CV_GRAY2BGRA );
+		currentImage.upload( out );
+	}
+
+	bool doGpuBlur = true;
+	if( doGpuBlur )
+	{
+		cv::gpu::blur( currentImage, currentImage, cv::Size( 3, 3 ), cv::Point( -1, -1 ) );
+	}
+
+	//bgs.applyBGS( &currentImage, BackgroundSubtractor::Type::MOG2 );
+
 	//flowKanade.calc( &im );
 
 
