@@ -17,19 +17,14 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 	QWidget( parent ),
 	minSurfaceArea( 2000 ),
 	flowKanadeGPU( parent )
-
 {
-	doImageProcessingTask.push_back( false );
-	doImageProcessingTask.push_back( false );
-	doImageProcessingTask.push_back( false );
-	doImageProcessingTask.push_back( false );
-	doImageProcessingTask.push_back( false );
-	doImageProcessingTask.push_back( false );
-	doImageProcessingTask.push_back( false );
-	std::cout << "doImageProcessingTask.size=" << doImageProcessingTask.size() << std::endl;
+	imageProcessorWidget = new ImageProcessorWidget( this );
+	imageProcessorWidget->show();
 
-	//connect( this, SIGNAL( openLukasKanadeConfig() ), ( QWidget * )  flowKanadeGPU , SLOT( openConfig() ) );
-	//connect( this, SIGNAL( closeLukasKanadeConfig() ), ( QWidget * )  flowKanadeGPU , SLOT( closeConfig() ) );
+	connect( imageProcessorWidget,			SIGNAL( checkBoxClicked( int ) ),	this,	SLOT( checkBoxClicked( int ) ) );
+	connect( imageProcessorWidget,			SIGNAL( upButtonClicked( int ) ),	this,	SLOT( upClicked( int ) ) );
+	connect( imageProcessorWidget,			SIGNAL( downButtonClicked( int ) ),	this,	SLOT( downClicked( int ) ) );
+	connect( imageProcessorWidget,			SIGNAL( configButtonClicked( int ) ),	this,	SLOT( configClicked( int ) ) );
 	connect( this, SIGNAL( toggleDialogDisplay() ), this, SLOT( toggleLukasKanadeDialogDisplay() ) );
 
 	processingSteps.push_back( new DilationStep( ) );
@@ -49,6 +44,7 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 
 ProcessingPipeline::~ProcessingPipeline(void)
 {
+	delete imageProcessorWidget;
 }
 
 void ProcessingPipeline::addImage( cv::gpu::GpuMat * imageToBeProcessed )
@@ -154,4 +150,87 @@ void ProcessingPipeline::checkBoxClicked( int id )
 void ProcessingPipeline::toggleLukasKanadeDialogDisplay( void )
 {
 	flowKanadeGPU.toggleViewDisplay();
+}
+
+void ProcessingPipeline::downClicked( int id )
+{
+	if( id <= 10 )
+	{
+		// swapping functionality in this class
+		std::swap( processingSteps.begin() + id, processingSteps.begin() + ( id + 1 ) );
+		// swap the down button positions
+		QPushButton * clickedButtonDown = imageProcessorWidget->getDownButtonById( id );
+		QRect tempPosDown = clickedButtonDown->geometry();
+		QPushButton * toSwapWithButtonDown = imageProcessorWidget->getDownButtonById( id + 1 );
+		clickedButtonDown->setGeometry( toSwapWithButtonDown->geometry() );
+		toSwapWithButtonDown->setGeometry( tempPosDown );
+		// swap the up button position
+		QPushButton * clickedButtonUp = imageProcessorWidget->getUpButtonByID( id );
+		QRect tempPosUp = clickedButtonUp->geometry();
+		QPushButton * toSwapWithButtonUp = imageProcessorWidget->getUpButtonByID( id + 1 );
+		clickedButtonUp->setGeometry( toSwapWithButtonUp->geometry() );
+		toSwapWithButtonUp->setGeometry( tempPosUp );
+		// swap labels
+		QLabel * clickedLabel = imageProcessorWidget->getLabelByID( id );
+		QRect tempPosLabel = clickedLabel->geometry();
+		QLabel * toSwapWithLabel = imageProcessorWidget->getLabelByID( id + 1 );
+		clickedLabel->setGeometry( toSwapWithLabel->geometry() );
+		toSwapWithLabel->setGeometry( tempPosLabel );
+		// config button
+		QPushButton * clickedButtonConfig = imageProcessorWidget->getConfigButtonByID( id );
+		QRect tempPosConfig = clickedButtonConfig->geometry();
+		QPushButton * toSwapWithButtonConfig = imageProcessorWidget->getConfigButtonByID( id + 1 );
+		clickedButtonConfig->setGeometry( toSwapWithButtonConfig->geometry() );
+		toSwapWithButtonConfig->setGeometry( tempPosConfig );
+		// checkbox
+		QCheckBox * clickedCheckBox = imageProcessorWidget->getCheckBoxByID( id );
+		QRect tempPosCheckbox = clickedCheckBox->geometry();
+		QCheckBox * toSwapWithCheckbox = imageProcessorWidget->getCheckBoxByID( id + 1 );
+		clickedCheckBox->setGeometry( toSwapWithCheckbox->geometry() );
+		toSwapWithCheckbox->setGeometry( tempPosCheckbox );
+	}
+}
+
+void ProcessingPipeline::upClicked( int id )
+{
+	if( id >= 1)
+	{
+		// swapping functionality in this class
+		std::swap( processingSteps.begin() + id, processingSteps.begin() + ( id - 1 ) );
+		// swap the down button positions
+		QPushButton * clickedButtonDown = imageProcessorWidget->getDownButtonById( id );
+		QRect tempPosDown = clickedButtonDown->geometry();
+		QPushButton * toSwapWithButtonDown = imageProcessorWidget->getDownButtonById( id - 1 );
+		clickedButtonDown->setGeometry( toSwapWithButtonDown->geometry() );
+		toSwapWithButtonDown->setGeometry( tempPosDown );
+		// swap the up button position
+		QPushButton * clickedButtonUp = imageProcessorWidget->getUpButtonByID( id );
+		QRect tempPosUp = clickedButtonUp->geometry();
+		QPushButton * toSwapWithButtonUp = imageProcessorWidget->getUpButtonByID( id +-1 );
+		clickedButtonUp->setGeometry( toSwapWithButtonUp->geometry() );
+		toSwapWithButtonUp->setGeometry( tempPosUp );
+		// swap labels
+		QLabel * clickedLabel = imageProcessorWidget->getLabelByID( id );
+		QRect tempPosLabel = clickedLabel->geometry();
+		QLabel * toSwapWithLabel = imageProcessorWidget->getLabelByID( id - 1 );
+		clickedLabel->setGeometry( toSwapWithLabel->geometry() );
+		toSwapWithLabel->setGeometry( tempPosLabel );
+		// config button
+		QPushButton * clickedButtonConfig = imageProcessorWidget->getConfigButtonByID( id );
+		QRect tempPosConfig = clickedButtonConfig->geometry();
+		QPushButton * toSwapWithButtonConfig = imageProcessorWidget->getConfigButtonByID( id - 1 );
+		clickedButtonConfig->setGeometry( toSwapWithButtonConfig->geometry() );
+		toSwapWithButtonConfig->setGeometry( tempPosConfig );
+		// checkbox
+		QCheckBox * clickedCheckBox = imageProcessorWidget->getCheckBoxByID( id );
+		QRect tempPosCheckbox = clickedCheckBox->geometry();
+		QCheckBox * toSwapWithCheckbox = imageProcessorWidget->getCheckBoxByID( id - 1 );
+		clickedCheckBox->setGeometry( toSwapWithCheckbox->geometry() );
+		toSwapWithCheckbox->setGeometry( tempPosCheckbox );
+	}
+}
+
+void ProcessingPipeline::configClicked( int id )
+{
+	//processingSteps.at( id )->toggleConfigWindow();
 }

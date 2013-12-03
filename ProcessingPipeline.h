@@ -17,6 +17,8 @@
 
 #include "ProcessingStep.h"
 
+#include "imageprocessorwidget.h"
+
 #include "src/opticalflow/LukasKanadeOpticalFlow.h"
 
 #include "QWidget"
@@ -35,6 +37,9 @@ public:
 
 public slots:
 	void checkBoxClicked( int id );
+	void downClicked( int id );
+	void upClicked( int id );
+	void configClicked( int id );
 	void toggleLukasKanadeDialogDisplay( void );
 signals:
 	void toggleDialogDisplay( void );
@@ -51,12 +56,12 @@ private:
 	LukasKanadeOpticalFlow flowKanadeGPU;
 
 	std::vector< ProcessingStep * > processingSteps;
+
+	ImageProcessorWidget * imageProcessorWidget;
 	
 
 	int minSurfaceArea;
 
 	bool checkSize( cv::gpu::GpuMat * image );
-
-	std::vector< bool > doImageProcessingTask;
 };
 
