@@ -1,4 +1,17 @@
 #include "ProcessingPipeline.h"
+#include "MedianFilterStep.h"
+#include "BackgroundSubtractionStep.h"
+#include "DilationStep.h"
+#include "ErosionStep.h"
+#include "OpenStep.h"
+#include "CloseStep.h"
+#include "TopHatStep.h"
+#include "BlackHatStep.h"
+#include "GradientStep.h"
+#include "GaussianBlurStep.h"
+#include "BiliteralFilterStep.h"
+
+#include <algorithm>
 
 ProcessingPipeline::ProcessingPipeline( QWidget *parent ) : 
 	QWidget( parent ),
@@ -19,6 +32,19 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 	//connect( this, SIGNAL( closeLukasKanadeConfig() ), ( QWidget * )  flowKanadeGPU , SLOT( closeConfig() ) );
 	connect( this, SIGNAL( toggleDialogDisplay() ), this, SLOT( toggleLukasKanadeDialogDisplay() ) );
 
+	processingSteps.push_back( new DilationStep( ) );
+	processingSteps.push_back( new ErosionStep() );
+	processingSteps.push_back( new OpenStep() );
+	processingSteps.push_back( new CloseStep() );
+	processingSteps.push_back( new TopHatStep() );
+	processingSteps.push_back( new BlackHatStep() );
+	processingSteps.push_back( new GradientStep() );
+
+	processingSteps.push_back( new MedianFilterStep() );
+	processingSteps.push_back( new BackgroundSubtractionStep() );
+	processingSteps.push_back( new GaussianBlurStep() );
+	processingSteps.push_back( new BiliteralFilterStep() );
+	//std::swap( processingSteps.begin() + 1, processingSteps.begin() );
 }
 
 ProcessingPipeline::~ProcessingPipeline(void)
@@ -34,34 +60,9 @@ void ProcessingPipeline::start( void )
 {
 	if( checkSize( &currentImage ) )
 	{
-
-		if( getTaskTodo( 0 ) )
+		for( auto it = processingSteps.begin(); it != processingSteps.end(); ++it )
 		{
-			improc.dilate( &currentImage );
-		}
-		if( getTaskTodo( 1 ) )
-		{
-			improc.erode( &currentImage );
-		}
-		if( getTaskTodo( 2 ) )
-		{
-			improc.open( &currentImage );
-		}
-		if( getTaskTodo( 3 ) )
-		{
-			improc.close( &currentImage );
-		}
-		if( getTaskTodo( 4 ) )
-		{
-			improc.topHat( &currentImage );
-		}
-		if( getTaskTodo( 5 ) )
-		{
-			improc.blackHat( &currentImage );
-		}
-		if( getTaskTodo( 6 ) )
-		{
-			improc.gradient( &currentImage );
+			( *it )->apply( &currentImage );
 		}
 	}
 
@@ -84,37 +85,17 @@ void ProcessingPipeline::start( void )
 	{
 		flowKanadeGPU.apply( &currentImage );
 	}
-
-
-	bool doMedian = false;
-	if( doMedian )
+	bool doSmooth = false;
+	if( doSmooth )
 	{
+		// doesnt work
 		cv::Mat im;
 		currentImage.download( im );
-		cv::medianBlur( im, im, 11 );
-		
+		cvSmooth( &im.data, &im.data );
 		currentImage.upload( im );
 	}
 
-	bool doGaussianBlur = false;
-	if( doGaussianBlur )
-	{
-		cv::gpu::GaussianBlur( currentImage, currentImage, cv::Size( 13, 13 ), 0 );
-	}
-
-	bool doBiliteralFilter = false;
-	if( doBiliteralFilter )
-	{
-		cv::Mat im;
-		currentImage.download( im );
-		cv::cvtColor( im, im, CV_BGRA2GRAY );
-		cv::Mat out;
-		cv::bilateralFilter( im, out, 0, 171, 3, 0 );
-		cv::cvtColor( out, out, CV_GRAY2BGRA );
-		currentImage.upload( out );
-	}
-
-	bool doGpuBlur = true;
+	bool doGpuBlur = false;
 	if( doGpuBlur )
 	{
 		cv::gpu::blur( currentImage, currentImage, cv::Size( 3, 3 ), cv::Point( -1, -1 ) );
@@ -164,19 +145,10 @@ bool ProcessingPipeline::checkSize( cv::gpu::GpuMat * image )
 	}
 }
 
-void ProcessingPipeline::setTaskTodo( int taskId, bool value )
-{
-	doImageProcessingTask[ taskId ] = value;
-}
-
-bool ProcessingPipeline::getTaskTodo( int taskId )
-{
-	return doImageProcessingTask[ taskId ];
-}
-
 void ProcessingPipeline::checkBoxClicked( int id )
 {
-	setTaskTodo( id, !getTaskTodo( id ) );
+	//setTaskTodo( id, !getTaskTodo( id ) );
+	processingSteps.at( id )->toggle( );
 }
 
 void ProcessingPipeline::toggleLukasKanadeDialogDisplay( void )

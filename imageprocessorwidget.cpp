@@ -24,6 +24,14 @@ ImageProcessorWidget::ImageProcessorWidget(QWidget *parent)
 	connect( ui.checkBox_5, SIGNAL( clicked( ) ),	signalMapper, SLOT( map(  ) ) );
 	signalMapper->setMapping( ui.checkBox_6, 6 );
 	connect( ui.checkBox_6, SIGNAL( clicked( ) ),	signalMapper, SLOT( map(  ) ) );
+	signalMapper->setMapping( ui.checkBox_7, 7 );
+	connect( ui.checkBox_7, SIGNAL( clicked( ) ),	signalMapper, SLOT( map(  ) ) );
+	signalMapper->setMapping( ui.checkBox_8, 8 );
+	connect( ui.checkBox_8, SIGNAL( clicked( ) ),	signalMapper, SLOT( map(  ) ) );
+	signalMapper->setMapping( ui.checkBox_9, 9 );
+	connect( ui.checkBox_9, SIGNAL( clicked( ) ),	signalMapper, SLOT( map(  ) ) );
+	signalMapper->setMapping( ui.checkBox_10, 10 );
+	connect( ui.checkBox_10, SIGNAL( clicked( ) ),	signalMapper, SLOT( map(  ) ) );
 	
 }
 
@@ -65,6 +73,18 @@ QCheckBox * ImageProcessorWidget::getCheckBoxByID( int id )
 		break;
 	case 6:
 		return ui.checkBox_6;
+		break;
+	case 7:
+		return ui.checkBox_7;
+		break;
+	case 8:
+		return ui.checkBox_8;
+		break;
+	case 9:
+		return ui.checkBox_9;
+		break;
+	case 10:
+		return ui.checkBox_10;
 		break;
 	default:
 		// TODO: 
