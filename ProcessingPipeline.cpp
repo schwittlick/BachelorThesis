@@ -100,8 +100,11 @@ void ProcessingPipeline::start( void )
 	//bgs.applyBGS( &currentImage, BackgroundSubtractor::Type::MOG2 );
 
 	//flowKanade.calc( &im );
-
-
+	bool doBM = true;
+	if( doBM )
+	{
+		bm.apply( &currentImage );
+	}
 	//cv::Mat flow;
 	//flowKanadeGPU.apply( &currentImage );
 	

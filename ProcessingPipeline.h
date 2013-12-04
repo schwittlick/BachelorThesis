@@ -14,6 +14,7 @@
 #include "OpticalFlowLukaskanade.h"
 #include "OpticalFlowSF.h"
 #include "DualTVL1OpticalFlow.h"
+#include "OpticalFlowBlockMatching.h"
 
 #include "ProcessingStep.h"
 
@@ -52,6 +53,7 @@ private:
 	OpticalFlowLukaskanade flowKanade;
 	OpticalFlowSF flowSF;
 	DualTVL1OpticalFlow flowTvl1;
+	OpticalFlowBlockMatching bm;
 
 	LukasKanadeOpticalFlow flowKanadeGPU;
 
