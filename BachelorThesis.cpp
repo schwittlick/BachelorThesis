@@ -27,8 +27,6 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	pipeline = new ProcessingPipeline( );
 
 	hardwareInfoDialog = new HardwareInfoDialog( this );
-	imageProcessorWidget = new ImageProcessorWidget( this );
-	imageProcessorWidget->show();
 
 	// passes all events for the videoLabel to this class and handles them via a eventfilter
 	ui.videoLabel->installEventFilter( this );
@@ -51,15 +49,12 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				this,		SLOT( openLukasKanadeWindow( ) ) );
 	connect( ui.actionHardware_Info,		SIGNAL( triggered() ),				this,		SLOT( openHardwareInfoDialog() ) );
 
-	connect( imageProcessorWidget,			SIGNAL( checkBoxClicked( int ) ),	( QObject* )pipeline,	SLOT( checkBoxClicked( int ) ) );
 	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				( QObject* )pipeline,	SIGNAL( toggleDialogDisplay() ) );
 }
 
 BachelorThesis::~BachelorThesis()
 {
 	delete hardwareInfoDialog;
-	//delete lukasKanadeOpticalFlowDialog;
-	delete imageProcessorWidget;
 	delete roiSelector;
 	delete pipeline;
 }
@@ -113,7 +108,7 @@ void BachelorThesis::loadImage()
 		timer.stop();
 		timer.store();
 		//std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
-		std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
+		//std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
 		QString elapsed;
 		elapsed.append( QString( "%1" ).arg( videoReader.getNormalizedProgress() ) );
 

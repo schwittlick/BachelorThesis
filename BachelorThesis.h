@@ -15,7 +15,6 @@
 
 #include "lukaskanadeopticalflowdialog.h"
 #include "hardwareinfodialog.h"
-#include "imageprocessorwidget.h"
 
 #include "opencv2/ocl/ocl.hpp"
 #include "opencv2/core/opengl_interop.hpp"
@@ -41,7 +40,6 @@ private:
 	Timer timer;
 
 	HardwareInfoDialog * hardwareInfoDialog;
-	ImageProcessorWidget * imageProcessorWidget;
 
 	int blurAmount;
 	int playbackSpeed;
