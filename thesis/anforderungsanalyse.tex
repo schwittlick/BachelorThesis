@@ -6,3 +6,24 @@ Matrix mit bestimmter Höhe und Breite, welche multipliziert die Pixelanzahl des 
 Ein Computer hat allerdings kein komplexes Gehirn und sieht ein Bild, was für einen Menschen z.B. großen emotionalen Wert haben kann schlichtweg als einen zweidimensionalen Array, welcher konkrete farbwerte enthält.
 Anhand dieser repräsentation des Bildes kann allerdings der Computer instruiert werden bestimmte Muster zu erkennen, oder bestimmte Operationen auf das Bild anzuwenden, wodurch letztendlich dem Bild Informationen 
 entnommen werden kann. Diese Verarbeitung wird maschinelles Sehen oder Bildverstehen engl. Computer Vision genannt und beschäftigt sich damit computergestützt Bilder auf eine menschliche Art und Weise zu interpretieren. Das Thema maschinelles Sehen wird im Abschnitt Maschinelles Sehen näher beschrieben.
+
+\section{Umsetzung}
+\section{Anforderungen an den Prototypen}
+Der Prototyp soll in der Lage sein unter möglichst allen Wetterumständen Schiffe anhand des Videostreames der IP-Kamera zu erkennen. Dies soll nur tagsüber passieren.
+Dieser Prototyp soll an unterschiedlichen Prten eingesetzt werden können, gegebenenfalls soll die Kamera an einen anderen Flussabschnitt bewegt werden können und die Software soll an die dort gegebenen lokalen Umstände anpassbar sein. Diese Anpassung soll anhand einer Grafischen Benutzeroberfläche geschehen.
+\subsection{Hardware}
+Die Hardwarekomponente des Prototypen soll aus einer Kamera bestehen, die entweder Videosinal über das Netzwerk / Internet an den verarbeitenden Rechner inkl. Software sendet, oder direkt an einem Computer angeschlossen sein, welcher die Verarbeitung dann direkt vor Ort vornimmt. Allerdings ergibt sich dadurch das Problem, dass ein Computer am FLuss stehen mnuss, was nicht immer möglich ist, da eine Stromzufuhr nicht immer gegeben sein kann. ( Wie soll denn überhaupt eine Kamera dort funktionieren? Eventuell eine Kamera per Batterie laufen lassen mit Mobilem Hotspot?!! ) 
+\subsubsection{IP-Kamera}
+\subsubsection{Halterung}
+\subsubsection{Benutzte Hardware}
+\subsection{Software}
+Die Softwarekomponente des Systemes soll inder Lage sein aus einer erhöhren Position am Flussrand Schiffe zu erkennen, zu verfolgen und gegebenenfalls klassifizieren und sonstige Informationen über das Schiff, wie z.B. Geschwindigkeit, Länge aufzuzeichnen. Die Position aus der die Kamera auf den Fluss 'sieht' soll variabel sein und die Sofware soll an diese veränderbaren Umstände angepasst werden können. Diese Anpassung soll anhand einer grafischen Benutzeroberfläche geschehen können.
+\subsubsection{Benutzeroberfläche}
+Die grafische Benutzeroberfläche soll es dem Benutzer ermöglichen die Algorithmen, die zur Erkennung und Verfolgung der Schiffe bnuetzt werden fein zu parametrisieren. Dazu sollen alle entscheidenden Parameter der Algorithmen aoffen gelegt werden und durch Standard Oberfkächen-Elemente veränderbar sein.
+\subsubsection{Performance}
+\section{Abgrenzungskriterien}
+\section{Methodik}
+\subsection{Projektmanagement}
+\subsection{Programmiermethodik}
+Agile Programmierung
+Extreme Programming
