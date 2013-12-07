@@ -19,5 +19,6 @@ public:
 
 private:
 	cv::gpu::GpuMat lastMat;
+	void drawFlow( cv::gpu::GpuMat & flow, cv::gpu::GpuMat & buffer );
 };
 
