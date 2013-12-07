@@ -1,4 +1,22 @@
 \chapter{Anforderungsanalyse}
+In der Bachelorarbeit soll es darum gehen Schiffe bzw. Boote anhand eines Live-Videostreames zu erkennen und zu tracken. Zusätzlich soll untersucht werden, inwiefern die Schiffe nach bestimmten
+Kriterien klassifiziert werden können, um gegebenenfalls Muster im Flussverkehr erkennen zu
+können. Mögliche Klassifikatoren können der Schifftyp, die Größe des Schiffes und die
+Geschwindigkeit des Schiffes sein. Dadurch können detaillierte Statistiken über einen bestimmten
+Flussabschnitt erstellt werden, welche gegebenenfalls mit Statistiken anderer Flussabschnitte
+verglichen werden können. 
+Deswegen soll die Hardwarekomponente des Systemes portabel und
+resistent gegenüber Wettereinflüssen sein. Die Entwicklung der Hardware Komponente soll
+ebenfalls Teil der Arbeit sein und aus einer IP-Kamera inklusive Wetterresistenter Halterung
+bestehen. Es soll ein funktionierender Prototyp erarbeitet werden, der mit wenigen Schritten an
+einen anderen Ort umgezogen werden kann. Dies erfordert höchstwarscheinlich eine Art
+Kalibrierung des Systemes auf die veränderten Umgebungsfaktoren, wie Blickwinkel und
+Lichtverhältnisse des neuen Ortes, welche elementarer Teil des Systemes sein soll.
+Die Erkennung, Verfolgung und Klassifizierung soll mittels bekannter und bereits implementierter
+Computer Vision Algorithmen geschehen und möglichst robust gegenüber eventuellen
+Wettereinflüssen sein. Zur Klassifizierung der Schiffe soll die Methode des Maschinellen Lernens in
+Betracht gezogen werden, allerdings mit anderen Ansätzen zur Klassifizierung verglichen werden.
+Es soll eine Software entwickelt werden, welche es ermöglicht Schiffe anhand von digitalem Videosignal zu erkennen, zu verfolgen und zu klassifizieren. Dieses Problem ist ein Klassisches Problem der Computer Vision und mit den nötigen Methoden und Mitteln umzusetzen. Allerdings soll die Software weiterhin für die Möglichkeit die Kamera an verschieden Orte zu stellen gestaltet werden. Durch die unterschiedlichen Positionen der Kamera muss die Software variablen gebaut sein, sodass man das System an die geänderten Umstände anpassen kann. Weiterhin muss bedacht werden, dass das Software system zu jeder Zeit während des Tages funktionieren soll und muss sich deswegen an ändernde Wetterumstände anpassen können, oder so robust gebaut sein, dass sie zu jeder Jahreszeit funktioniert.
 
 \section{Anwendungsgebiet}
 Die Arbeit beschäftigt sich mit der Thematik anhand von Bildern und Bildsequenzen ( Videos ) aussagekräftige Informationen zu erhalten. Ein Bild repräsentiert im Computer speicher ist nichts weiter, als eine
@@ -10,20 +28,45 @@ entnommen werden kann. Diese Verarbeitung wird maschinelles Sehen oder Bildverst
 \section{Umsetzung}
 \section{Anforderungen an den Prototypen}
 Der Prototyp soll in der Lage sein unter möglichst allen Wetterumständen Schiffe anhand des Videostreames der IP-Kamera zu erkennen. Dies soll nur tagsüber passieren.
-Dieser Prototyp soll an unterschiedlichen Prten eingesetzt werden können, gegebenenfalls soll die Kamera an einen anderen Flussabschnitt bewegt werden können und die Software soll an die dort gegebenen lokalen Umstände anpassbar sein. Diese Anpassung soll anhand einer Grafischen Benutzeroberfläche geschehen.
+Dieser Prototyp soll an unterschiedlichen Orten eingesetzt werden können, gegebenenfalls soll die Kamera an einen anderen Flussabschnitt bewegt werden können und die Software soll an die dort gegebenen lokalen Umstände anpassbar sein. Diese Anpassung soll anhand einer Grafischen Benutzeroberfläche geschehen.
 \subsection{Hardware}
 Die Hardwarekomponente des Prototypen soll aus einer Kamera bestehen, die entweder Videosinal über das Netzwerk / Internet an den verarbeitenden Rechner inkl. Software sendet, oder direkt an einem Computer angeschlossen sein, welcher die Verarbeitung dann direkt vor Ort vornimmt. Allerdings ergibt sich dadurch das Problem, dass ein Computer am FLuss stehen mnuss, was nicht immer möglich ist, da eine Stromzufuhr nicht immer gegeben sein kann. ( Wie soll denn überhaupt eine Kamera dort funktionieren? Eventuell eine Kamera per Batterie laufen lassen mit Mobilem Hotspot?!! ) 
-\subsubsection{IP-Kamera}
+
+\subsubsection{Kamera}
+An die Kamera, die die Aufgabe hat den Flussausschnitt zu filmen werden nur wenige Anforderungen gestellt. Sie soll ausschließlich die Fähigkeit haben ihren Videostream über das Internet erreichbar zu machen. Die Qualität des Videostreames ist ein Kriterium, das ausser Acht gelassen werden soll.
+Als Kamera wurde die AXIS M1031-M gewählt, da sie schlichtweg gegeben war und den Anforderungen entspricht. Sie bietet ihren Stream in diversen Formaten ( h.264, Motion JPEG, MPEG-4 ) an und war bereits eingerichtet.
+Ausserdem hat diese Kamera den Vorteil einer einfachen Installation, einer 640x480 Pixel Auflösung mit einer Bildrate von 30FPS.
+
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{axis_camera} %{CS0031}
+\caption[AXIS M1031-M]{AXIS M1031-M\footnotemark}
+\label{fig:AXIS M1031-M}
+\end{figure}
 \subsubsection{Halterung}
 \subsubsection{Benutzte Hardware}
 \subsection{Software}
+\footnotetext{\url{http://www.networkcamerastore.com/axis-m1031-w-0300-004-wireless-network-camera}}
 Die Softwarekomponente des Systemes soll inder Lage sein aus einer erhöhren Position am Flussrand Schiffe zu erkennen, zu verfolgen und gegebenenfalls klassifizieren und sonstige Informationen über das Schiff, wie z.B. Geschwindigkeit, Länge aufzuzeichnen. Die Position aus der die Kamera auf den Fluss 'sieht' soll variabel sein und die Sofware soll an diese veränderbaren Umstände angepasst werden können. Diese Anpassung soll anhand einer grafischen Benutzeroberfläche geschehen können.
 \subsubsection{Benutzeroberfläche}
 Die grafische Benutzeroberfläche soll es dem Benutzer ermöglichen die Algorithmen, die zur Erkennung und Verfolgung der Schiffe bnuetzt werden fein zu parametrisieren. Dazu sollen alle entscheidenden Parameter der Algorithmen aoffen gelegt werden und durch Standard Oberfkächen-Elemente veränderbar sein.
 \subsubsection{Performance}
+Da die Verarbeitung des Videostreames in Echtzeit geschehen soll die Software alle möglichen Parallelisierungsmethoden benutzen, die sich anbieten. 
 \section{Abgrenzungskriterien}
+In diesem Abschnitt wird erläutert von welchen Anforderungen sich der Prototyp klar abgrenzt. Darüber sollte ich mir mal gedanken machen-
 \section{Methodik}
+In den folgenden Unterabschnitten wird tiefer auf die Umsetzung des Prototypen und dieser Dokumentation eingegangen. Es werden Hilfsmittel, die das Projektmanagement und die Programmierung unterstützen gegeneinander abgewogen und untersucht.
 \subsection{Projektmanagement}
+Um ein professionelles und strukturiertes Projektmanagement zu gewährleisten muss ich für eine Unterstützung entschieden werden. Gängige Möglichkeiten bieten Projektmanagement-Systeme wie trac und Redmine.
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{trac-timetracking-report} %{CS0031}
+\caption[trac Projektmanagement]{trac Projektmanagement\footnotemark}
+\label{fig:trac Projektmanagement}
+\end{figure}
 \subsection{Programmiermethodik}
-Agile Programmierung
-Extreme Programming
+\footnotetext{\url{http://trac.edgewall.org/wiki/TimeTracking}}
+Bei diesem Projekt kann kein nicht-iteratives Vorgehensmodell, wie das Wasserfallmodell benutzt werden, da sich die tatsächlichen Anforderungen an die Software erst während der Implementierungsphase herausstellen. Man kann bei solch einem Projekt vorab schlichtweg nicht sagen, welche Bildverarbeitungsmethoden genau angewandt werden sollen, da nach der Implementierung zunächst eine fundierte Untersuchung der Ergebnisse geschehen muss, um zu entscheiden, welche Folgeverarbeitungen darauf aufbauen können. Es gibt diverse Ansätze, die das Problem dieser Arbeit lösen, welche jedoch nicht vor tatsächlicher Implementierung festgehalten werden können.
+Daher wurde sich entschieden eine agile Vorgehensweise zu wählen, um genau diese Art des Projektes zu addressieren. Dadurch kann sich unmittelbar an Erkenntnisse der Implementierung angepasst werden.
+\subsubsection{Agile Programmierung}
+\subsubsection{Extreme Programming}

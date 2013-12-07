@@ -1,0 +1,116 @@
+\chapter{Grundlagen}
+\section{Allgemein}
+Der typische grundlegend strukturellen Schritte bei der Erkennung der Schiffe ist wie folgt:
+Im folgenden werden sämtliche grundlegenden Konzepte die zum Verständnis der in den folgenden Kapiteln erarbeiteten Lösungsansätze helfen erläutert. 
+
+Die Aufgabe Objekte anhand von Bild/-sequenzen zu erkennen und diesen Informationen über der realen Objekte zu entnehmen gliedert sich in die Thematik des Bildverstehens ein. Das Forschungsgebiet des Bildverstehens beschäftigt sich damit die menschliche Art zu sehen auf eine Maschine zu übertragen. Die visuelle Interpretation von dem was unsere Augen wahrnehmen geschieht ununterbrochen und meist unterbewusst. \cite[S.~33]{Sester01}Die Tatsache, dass der Mensch auf seine Erfahrung darüber, wie die Welt aufgebaut ist immer zugreifen kann ermöglicht ihm Gegenstände zu erkennen, die nicht ausschließlich dadurch, was man davon sieht gedeutet werden können, sondern aus einer Kombination von zusätzlichen Informationen. Diese weiteren Informationen können aus anderen menschlichen Sinnen gewonnen werden, welche bei der maschinellen Bildinterpretation nicht gegeben sind. (vgl. Sester01)
+\begin{quote}
+Menschliches Sehen bezeichnet nach Boden den Prozess, der Bilder der realen Welt in eine für den Betrachter günstige Beschreibung überführt, bei dem nur noch die wichtigen Informationen erhalten bleiben und unwichtige entfallen.
+\footnote{\url{http://www.ifp.uni-stuttgart.de/publications/dissertationen/moni_diss.pdf}}
+\end{quote}
+Der menschliche Sehapparat hat sich über den Verlauf der Evolution so entwickelt, dass er ebenfalls Objekte, die in verschiedenen Erscheinungsarten auftreten können erkennen zu können. Objekte können in unterschiedlichen Situationen 'gesehen' werden, wobei diverse Faktoren, der die äußere Erscheinung verändern können greifen. Diese sind Faktoren wie Beleuchtung, Perspektive, Orientierung und andere Einflüsse ein Objekt gar physisch verändern. Trotzdem können diese Objekte von dem menschlichen Sehapparat erkannt werden, was grundsätzlich damit zusammen hängt, dass der Mensch die Fähigkeit zu lernen hat. Dadurch ist es den Menschen möglich ununterbrochen Informationen über ihre Umgebung zu verarbeiten und daraus die menschliche Bildverstehen zu verbessern, um in der Zukunft visuelle Einflüsse noch schneller und genauer zu verarbeiten und zu interpretieren.
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{digitale_bildwandlung} %{CS0031}
+\caption[Digitale Bildwandlung]{Digitale Bildwandlung\footnotemark}
+\label{fig:Digitale Bildwandlung}
+\end{figure}
+\footnotetext{\url{http://people.f4.htw-berlin.de/~barthel/veranstaltungen/GLDM/GLDM.htm}}
+
+Die allgemeine Abfolge von Schritten, die zur Lösung des Problemes dieser Arbeit führt ist im folgenden dargestellt.
+\begin{itemize}
+\item{Szene}
+\item{Bildaufnahme}
+\item{Bildvorverarbeitung}
+\item{Segmentierung}
+\item{Merkmalsextraktion}
+\item{Klassifizierung}
+\item{Aussage}
+\end{itemize}
+
+\subsection{Bildverarbeitung}
+%http://de.wikipedia.org/wiki/Bildverarbeitung 
+%http://people.f4.htw-berlin.de/~barthel/veranstaltungen/GLDM/GLDM.htm 
+Die Bildverarbeitung allgemein, allerdings im besonderen Verfahren der digitalen Bildverarbeitung erfordern Bilddaten als Eingabedaten. Als Eingabebilddaten ist die Rastergrafik am meisten verbreitet, welche ein Bild durch ein zweidimensionales Raster dargestellt wird. Eine andere Art der Bilddaten sind die Vektorgrafiken, die nicht aus Pixeln bestehen, sondern aus geometrischen Anweisungen, die das Bild aus Grafikprimitiven und geometrischen Kurven formt.
+
+Die Bildverarbeitung liefert die entsprechenden mathematischen Verfahren, die bei der Bildbearbeitung bzw. der professionellen Veränderung / Analyse von digitalen Bildern zum Einsatz kommen. Die Bildveratbeitung dient als Grundlage zur Bildanalyse, Bildauswertung, Bildlkassifikation, Bilderkennung und Bildsortierung.
+
+Der digitalen Bildverarbeitung liegen digitale Bilddaten zu grunde, die zunächst geschaffen werden müssen. Dies geschieht allgemein beschrieben indem man entweder von einer Szene mit einer Digitalkamera ein Bild macht, oder ein analoges Bild scannt. Wissenschaftlich beschrieben ist eine Digitalkamera ein digitaler Bildwandler, der dazu in der Lage ist ein analoges Bildsignal abzutasten und in diskrete Werte zu überführen. Diese Überführung wird anhand von zwei Parametern durchgeführt: Auflösung und Farbtiefe.
+Die Auflösung beschreibt, mithilfe von wievielen Bildpunkten eine Szene abgetastet wird, wie genau detailliert das Bild also aufgenommen wird. Die Farbtiefe beschreibt, mit wievielen Farbkanälen erzeugt wird, welche Farben für die Zusammenstellung des Bildes zugelassen werden und wie genau diese gespeichert werden. 
+
+Sämtliche Bildoperatoren arbeiten auf den Daten ( Pixeln ) eines Ursprungsbildes und erzeugen daraus ein Ergebnisbild. Sie können als mathematische Bildoperation gesehen werden und können in einige Untergruppen kategorisiert werden, welche im folgenden individuell betrachtet werden.
+
+\subsubsection{Punkoperatoren}
+Bildpunktoperatoren arbeiten ausschließlich auf dem Farbwert(en) eines Bildpunktes des Ursprungsbildes. Sie haben als Eingabedaten die Farbwerte eines Bildpunktes und errechen ausschließlich die Farbwerte des Ergebnisbildes des Pixels an der gleichen Position im Bild, wie des Ursprungsbildes.
+\begin{quote}
+\textit{ErgebnisPixel( x, y ) = Operator( Ursprungsbild( x, y ) )}
+\end{quote}
+
+TODO: Hier eine Grafik eines einfachen Punktoperators einfügen.
+
+
+Mithilfe von Bildpunktoperatoren können Verarbeitungen, wie zum Beispiel Helligkeits- und Kontrastanpassungen, sowie Farbkorrekturen und Tonwertkorrekturen, aber auch Bildüberlagerungen erreicht werden.
+\emph{homogen}
+\emph{inhomogen}
+\subsubsection{Nachbarschaftsoperatoren}
+Nachbarschaftsoperatoren arbeiten als Eingabedaten auf mehreren Bildpunkten. Sie haben einen Kernel, welcher bestimmt, welche Bildpunkt um den aktiven Bildpunkt in die Berechnung des Filters mit einbezogen werden soll. Nachbarschaftsoperatoren werden im Folgenden \emph{Filter} genannt.
+\begin{quote}
+\textit{ErgebnisPixel( x, y ) = Operator( KernelUrsprungsbild( x, y ) )}
+\end{quote}
+
+\emph{Faltungsfilter}
+\emph{Medianfilter}
+\emph{Extremalspannenfilter}
+\emph{Prewitt-Operator}
+\emph{Dekonvolution}
+\subsubsection{Geometrische Bilderoperation / Globale Operatoren}
+\emph{skalierung}
+\emph{rotation}
+\emph{translation}
+\emph{Anistrophische Filterung}
+\emph{Fourier Transformation}
+
+\subsection{Bildberarbeitung}
+Bildbearbeitung bedeutet die Veränderung ( Verbesserung, Verfremdung oder Manipulation ) vorhandener digitaler Bilder mit ensprechender Software, wie zum Beispiel Adobe Photoshop\footnote{\url{http://www.adobe.com/}}. Diese Veränderung geschieht mit dem Anreiz den Eindruck des Bildes auf das menschliche Auge zu verändern. Dort liegt der entscheidende Unterschied zu Bildverarbeitung, welche im vorangehenden Punkt beschrieben wurde. Es werden für die Bildbearbeitung zwar Algorithmen die der Bildverarbeitung zuzuordnen sind genutzt, allerdings ist der 'Konsument' des Bildes bei der Bildbearbeitung das menschliche Auge und bei der Bildverarbeitung die Maschine, bzw. weitere Algorithmen, die auf Pixelebene arbeiten.
+
+\subsubsection{Weichzeichnen}
+\subsubsection{Farbstichanpassungen}
+\subsubsection{Zurechtschneiden}
+
+\subsection{Maschinelles Sehen} 
+%http://de.wikipedia.org/wiki/Maschinelles_Sehen 
+Das Maschinelle Sehen erzeugt anhand eines Bildes / Bildsignales Interpretationen bzw. Bildbeschreibung des Bildes.
+
+\subsection{Computer Vision}
+
+\subsection{Computergrafik} 
+Die Computergrafik beschäftigt sich damit anhand von Bildbeschreibungen Bilder zu erzeugen.
+
+\subsection{Bildvorverarbeitung} 
+Während der Bildvorverarbeitung können unterschiedliche Bildverarbeitungsalgorithmen auf ein Bild angewendet werden. 
+
+
+\subsection{Segmentierung}
+%http://de.wikipedia.org/wiki/Segmentierung_(Bildverarbeitung) 
+Die Segmentierung ist ein Teilgebiet der digitalen Bildverarbeitung und des maschinellen Sehens.
+
+Die Segmentierung ist ein Schritt/Prozess der Bildverarbeitung, in dem Regionen eines Bildes als inhaltlich zusammenhängend erklärt werden. Typischerweise geht der Segmentierung eine Vorverarbeitung voraus und folgt eine Merkmalsextraktion anhan
+
+\section{Konkret}
+\subsection{Vorverarbeitung}
+\subsubsection{background subtraction}
+\subsubsection{smoothing}
+\subsubsection{median filter}
+\subsubsection{erosion / dilatation}
+\subsubsection{pyrDown / pyrUp}
+\subsection{Bewegungserkennung}
+\subsubsection{Optical Flow Farneback sparse/dense}
+\subsubsection{Optical flow Lukas kanade sparse/dense}
+\subsubsection{Opticval Flow Block Matching dense}
+\subsubsection{Optical Flow Brox dense}
+\subsubsection{Optiucal Flow DualTVL1}
+\subsubsection{Optical Flow Horn Schunk}
+\subsection{Objekterkennung}
+\subsubsection{blob detection}
+\subsection{Objektverfolgung}
+\subsubsection{Kalman filter}
