@@ -5,4 +5,68 @@ Da die Geschwindigkeit des Programmes von Anfang an wichtig ist wurde sich dazu 
 Deswegen wurde sich dazu entschieden so viel wie möglich der Arbeitslast auf die GPU auzulagern, da zu beginn der Bearbeitung vermutet wurde, dass eine Sequenzielle bearbeitung der Berechnungen nicht ausreichen wird, da die Software in Echzeit Videodaten verarbeiten können soll.
 OpenCV unterstützt seit der version 2.4.6. die benutzung der CUDA Runtime API und unterstützt ausschließlich NVIDIA GPU's. Um die GPU für OpenCV zu benutzen muss OpenCV eigenständig gebaut werden, die vorkompilierten versionen sind ohne CUDA support kompiliert. Dafür muss CUDA , die neuesten Grafikkartentreiber und eine NVIDIA Grafikkarte vorhanden sein. 
 Die Kompilierung hat sich als etwas kompliziert herausgestellt, sodass die neueste version von \url{http://www.github.com/itseez/opencv}  mit dem tag 2.4.7. benutzt werden musste um eine erfolgreiche kompilierung abzuschließen. Dafür ist die Option WITH\_CUDA zu aktivieren, worauf man zusätzlich das Verzeichnis der NVIDIA CUDA installation angeben muss. Weiterhin habe ich OpenGL für die beschleunigte videodarstellung und OpenMP für die parallelisierung auf den CPUs aktiviert, um die die Grundbedingungen für die Geschwindigkeit der Software ausreichend zu erfüllen.
-\section{Qt}
+\subsection{Mat}
+In OpenCV werden sämtliche Bilddaten als Matrizen abgebildet und der entsprechende Datentyp zur programmatischen Speicherung von Bilddaten heisst ensprechend Mat. Dieser Datentyp hält einige Informationen, wie die Größe des Bildes und der \emph{Typ} des Bildes. Die Größe beschreibt schlichtweg, wieviele Bildpunkte das Bild in der horizontalen, sowie in der vertikalen besitzt. Der Typ beschreibt, was für Bilddaten gespeichert sind. Wie bereits im Kapitel (??GRUNDLAGEN??) beschrieben können Bilder in unterschiedlichen Formaten, wie z.B. Grauwerte und Farbwerte gespeichert werden. OpenCV geht darüber hinaus und ermöglicht dem Entwickler zu bestimmen, wieviele \emph{channels} ein Bild hat und wie genau die Farbwerte gespeichert sind: \emph{depth}. Der Tabelle types können die diversen unterschiedlichen Typen entnommen werden.
+\begin{table}
+\caption[Mat Typen in OpenCV]{Mat Typen in OpenCV\footnotemark}
+\label{tab:types}
+\centering
+\setlength{\tabcolsep}{5mm}	% separator between columns
+\def\arraystretch{1.25}			% vertical stretch factor (Standard = 1.0)
+\begin{tabular}{|r||c|c|c|c|} \hline
+& \emph{C1} & \emph{C2} & \emph{C3} & \emph{C4}\\
+\hline\hline
+CV\_8U & 0 & 8 & 16 & 24\\
+\hline
+CV\_8S & 1 & 9 & 17 & 25\\
+\hline
+CV\_16U & 2 & 10 & 18 & 26\\
+\hline
+CV\_16S & 3 & 11 & 19 & 27\\
+\hline
+CV\_32S & 4 & 12 & 20 & 28\\
+\hline
+CV\_32F & 5 & 13 & 21 & 29\\
+\hline
+CV\_64F & 6 & 14 & 22 & 30\\
+\hline
+\end{tabular}
+\end{table}
+\footnotetext{\url{http://ninghang.blogspot.de/2012/11/list-of-mat-type-in-opencv.html}}
+
+\section{Grafische Benutzeroberfläche}
+Es wird ein Framework zur gestaltung und umsetzung der grafischen Benutzeroberfläche genutzt werden müssen. Die Anforderungen an dieses Framework sind eindeutig: Es muss in C++ geschrieben sein, viele gängige Oberflächenelemente anbieten und frei benutzbar sein. Im folgenden werden zwei Frameworks verglichen.
+\subsection{Qt}
+Qt existiert zur Zeit unter der Version 5.1.1. und ist eines der meist verbreitetsten C++ Bibliotheken zur Erstellung von grafischen Benutzeroberflächen. Qt's Entwicklungsgeschichte reicht bis zum Jahr 1991 zurück, wo die tatsächliche Entwicklung begann, allerdings wurde die erste Version im Jahr 1998 von der norwegischen Firma \textit{TrollTech} veröffentlicht. Qt bietet eine vielzahl von grafischen Steuerelementen, einen Qt Creator an, mit dem die Steuerelemente interaktiv angeordnet werden können und sogar ein Modul zur Übersetzung der Texte, die im Interface vorkommen in andere Sprachen, dem Linguist. Zudem wird Qt aktiv weiterentwickelt und die aktuelle Version 5.1. wurde im Juli 2013 veröffentlicht. Weiterhin hat Qt ein interessantes Lizensierungsmodell. Seitdem Nokia das Projekt 2008 aufkaufte wurde, wird es seit Oktober 2011 als freie Software unter der LGPL weitergegeben. Durch die LGPL ist es möglich auch ohne eine kostenflichtige Lizenz kostenpflichtige Software mit Qt zu entwickeln, ohne den Sourcecode der Software veröffentlichen zu müssen. Ausschließlich, wenn Änderungen am Quellcode von Qt selbst vorgenommen wurden, müssen diese Änderungen veröffentlicht werden. 
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{qt_gallery} %{CS0031}
+\caption[Qt Steuerelemente]{Qt Steuerelemente\footnotemark}
+\label{fig:Qt Steuerelemente}
+\end{figure}
+\footnotetext{\url{http://www.ics.com/blog/whats-new-qt-51-qt-quick-controls}}
+
+\subsection{Alternativen}
+In diesem Kapitel wird auf die alternativen Frameworks und Bibliotheken zum Qt-Project eingegangen.
+\subsubsection{Windows Template Library}
+WTL\footnote{\url{http://wtl.sourceforge.net/}} ist eine Bibliothek zur Entwicklung von grafischen Benutzeroberflächen für Windows. Sie ist unter der CPL lizensiert, besitzt ebenfalls diverse Steuerelemente, kann allerdings ausschließlich unter Win32 Anwendungen benutzt werden.
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{wtl_example} %{CS0031}
+\caption[WTL Beispiel]{WTL Beispiel\footnotemark}
+\label{fig:WTL Beispiel}
+\end{figure}
+\footnotetext{\url{http://www.codewiz51.com/wiki/GetFile.aspx?File=WTLFopDemonstration/WTLFopDemonstrationNoMenu.JPG}}
+\subsubsection{wxWidgets}
+wxWidgets\footnote{}\url{http://www.wxwidgets.org/} ist eine C++ Bibliothek, die die Entwicklung von grafischen, plattformübergreifenden Anwendungen unterstützt.
+wxWidgets ist under der "wxWidgets License" lizensiert, welche grundsätzlich der L-GPL Lizenz entspricht, allerdings mit dem Unterschied, Software, die wxWidgets in binärer Form nutzt eigene Lizensierung anwenden kann\footnote{\url{http://www.wxwidgets.org/about/newlicen.htm}}.
+\subsubsection{gtkmm}
+gtkmm ist eine offizielle C++ Anbindung an die GTK+ Bibliothek. Sie bietet viele übliche Oberflächenelemente an, und bietet die Möglichkeit diese per Vererbung noch anzupassen. Die Benutzeroberfläche kann per Quellcode, aber auch mithilfe des \textit{Glade User Inteface Designer}s\footnote{}\url{http://glade.gnome.org/} erstellt werden.
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{gtkmm_palette} %{CS0031}
+\caption[gtkmm Toolpalette]{gtkmm Toolpalette\footnotemark}
+\label{fig:gtkmm Toolpalette}
+\end{figure}
+\footnotetext{\url{https://developer.gnome.org/gtkmm-tutorial/3.4/toolpalette-example.html.en}}
+Weiterhin ist gktmm unter der LGPL Lizenz veröffentlicht\footnote{\url{http://www.gtkmm.org/en/license.shtml}}.
