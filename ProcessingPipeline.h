@@ -1,6 +1,7 @@
 #pragma once
 
 #include < vector >
+#include < map >
 
 #include "QObject"
 #include "QDialog"
@@ -37,6 +38,7 @@ public:
 	cv::gpu::GpuMat getFinishedImage( void );
 
 public slots:
+	void toggleProcessingPipelineConfigWidgetDisplay( void );
 	void checkBoxClicked( int id );
 	void downClicked( int id );
 	void upClicked( int id );
@@ -58,9 +60,11 @@ private:
 	LukasKanadeOpticalFlow flowKanadeGPU;
 
 	std::vector< ProcessingStep * > processingSteps;
+	std::vector< int > currentProcessingStepOrder;
+	int getActualID( int _id );
+	int findId( const std::vector<int>& where, int searchParameter );
 
-	ImageProcessorWidget * imageProcessorWidget;
-	
+	ImageProcessorWidget * processingPipelineConfigWidget;
 
 	int minSurfaceArea;
 
