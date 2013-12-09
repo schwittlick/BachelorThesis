@@ -40,6 +40,5 @@ void ErosionStep::iterationChanged( int _iterations )
 
 void ErosionStep::toggleConfigWindow()
 {
-	std::cout << "toggling controlwindow erosionstep " << std::endl;
 	controls->setVisible( !controls->isVisible() );
 }
