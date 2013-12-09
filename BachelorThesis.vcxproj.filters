@@ -51,6 +51,12 @@
     <Filter Include="Source Files\misc">
       <UniqueIdentifier>{d1ad95f1-9f67-4207-880e-2df4952c7624}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gui">
+      <UniqueIdentifier>{b79ae7fd-61ca-4942-b50f-1962ce8aab25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gui">
+      <UniqueIdentifier>{19759f23-aeb8-4865-bbc6-048b55f6b017}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,9 +75,6 @@
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="VideoReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lukaskanadeopticalflowdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_lukaskanadeopticalflowdialog.cpp">
@@ -98,12 +101,6 @@
     <ClCompile Include="src\misc\Timer.cpp">
       <Filter>Source Files\misc</Filter>
     </ClCompile>
-    <ClCompile Include="src\opticalflow\BroxOpticalFlow.cpp">
-      <Filter>Source Files\opticalflow</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opticalflow\FarnebackOpticalFlow.cpp">
-      <Filter>Source Files\opticalflow</Filter>
-    </ClCompile>
     <ClCompile Include="src\opticalflow\flow_functions.cpp">
       <Filter>Source Files\opticalflow</Filter>
     </ClCompile>
@@ -116,13 +113,7 @@
     <ClCompile Include="FeatureDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ip\StandardImageProcessor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\detect\BlobDetector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hardwareinfodialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_hardwareinfodialog.cpp">
@@ -134,17 +125,11 @@
     <ClCompile Include="ProcessingPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="imageprocessorwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_imageprocessorwidget.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_imageprocessorwidget.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="OpticalFlowSF.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OpticalFlowLukaskanade.cpp">
       <Filter>Source Files\opticalflow</Filter>
@@ -152,8 +137,125 @@
     <ClCompile Include="OpticalFlowFarneback.cpp">
       <Filter>Source Files\opticalflow</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ProcessingPipeline.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ProcessingPipeline.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowFarnebackConfigDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowFarnebackConfigDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowFarneback.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowFarneback.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="OpticalFlowSF.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="OpticalFlowFarnebackConfigDialog.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="hardwareinfodialog.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="imageprocessorwidget.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="lukaskanadeopticalflowdialog.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
     <ClCompile Include="DualTVL1OpticalFlow.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\StandardImageProcessor.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_LukasKanadeOpticalFlow.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_LukasKanadeOpticalFlow.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="OpticalFlowBlockMatching.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundSubtractionStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="BiliteralFilterStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackHatStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="DilationStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="CloseStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="ErosionStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianBlurStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="GradientStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="MedianFilterStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessingStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="TopHatStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="dilationstepwidget.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dilationstepwidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dilationstepwidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ProcessingStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ProcessingStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DilationStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DilationStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ErosionStepWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ErosionStepWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ErosionStepWidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ErosionStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ErosionStep.cpp">
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,9 +272,6 @@
       <Filter>Generated Files</Filter>
     </CustomBuild>
     <CustomBuild Include="VideoReader.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="lukaskanadeopticalflowdialog.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="lukaskanadeopticalflowdialog.ui">
@@ -193,29 +292,59 @@
     <CustomBuild Include="src\misc\Timer.h">
       <Filter>Header Files\misc</Filter>
     </CustomBuild>
-    <CustomBuild Include="src\opticalflow\BroxOpticalFlow.h">
-      <Filter>Header Files\opticalflow</Filter>
-    </CustomBuild>
-    <CustomBuild Include="src\opticalflow\FarnebackOpticalFlow.h">
-      <Filter>Header Files\opticalflow</Filter>
-    </CustomBuild>
     <CustomBuild Include="src\opticalflow\flow_functions.h">
       <Filter>Header Files\opticalflow</Filter>
     </CustomBuild>
     <CustomBuild Include="src\opticalflow\LukasKanadeOpticalFlow.h">
       <Filter>Header Files\opticalflow</Filter>
     </CustomBuild>
-    <CustomBuild Include="hardwareinfodialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="hardwareinfodialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="imageprocessorwidget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="imageprocessorwidget.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ProcessingPipeline.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="OpticalFlowFarnebackConfigDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="lukaskanadeopticalflowdialog.h">
+      <Filter>Header Files\gui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="imageprocessorwidget.h">
+      <Filter>Header Files\gui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="hardwareinfodialog.h">
+      <Filter>Header Files\gui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="OpticalFlowFarnebackConfigDialog.h">
+      <Filter>Header Files\gui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="OpticalFlowFarneback.h">
+      <Filter>Header Files\opticalflow</Filter>
+    </CustomBuild>
+    <CustomBuild Include="dilationstepwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="dilationstepwidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DilationStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ProcessingStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ErosionStepWidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ErosionStepWidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ErosionStep.h">
+      <Filter>Header Files\ip</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -234,32 +363,65 @@
     <ClInclude Include="FeatureDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ip\StandardImageProcessor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\detect\BlobDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_hardwareinfodialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProcessingPipeline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OpticalFlowFarneback.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_imageprocessorwidget.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_OpticalFlowFarnebackConfigDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
     <ClInclude Include="OpticalFlowLukaskanade.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\opticalflow</Filter>
     </ClInclude>
     <ClInclude Include="OpticalFlowSF.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\opticalflow</Filter>
     </ClInclude>
     <ClInclude Include="DualTVL1OpticalFlow.h">
+      <Filter>Header Files\opticalflow</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ip\StandardImageProcessor.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="OpticalFlowBlockMatching.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundSubtractionStep.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="BiliteralFilterStep.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackHatStep.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="CloseStep.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianBlurStep.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="GradientStep.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="MedianFilterStep.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenStep.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="TopHatStep.h">
+      <Filter>Header Files\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_dilationstepwidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_ErosionStepWidget.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
