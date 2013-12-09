@@ -146,32 +146,8 @@
      <addaction name="actionFarneback"/>
      <addaction name="actionBrox"/>
     </widget>
-    <widget class="QMenu" name="menuImage_Processing">
-     <property name="title">
-      <string>Image Processing</string>
-     </property>
-     <widget class="QMenu" name="menuBackground_Subtraction">
-      <property name="title">
-       <string>Background Subtraction</string>
-      </property>
-      <addaction name="actionMOG"/>
-      <addaction name="actionMOG2"/>
-      <addaction name="actionGMG"/>
-      <addaction name="actionFGD"/>
-     </widget>
-     <widget class="QMenu" name="menuBlur">
-      <property name="title">
-       <string>Blur</string>
-      </property>
-      <addaction name="actionGaussian_Blur"/>
-      <addaction name="actionMedian_Blur"/>
-      <addaction name="actionNormal_Blur"/>
-     </widget>
-     <addaction name="menuBackground_Subtraction"/>
-     <addaction name="menuBlur"/>
-    </widget>
     <addaction name="menuOptical_Flow"/>
-    <addaction name="menuImage_Processing"/>
+    <addaction name="actionProcesingPipeline"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -268,6 +244,11 @@
   <action name="actionHardware_Info">
    <property name="text">
     <string>Hardware Info</string>
+   </property>
+  </action>
+  <action name="actionProcesingPipeline">
+   <property name="text">
+    <string>ProcesingPipeline</string>
    </property>
   </action>
  </widget>

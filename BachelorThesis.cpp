@@ -50,6 +50,7 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 	connect( ui.actionHardware_Info,		SIGNAL( triggered() ),				this,		SLOT( openHardwareInfoDialog() ) );
 
 	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				( QObject* )pipeline,	SIGNAL( toggleDialogDisplay() ) );
+	connect( ui.actionProcesingPipeline,	SIGNAL( triggered() ),				( QObject* ) pipeline,	SLOT( toggleProcessingPipelineConfigWidgetDisplay() ) );
 }
 
 BachelorThesis::~BachelorThesis()
