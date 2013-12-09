@@ -5,14 +5,19 @@
 
 #include <iostream>
 
-class ProcessingStep
+#include "QObject"
+#include "QWidget"
+
+class ProcessingStep : public QWidget
 {
+	Q_OBJECT
 public:
-	ProcessingStep(void);
+	ProcessingStep( QWidget *parent = 0 );
 	~ProcessingStep(void);
 
 	virtual void apply( cv::gpu::GpuMat * mat ) = 0;
 	void toggle();
+	virtual void toggleConfigWindow( void );
 	bool isActive( void );
 	void setKernelSize( int _kernelSize );
 	cv::Mat getKernel( void );

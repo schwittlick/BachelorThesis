@@ -1,7 +1,8 @@
 #include "ProcessingStep.h"
 
 
-ProcessingStep::ProcessingStep(void) :
+ProcessingStep::ProcessingStep( QWidget *parent ) :
+	QWidget( parent ),
 	activated( false ),
 	kernelSize( 3 )
 {
@@ -16,6 +17,11 @@ ProcessingStep::~ProcessingStep(void)
 void ProcessingStep::toggle()
 {
 	this->activated = !this->activated;
+}
+
+void ProcessingStep::toggleConfigWindow()
+{
+	std::cout << "nothing happening here so far." << std::endl;
 }
 
 bool ProcessingStep::isActive( void )
