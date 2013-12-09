@@ -11,7 +11,7 @@ BackgroundSubtractor::~BackgroundSubtractor(void)
 {
 }
 
-void BackgroundSubtractor::applyBGS( cv::Mat * image, enum Type method )
+void BackgroundSubtractor::applyBGS( cv::Mat * image, enum Type method, double learningRate )
 {
 	gmg.numInitializationFrames = 40;
 	image->copyTo( frame );
@@ -29,7 +29,7 @@ void BackgroundSubtractor::applyBGS( cv::Mat * image, enum Type method )
 		break;
 
 	case MOG:
-		mog(d_frame, d_fgmask, 0.01f);
+		mog(d_frame, d_fgmask, learningRate);
 		mog.getBackgroundImage(d_bgimg);
 		break;
 
@@ -63,7 +63,7 @@ void BackgroundSubtractor::applyBGS( cv::Mat * image, enum Type method )
 	//image = cv::Mat( fgimg );
 }
 
-void BackgroundSubtractor::applyBGS( cv::gpu::GpuMat * _gpu_image, enum Type method )
+void BackgroundSubtractor::applyBGS( cv::gpu::GpuMat * _gpu_image, enum Type method, double learningRate )
 {
 	gmg.numInitializationFrames = 40;
 	switch ( method )
@@ -75,7 +75,7 @@ void BackgroundSubtractor::applyBGS( cv::gpu::GpuMat * _gpu_image, enum Type met
 		break;
 
 	case MOG:
-		mog( *_gpu_image, d_fgmask, 0.01f );
+		mog( *_gpu_image, d_fgmask, learningRate );
 		mog.getBackgroundImage( d_bgimg );
 		break;
 
