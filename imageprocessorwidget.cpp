@@ -10,7 +10,7 @@ ImageProcessorWidget::ImageProcessorWidget(QWidget *parent)
 	upSignalMapper = new QSignalMapper();
 	configSignalMapper = new QSignalMapper();
 
-	ui.button_down_0->setGeometry( QRect( 0, 0, 40, 40 ) );
+	//ui.button_down_0->setGeometry( QRect( 0, 0, 40, 40 ) );
 
 
 	connect( toggleSignalMapper, SIGNAL( mapped( int ) ), this, SLOT( checkBoxClickedByID( int ) ) );

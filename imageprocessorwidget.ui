@@ -18,7 +18,7 @@
     <rect>
      <x>3</x>
      <y>7</y>
-     <width>294</width>
+     <width>300</width>
      <height>361</height>
     </rect>
    </property>
@@ -36,7 +36,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Up</string>
+           <string>Up0</string>
           </property>
          </widget>
         </item>
@@ -49,7 +49,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Down</string>
+           <string>Down0</string>
           </property>
          </widget>
         </item>
@@ -65,14 +65,14 @@
       <item>
        <widget class="QLabel" name="label_0">
         <property name="text">
-         <string>DILATE</string>
+         <string>DILATE0</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="configButton_0">
         <property name="text">
-         <string>config</string>
+         <string>config0</string>
         </property>
        </widget>
       </item>
@@ -91,7 +91,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Up</string>
+           <string>Up1</string>
           </property>
          </widget>
         </item>
@@ -104,7 +104,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Down</string>
+           <string>Down1</string>
           </property>
          </widget>
         </item>
@@ -122,7 +122,7 @@
         <item>
          <widget class="QLabel" name="label_1">
           <property name="text">
-           <string>ERODE</string>
+           <string>ERODE1</string>
           </property>
          </widget>
         </item>
@@ -131,7 +131,7 @@
       <item>
        <widget class="QPushButton" name="configButton_1">
         <property name="text">
-         <string>config</string>
+         <string>config1</string>
         </property>
        </widget>
       </item>
@@ -150,7 +150,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Up</string>
+           <string>Up2</string>
           </property>
          </widget>
         </item>
@@ -163,7 +163,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Down</string>
+           <string>Down2</string>
           </property>
          </widget>
         </item>
@@ -181,7 +181,7 @@
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>OPEN</string>
+           <string>OPEN2</string>
           </property>
          </widget>
         </item>
@@ -190,7 +190,7 @@
       <item>
        <widget class="QPushButton" name="configButton_2">
         <property name="text">
-         <string>config</string>
+         <string>config2</string>
         </property>
        </widget>
       </item>
@@ -209,7 +209,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Up</string>
+           <string>Up3</string>
           </property>
          </widget>
         </item>
@@ -222,7 +222,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Down</string>
+           <string>Down3</string>
           </property>
          </widget>
         </item>
@@ -240,7 +240,7 @@
         <item>
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>CLOSE</string>
+           <string>CLOSE3</string>
           </property>
          </widget>
         </item>
@@ -249,7 +249,7 @@
       <item>
        <widget class="QPushButton" name="configButton_3">
         <property name="text">
-         <string>config</string>
+         <string>config3</string>
         </property>
        </widget>
       </item>
@@ -268,7 +268,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Up</string>
+           <string>Up4</string>
           </property>
          </widget>
         </item>
@@ -281,7 +281,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Down</string>
+           <string>Down4</string>
           </property>
          </widget>
         </item>
@@ -299,7 +299,7 @@
         <item>
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>TOPHAT</string>
+           <string>TOPHAT4</string>
           </property>
          </widget>
         </item>
@@ -308,7 +308,7 @@
       <item>
        <widget class="QPushButton" name="configButton_4">
         <property name="text">
-         <string>config</string>
+         <string>config4</string>
         </property>
        </widget>
       </item>
@@ -327,7 +327,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Up</string>
+           <string>Up5</string>
           </property>
          </widget>
         </item>
@@ -340,7 +340,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Down</string>
+           <string>Down5</string>
           </property>
          </widget>
         </item>
@@ -358,7 +358,7 @@
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>BLACKHAT</string>
+           <string>BLACKHAT5</string>
           </property>
          </widget>
         </item>
@@ -367,7 +367,7 @@
       <item>
        <widget class="QPushButton" name="configButton_5">
         <property name="text">
-         <string>config</string>
+         <string>config5</string>
         </property>
        </widget>
       </item>
@@ -386,7 +386,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Up</string>
+           <string>Up6</string>
           </property>
          </widget>
         </item>
@@ -399,7 +399,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Down</string>
+           <string>Down6</string>
           </property>
          </widget>
         </item>
@@ -417,7 +417,7 @@
         <item>
          <widget class="QLabel" name="label_6">
           <property name="text">
-           <string>GRADIENT</string>
+           <string>GRADIENT6</string>
           </property>
          </widget>
         </item>
@@ -426,7 +426,7 @@
       <item>
        <widget class="QPushButton" name="configButton_6">
         <property name="text">
-         <string>config</string>
+         <string>config6</string>
         </property>
        </widget>
       </item>
@@ -447,7 +447,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Up</string>
+             <string>Up7</string>
             </property>
            </widget>
           </item>
@@ -460,7 +460,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Down</string>
+             <string>Down7</string>
             </property>
            </widget>
           </item>
@@ -476,7 +476,7 @@
         <item>
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>MEDIANFILTER </string>
+           <string>MEDIANFILTER 7</string>
           </property>
          </widget>
         </item>
@@ -485,7 +485,7 @@
       <item>
        <widget class="QPushButton" name="configButton_7">
         <property name="text">
-         <string>config</string>
+         <string>config7</string>
         </property>
        </widget>
       </item>
@@ -504,7 +504,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Up</string>
+           <string>Up8</string>
           </property>
          </widget>
         </item>
@@ -517,7 +517,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Down</string>
+           <string>Down8</string>
           </property>
          </widget>
         </item>
@@ -535,7 +535,7 @@
         <item>
          <widget class="QLabel" name="label_8">
           <property name="text">
-           <string>BACKGROUNDSUBS</string>
+           <string>BACKGROUNDSUBS8</string>
           </property>
          </widget>
         </item>
@@ -544,7 +544,7 @@
       <item>
        <widget class="QPushButton" name="configButton_8">
         <property name="text">
-         <string>config</string>
+         <string>config8</string>
         </property>
        </widget>
       </item>
@@ -563,7 +563,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Up</string>
+           <string>Up9</string>
           </property>
          </widget>
         </item>
@@ -576,7 +576,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Down</string>
+           <string>Down9</string>
           </property>
          </widget>
         </item>
@@ -594,7 +594,7 @@
         <item>
          <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>GAUSSIANBLUR</string>
+           <string>GAUSSIANBLUR9</string>
           </property>
          </widget>
         </item>
@@ -603,7 +603,7 @@
       <item>
        <widget class="QPushButton" name="configButton_9">
         <property name="text">
-         <string>config</string>
+         <string>config9</string>
         </property>
        </widget>
       </item>
@@ -622,7 +622,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Up</string>
+           <string>Up10</string>
           </property>
          </widget>
         </item>
@@ -635,7 +635,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Down</string>
+           <string>Down10</string>
           </property>
          </widget>
         </item>
@@ -653,7 +653,7 @@
         <item>
          <widget class="QLabel" name="label_10">
           <property name="text">
-           <string>BILITERALFILTER</string>
+           <string>BILITERALFILTER10</string>
           </property>
          </widget>
         </item>
@@ -662,7 +662,7 @@
       <item>
        <widget class="QPushButton" name="configButton_10">
         <property name="text">
-         <string>config</string>
+         <string>config10</string>
         </property>
        </widget>
       </item>
