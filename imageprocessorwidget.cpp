@@ -82,9 +82,11 @@ QCheckBox * ImageProcessorWidget::getCheckBoxByID( int id )
 	case 10:
 		return ui.checkBox_10;
 		break;
+	case 11:
+		return ui.checkBox_11;
 	default:
 		// TODO: 
-		return ui.checkBox_1;
+		throw 0;
 		break;
 	}
 }
@@ -118,6 +120,8 @@ void ImageProcessorWidget::setupToggleSignals()
 	connect( ui.checkBox_9, SIGNAL( clicked( ) ),	toggleSignalMapper, SLOT( map(  ) ) );
 	toggleSignalMapper->setMapping( ui.checkBox_10, 10 );
 	connect( ui.checkBox_10, SIGNAL( clicked( ) ),	toggleSignalMapper, SLOT( map(  ) ) );
+	toggleSignalMapper->setMapping( ui.checkBox_11, 11 );
+	connect( ui.checkBox_11, SIGNAL( clicked( ) ),	toggleSignalMapper, SLOT( map(  ) ) );
 }
 
 void ImageProcessorWidget::setupDownSignals()
@@ -144,6 +148,8 @@ void ImageProcessorWidget::setupDownSignals()
 	connect( ui.button_down_9, SIGNAL( clicked() ), downSignalMapper, SLOT( map() ) );
 	downSignalMapper->setMapping( ui.button_down_10, 10 );
 	connect( ui.button_down_10, SIGNAL( clicked() ), downSignalMapper, SLOT( map() ) );
+	downSignalMapper->setMapping( ui.button_down_11, 11 );
+	connect( ui.button_down_11, SIGNAL( clicked() ), downSignalMapper, SLOT( map() ) );
 }
 
 void ImageProcessorWidget::setupUpSignals()
@@ -170,6 +176,8 @@ void ImageProcessorWidget::setupUpSignals()
 	connect( ui.button_up_9, SIGNAL( clicked() ), upSignalMapper, SLOT( map() ) );
 	upSignalMapper->setMapping( ui.button_up_10, 10 );
 	connect( ui.button_up_10, SIGNAL( clicked() ), upSignalMapper, SLOT( map() ) );
+	upSignalMapper->setMapping( ui.button_up_11, 11 );
+	connect( ui.button_up_11, SIGNAL( clicked() ), upSignalMapper, SLOT( map() ) );
 }
 
 void ImageProcessorWidget::setupConfigSignals()
@@ -196,6 +204,8 @@ void ImageProcessorWidget::setupConfigSignals()
 	connect( ui.configButton_9, SIGNAL( clicked() ), configSignalMapper, SLOT( map() ) );
 	configSignalMapper->setMapping( ui.configButton_10, 10 );
 	connect( ui.configButton_10, SIGNAL( clicked() ), configSignalMapper, SLOT( map() ) );
+	configSignalMapper->setMapping( ui.configButton_11, 11 );
+	connect( ui.configButton_11, SIGNAL( clicked() ), configSignalMapper, SLOT( map() ) );
 }
 
 void ImageProcessorWidget::upButtonClickedByID( int id )
@@ -250,6 +260,9 @@ QPushButton * ImageProcessorWidget::getDownButtonById( int id )
 		case 10:
 			return ui.button_down_10;
 			break;
+		case 11:
+			return ui.button_down_11;
+			break;
 		default:
 			// lulz
 			throw 0;
@@ -293,6 +306,9 @@ QPushButton * ImageProcessorWidget::getUpButtonByID( int id )
 			break;
 		case 10:
 			return ui.button_up_10;
+			break;
+		case 11:
+			return ui.button_up_11;
 			break;
 		default:
 			// luuulz
@@ -338,6 +354,9 @@ QPushButton * ImageProcessorWidget::getConfigButtonByID( int id )
 		case 10:
 			return ui.configButton_10;
 			break;
+		case 11:
+			return ui.configButton_11;
+			break;
 		default:
 			// luuulz
 			throw 0;
@@ -381,6 +400,9 @@ QLabel * ImageProcessorWidget::getLabelByID( int id )
 			break;
 		case 10:
 			return ui.label_10;
+			break;
+		case 11:
+			return ui.label_11;
 			break;
 		default:
 			// luuulz

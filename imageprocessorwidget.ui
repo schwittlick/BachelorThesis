@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>299</width>
-    <height>370</height>
+    <width>538</width>
+    <height>490</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>ImageProcessorWidget</string>
   </property>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>3</x>
-     <y>7</y>
-     <width>300</width>
-     <height>361</height>
+     <x>4</x>
+     <y>8</y>
+     <width>527</width>
+     <height>468</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -663,6 +663,65 @@
        <widget class="QPushButton" name="configButton_10">
         <property name="text">
          <string>config10</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_33">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_34">
+        <item>
+         <widget class="QPushButton" name="button_up_11">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Up11</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="button_down_11">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Down11</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_35">
+        <item>
+         <widget class="QCheckBox" name="checkBox_11">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>THRESHOLD11</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="configButton_11">
+        <property name="text">
+         <string>config11</string>
         </property>
        </widget>
       </item>
