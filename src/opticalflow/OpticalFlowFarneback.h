@@ -21,7 +21,7 @@
 #include "opencv2/highgui/highgui_c.h"
 #include "opencv2/imgproc/imgproc_c.h"
 
-#include "OpticalFlowFarnebackConfigDialog.h"
+#include "src/opticalflow/dialogs/OpticalFlowFarnebackConfigDialog.h"
 
 class OpticalFlowFarneback : QWidget
 {

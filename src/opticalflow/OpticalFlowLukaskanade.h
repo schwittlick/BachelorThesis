@@ -19,7 +19,7 @@
 
 #include < vector >
 
-#include "FeatureDetector.h"
+#include "src/detect/FeatureDetector.h"
 
 class OpticalFlowLukaskanade
 {

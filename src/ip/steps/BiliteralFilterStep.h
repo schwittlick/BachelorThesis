@@ -3,7 +3,7 @@
 #include "ProcessingStep.h"
 #include "QObject"
 #include "QWidget"
-#include "BiliteralFilterStepDialog.h"
+#include "src/ip/dialogs/BiliteralFilterStepDialog.h"
 
 class BiliteralFilterStep : public ProcessingStep
 {

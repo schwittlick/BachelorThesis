@@ -355,7 +355,7 @@ void drawColorField(Mat &imgU, Mat &imgV, Mat &imgColor)
 		}
 	}
 
-	drawLegendHSV(imgColor,15,25,15);
+	//drawLegendHSV(imgColor,15,25,15);
 }
 
 void drawColorField_GPU(cv::gpu::GpuMat &imgU, cv::gpu::GpuMat &imgV, cv::gpu::GpuMat &imgColor)

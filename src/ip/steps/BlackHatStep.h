@@ -2,18 +2,16 @@
 
 #include "ProcessingStep.h"
 #include "QObject"
-#include "QWidget"
-#include "ErosionStepWidget.h"
+#include "src/ip/dialogs/BlackHatStepDialog.h"
 
-class ErosionStep : public ProcessingStep
+class BlackHatStep : public ProcessingStep
 {
 	Q_OBJECT
 public:
-	ErosionStep( QWidget *parent = 0 );
-	~ErosionStep(void);
+	BlackHatStep( QWidget *parent = 0 );
+	~BlackHatStep(void);
 
 	void apply( cv::gpu::GpuMat * image );
-
 	void toggleConfigWindow( void );
 
 public slots:
@@ -21,8 +19,7 @@ public slots:
 	void iterationChanged( int iterations );
 
 private:
-	ErosionStepWidget * controls;
-	int point;
+	BlackHatStepDialog * controls;
 	int iterations;
 };
 

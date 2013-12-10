@@ -2,7 +2,7 @@
 
 #include "ProcessingStep.h"
 
-#include "dilationstepwidget.h"
+#include "src/ip/dialogs/dilationstepwidget.h"
 #include "QObject"
 #include "QWidget"
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ProcessingStep.h"
+#include "src/ip/steps/ProcessingStep.h"
 #include "src/ip/BackgroundSubtractor.h"
-#include "BackgroundSubtractionStepDialog.h"
+#include "src/ip/dialogs/BackgroundSubtractionStepDialog.h"
 
 class BackgroundSubtractionStep : public ProcessingStep
 {
