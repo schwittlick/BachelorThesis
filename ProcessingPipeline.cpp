@@ -1,15 +1,16 @@
 #include "ProcessingPipeline.h"
-#include "MedianFilterStep.h"
-#include "BackgroundSubtractionStep.h"
-#include "DilationStep.h"
-#include "ErosionStep.h"
-#include "OpenStep.h"
-#include "CloseStep.h"
-#include "TopHatStep.h"
-#include "BlackHatStep.h"
-#include "GradientStep.h"
-#include "GaussianBlurStep.h"
-#include "BiliteralFilterStep.h"
+#include "src/ip/steps/MedianFilterStep.h"
+#include "src/ip/steps/BackgroundSubtractionStep.h"
+#include "src/ip/steps/DilationStep.h"
+#include "src/ip/steps/ErosionStep.h"
+#include "src/ip/steps/OpenStep.h"
+#include "src/ip/steps/CloseStep.h"
+#include "src/ip/steps/TopHatStep.h"
+#include "src/ip/steps/BlackHatStep.h"
+#include "src/ip/steps/GradientStep.h"
+#include "src/ip/steps/GaussianBlurStep.h"
+#include "src/ip/steps/BiliteralFilterStep.h"
+#include "src/ip/steps/ThresholdStep.h"
 
 #include <algorithm>
 
@@ -26,22 +27,6 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 	connect( processingPipelineConfigWidget,			SIGNAL( configButtonClicked( int ) ),	this,	SLOT( configClicked( int ) ) );
 	connect( this,										SIGNAL( toggleDialogDisplay() ),		this,	SLOT( toggleLukasKanadeDialogDisplay() ) );
 
-
-	currentProcessingStepOrder.push_back( 0 );
-	currentProcessingStepOrder.push_back( 1 );
-	currentProcessingStepOrder.push_back( 2 );
-	currentProcessingStepOrder.push_back( 3 );
-	currentProcessingStepOrder.push_back( 4 );
-	currentProcessingStepOrder.push_back( 5 );
-	currentProcessingStepOrder.push_back( 6 );
-	currentProcessingStepOrder.push_back( 7 );
-	currentProcessingStepOrder.push_back( 8 );
-	currentProcessingStepOrder.push_back( 9 );
-	currentProcessingStepOrder.push_back( 10 );
-
-	//printCurrentprocessingOrder();
-
-
 	processingSteps.push_back( new DilationStep( ) );
 	processingSteps.push_back( new ErosionStep() );
 	processingSteps.push_back( new OpenStep() );
@@ -54,7 +39,13 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 	processingSteps.push_back( new BackgroundSubtractionStep() );
 	processingSteps.push_back( new GaussianBlurStep() );
 	processingSteps.push_back( new BiliteralFilterStep() );
-	//std::swap( processingSteps.begin() + 1, processingSteps.begin() );
+	processingSteps.push_back( new ThresholdStep() );
+
+	// initializes the standard order
+	for( int i = 0; i < processingSteps.size(); ++i )
+	{
+		currentProcessingStepOrder.push_back( i );
+	}
 }
 
 ProcessingPipeline::~ProcessingPipeline(void)
@@ -184,7 +175,7 @@ void ProcessingPipeline::toggleProcessingPipelineConfigWidgetDisplay( void )
 
 void ProcessingPipeline::downClicked( int id )
 {
-	if( id < 10 )
+	if( !isVeryBottomElement( id ) )
 	{
 		int actualID = findId( currentProcessingStepOrder, id );
 		int oneButtonDownID = actualID + 1;
@@ -228,7 +219,7 @@ void ProcessingPipeline::downClicked( int id )
 
 void ProcessingPipeline::upClicked( int id )
 {
-	if( id > 0)
+	if( !isVeryTopElement( id ) )
 	{
 		int actualID = findId( currentProcessingStepOrder, id );
 		int oneButtonUpID = actualID - 1;
@@ -288,4 +279,14 @@ int ProcessingPipeline::findId( const std::vector<int>& where, int searchParamet
 		}
 	}
 	return -1;
+}
+
+bool ProcessingPipeline::isVeryBottomElement( int _id )
+{
+	return ( findId( currentProcessingStepOrder, _id ) < currentProcessingStepOrder.size() - 1 ) ? false : true;
+}
+
+bool ProcessingPipeline::isVeryTopElement( int _id )
+{
+	return ( findId( currentProcessingStepOrder, _id ) > 0 ) ? false : true;
 }

@@ -9,15 +9,15 @@
 #include "opencv2/core/core.hpp"
 #include "opencv2/gpu/gpu.hpp"
 
-#include "FeatureDetector.h"
+#include "src/detect/FeatureDetector.h"
 #include "src/ip/StandardImageProcessor.h"
-#include "OpticalFlowFarneback.h"
-#include "OpticalFlowLukaskanade.h"
-#include "OpticalFlowSF.h"
-#include "DualTVL1OpticalFlow.h"
-#include "OpticalFlowBlockMatching.h"
+#include "src/opticalflow/OpticalFlowFarneback.h"
+#include "src/opticalflow/OpticalFlowLukaskanade.h"
+#include "src/opticalflow/OpticalFlowSF.h"
+#include "src/opticalflow/DualTVL1OpticalFlow.h"
+#include "src/opticalflow/OpticalFlowBlockMatching.h"
 
-#include "ProcessingStep.h"
+#include "src/ip/steps/ProcessingStep.h"
 
 #include "imageprocessorwidget.h"
 
@@ -69,5 +69,8 @@ private:
 	int minSurfaceArea;
 
 	bool checkSize( cv::gpu::GpuMat * image );
+
+	bool isVeryBottomElement( int _id );
+	bool isVeryTopElement( int _id );
 };
 
