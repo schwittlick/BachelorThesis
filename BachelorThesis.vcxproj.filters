@@ -57,6 +57,12 @@
     <Filter Include="Header Files\gui">
       <UniqueIdentifier>{19759f23-aeb8-4865-bbc6-048b55f6b017}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ip\dialogs">
+      <UniqueIdentifier>{d23eb75e-7111-493a-85ac-a3aafd2a60e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ip\steps">
+      <UniqueIdentifier>{1f09a21a-31cb-4ee6-98fa-d3df865ff464}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,9 +89,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_lukaskanadeopticalflowdialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="src\ip\BackgroundSubtractor.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
     <ClCompile Include="src\ip\Denoiser.cpp">
       <Filter>Source Files\ip</Filter>
     </ClCompile>
@@ -110,9 +113,6 @@
     <ClCompile Include="src\ip\MeanShifter.cpp">
       <Filter>Source Files\ip</Filter>
     </ClCompile>
-    <ClCompile Include="FeatureDetector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\detect\BlobDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -130,12 +130,6 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_imageprocessorwidget.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="OpticalFlowLukaskanade.cpp">
-      <Filter>Source Files\opticalflow</Filter>
-    </ClCompile>
-    <ClCompile Include="OpticalFlowFarneback.cpp">
-      <Filter>Source Files\opticalflow</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ProcessingPipeline.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -155,23 +149,8 @@
     <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowFarneback.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="OpticalFlowSF.cpp">
-      <Filter>Source Files\opticalflow</Filter>
-    </ClCompile>
-    <ClCompile Include="OpticalFlowFarnebackConfigDialog.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="hardwareinfodialog.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
     <ClCompile Include="imageprocessorwidget.cpp">
       <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="lukaskanadeopticalflowdialog.cpp">
-      <Filter>Source Files\gui</Filter>
-    </ClCompile>
-    <ClCompile Include="DualTVL1OpticalFlow.cpp">
-      <Filter>Source Files\opticalflow</Filter>
     </ClCompile>
     <ClCompile Include="src\ip\StandardImageProcessor.cpp">
       <Filter>Source Files\ip</Filter>
@@ -181,48 +160,6 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_LukasKanadeOpticalFlow.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="OpticalFlowBlockMatching.cpp">
-      <Filter>Source Files\opticalflow</Filter>
-    </ClCompile>
-    <ClCompile Include="BackgroundSubtractionStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="BiliteralFilterStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="BlackHatStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="DilationStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="CloseStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="ErosionStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="GaussianBlurStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="GradientStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="MedianFilterStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="ProcessingStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="TopHatStep.cpp">
-      <Filter>Source Files\ip</Filter>
-    </ClCompile>
-    <ClCompile Include="dilationstepwidget.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_dilationstepwidget.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -242,9 +179,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_DilationStep.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="ErosionStepWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ErosionStepWidget.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -255,6 +189,231 @@
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ErosionStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BiliteralFilterStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BiliteralFilterStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BiliteralFilterStepDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BiliteralFilterStepDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BlackHatStepDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BlackHatStepDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BlackHatStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BlackHatStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BackgroundSubtractionStepDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BackgroundSubtractionStepDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\BackgroundSubtractor.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BackgroundSubtractionStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BackgroundSubtractionStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\BiliteralFilterStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\BlackHatStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\CloseStep.cpp">
+      <Filter>Source Files\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\DilationStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\ErosionStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\GaussianBlurStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\GradientStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\MedianFilterStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\OpenStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\ProcessingStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\TopHatStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\BackgroundSubtractionStep.cpp">
+      <Filter>Source Files\ip\steps</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\BackgroundSubtractionStepDialog.cpp">
+      <Filter>Source Files\ip\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\BiliteralFilterStepDialog.cpp">
+      <Filter>Source Files\ip\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\BlackHatStepDialog.cpp">
+      <Filter>Source Files\ip\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\dilationstepwidget.cpp">
+      <Filter>Source Files\ip\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\ErosionStepWidget.cpp">
+      <Filter>Source Files\ip\dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\OpticalFlowSF.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\OpticalFlowLukaskanade.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\OpticalFlowFarneback.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\OpticalFlowBlockMatching.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\dialogs\OpticalFlowFarnebackConfigDialog.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\DualTVL1OpticalFlow.cpp">
+      <Filter>Source Files\opticalflow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\detect\FeatureDetector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\misc\hardwareinfodialog.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\dialogs\lukaskanadeopticalflowdialog.cpp">
+      <Filter>Source Files\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\steps\ThresholdStep.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThresholdStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ThresholdStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\ThresholdStepDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThresholdStepDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ThresholdStepDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\CloseStepDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CloseStepDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CloseStepDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CloseStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CloseStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GaussianBlurStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GaussianBlurStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\GaussianBlurStepDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GaussianBlurStepDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GaussianBlurStepDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_gradientstepdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_gradientstepdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\gradientstepdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GradientStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GradientStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\MedianFilterStepDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MedianFilterStepDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MedianFilterStepDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MedianFilterStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MedianFilterStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\OpenStepDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpenStepDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpenStepDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpenStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpenStep.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ip\dialogs\TopHatDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_TopHatDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_TopHatDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_TopHatStep.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_TopHatStep.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
@@ -273,9 +432,6 @@
     </CustomBuild>
     <CustomBuild Include="VideoReader.h">
       <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="lukaskanadeopticalflowdialog.ui">
-      <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="src\ip\BackgroundSubtractor.h">
       <Filter>Header Files\ip</Filter>
@@ -298,52 +454,145 @@
     <CustomBuild Include="src\opticalflow\LukasKanadeOpticalFlow.h">
       <Filter>Header Files\opticalflow</Filter>
     </CustomBuild>
-    <CustomBuild Include="hardwareinfodialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="imageprocessorwidget.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ProcessingPipeline.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="OpticalFlowFarnebackConfigDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="lukaskanadeopticalflowdialog.h">
-      <Filter>Header Files\gui</Filter>
-    </CustomBuild>
     <CustomBuild Include="imageprocessorwidget.h">
       <Filter>Header Files\gui</Filter>
     </CustomBuild>
-    <CustomBuild Include="hardwareinfodialog.h">
-      <Filter>Header Files\gui</Filter>
+    <CustomBuild Include="src\ip\steps\BiliteralFilterStep.h">
+      <Filter>Header Files\ip</Filter>
     </CustomBuild>
-    <CustomBuild Include="OpticalFlowFarnebackConfigDialog.h">
-      <Filter>Header Files\gui</Filter>
+    <CustomBuild Include="src\ip\steps\BlackHatStep.h">
+      <Filter>Header Files\ip</Filter>
     </CustomBuild>
-    <CustomBuild Include="OpticalFlowFarneback.h">
+    <CustomBuild Include="src\ip\steps\DilationStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\steps\ErosionStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\steps\ProcessingStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\steps\BackgroundSubtractionStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\BackgroundSubtractionStepDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\BackgroundSubtractionStepDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\BiliteralFilterStepDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\BiliteralFilterStepDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\BlackHatStepDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\BlackHatStepDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\dilationstepwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\dilationstepwidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\ErosionStepWidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\ErosionStepWidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\opticalflow\OpticalFlowFarneback.h">
       <Filter>Header Files\opticalflow</Filter>
     </CustomBuild>
-    <CustomBuild Include="dilationstepwidget.h">
-      <Filter>Header Files</Filter>
+    <CustomBuild Include="src\opticalflow\dialogs\OpticalFlowFarnebackConfigDialog.h">
+      <Filter>Header Files\gui</Filter>
     </CustomBuild>
-    <CustomBuild Include="dilationstepwidget.ui">
+    <CustomBuild Include="src\opticalflow\dialogs\OpticalFlowFarnebackConfigDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="DilationStep.h">
-      <Filter>Header Files\ip</Filter>
+    <CustomBuild Include="src\misc\hardwareinfodialog.h">
+      <Filter>Header Files\gui</Filter>
     </CustomBuild>
-    <CustomBuild Include="ProcessingStep.h">
-      <Filter>Header Files\ip</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ErosionStepWidget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ErosionStepWidget.ui">
+    <CustomBuild Include="src\misc\hardwareinfodialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="ErosionStep.h">
+    <CustomBuild Include="src\opticalflow\dialogs\lukaskanadeopticalflowdialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\opticalflow\dialogs\lukaskanadeopticalflowdialog.h">
+      <Filter>Header Files\gui</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\steps\ThresholdStep.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\ThresholdStepDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\ThresholdStepDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\CloseStepDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\CloseStepDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\steps\CloseStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\steps\GaussianBlurStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\GaussianBlurStepDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\GaussianBlurStepDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\gradientstepdialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\gradientstepdialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\steps\GradientStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\MedianFilterStepDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\MedianFilterStepDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\steps\MedianFilterStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\OpenStepDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\OpenStepDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\steps\OpenStep.h">
+      <Filter>Header Files\ip</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\TopHatDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\dialogs\TopHatDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\ip\steps\TopHatStep.h">
       <Filter>Header Files\ip</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -360,9 +609,6 @@
     <ClInclude Include="src\ip\Denoiser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FeatureDetector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\detect\BlobDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -375,52 +621,58 @@
     <ClInclude Include="GeneratedFiles\ui_OpticalFlowFarnebackConfigDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="OpticalFlowLukaskanade.h">
-      <Filter>Header Files\opticalflow</Filter>
-    </ClInclude>
-    <ClInclude Include="OpticalFlowSF.h">
-      <Filter>Header Files\opticalflow</Filter>
-    </ClInclude>
-    <ClInclude Include="DualTVL1OpticalFlow.h">
-      <Filter>Header Files\opticalflow</Filter>
-    </ClInclude>
     <ClInclude Include="src\ip\StandardImageProcessor.h">
-      <Filter>Header Files\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="OpticalFlowBlockMatching.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BackgroundSubtractionStep.h">
-      <Filter>Header Files\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="BiliteralFilterStep.h">
-      <Filter>Header Files\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="BlackHatStep.h">
-      <Filter>Header Files\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="CloseStep.h">
-      <Filter>Header Files\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="GaussianBlurStep.h">
-      <Filter>Header Files\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="GradientStep.h">
-      <Filter>Header Files\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="MedianFilterStep.h">
-      <Filter>Header Files\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenStep.h">
-      <Filter>Header Files\ip</Filter>
-    </ClInclude>
-    <ClInclude Include="TopHatStep.h">
       <Filter>Header Files\ip</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_dilationstepwidget.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_ErosionStepWidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_BiliteralFilterStepDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_BlackHatStepDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_BackgroundSubtractionStepDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opticalflow\OpticalFlowSF.h">
+      <Filter>Header Files\opticalflow</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opticalflow\OpticalFlowLukaskanade.h">
+      <Filter>Header Files\opticalflow</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opticalflow\OpticalFlowBlockMatching.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opticalflow\DualTVL1OpticalFlow.h">
+      <Filter>Header Files\opticalflow</Filter>
+    </ClInclude>
+    <ClInclude Include="src\detect\FeatureDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_ThresholdStepDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_CloseStepDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GaussianBlurStepDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_gradientstepdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MedianFilterStepDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_OpenStepDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_TopHatDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
