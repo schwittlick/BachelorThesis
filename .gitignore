@@ -3,3 +3,12 @@
 *.lastbuildstate
 *.unsuccessfulbuild
 *.rtf
+*.obj
+*.pdb
+*.log
+*.xml
+*.aps
+
+GeneratedFiles/Debug/*.cpp
+GeneratedFiles/Release/*.cpp
+GeneratedFiles/*.h
