@@ -13,8 +13,8 @@
 
 #include "ProcessingPipeline.h"
 
-#include "lukaskanadeopticalflowdialog.h"
-#include "hardwareinfodialog.h"
+#include "src/opticalflow/dialogs/lukaskanadeopticalflowdialog.h"
+#include "src/misc/hardwareinfodialog.h"
 
 #include "opencv2/ocl/ocl.hpp"
 #include "opencv2/core/opengl_interop.hpp"

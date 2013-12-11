@@ -65,7 +65,7 @@ void BachelorThesis::loadImage()
 	if( videoReader.isOpen() && !isVideoPaused )
 	{
 		timer.start();
-		cv::gpu::GpuMat * originalImage;
+		cv::gpu::GpuMat * originalImage = nullptr;
 		cv::gpu::GpuMat processedImage;
 
 		// loading new frames. the amount of skipped frames is indicated by playbackSpeed
