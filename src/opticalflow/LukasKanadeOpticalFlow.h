@@ -17,7 +17,7 @@
 #include "src/misc/Timer.h"
 
 #include "src/opticalflow/flow_functions.h"
-#include "lukaskanadeopticalflowdialog.h"
+#include "src/opticalflow/dialogs/lukaskanadeopticalflowdialog.h"
 
 #include "QObject"
 #include "QWidget"
