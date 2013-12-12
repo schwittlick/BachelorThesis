@@ -23,8 +23,8 @@ public:
 	void open( const std::string & fileName );
 	void close( void );
 	bool isOpen( void );
-	cv::Mat * getNextImage( void );
-	cv::gpu::GpuMat * getNextImage_GPU( void );
+	cv::Mat getNextImage( void );
+	cv::gpu::GpuMat getNextImage_GPU( void );
 	double getNormalizedProgress( void );
 	int getMaxFrames( void );
 	int getCurrentFrameNr( void );

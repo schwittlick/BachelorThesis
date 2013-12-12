@@ -63,7 +63,7 @@ void VideoReader::open( const std::string & fileName )
 	wasOpened = true;
 }
 
-cv::Mat * VideoReader::getNextImage( void )
+cv::Mat VideoReader::getNextImage( void )
 {
 	switch( selectedType ) 
 	{
@@ -125,7 +125,7 @@ cv::Mat * VideoReader::getNextImage( void )
 		this->close();
 	}
 
-	return &currentFrame;
+	return currentFrame;
 }
 
 bool VideoReader::isOpen( void )
@@ -187,7 +187,7 @@ bool VideoReader::isFinished( void )
 	}
 }
 
-cv::gpu::GpuMat * VideoReader::getNextImage_GPU( void )
+cv::gpu::GpuMat VideoReader::getNextImage_GPU( void )
 {
 	//std::cout << "VideoReader::getNextImage_GPU:-> GPU Videoreader: " << videoReaderGPU.isOpened() << std::endl;
 	if( videoReaderGPU.isOpened() )
@@ -207,5 +207,5 @@ cv::gpu::GpuMat * VideoReader::getNextImage_GPU( void )
 		}
 		
 	}
-	return &currentGpuMat;
+	return currentGpuMat;
 }
