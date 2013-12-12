@@ -13,7 +13,7 @@ VideoReader::~VideoReader(void)
 {
 }
 
-void VideoReader::open( std::string fileName )
+void VideoReader::open( const std::string & fileName )
 {
 
 	std::cout << "VideoReader::open" << std::endl;
@@ -43,6 +43,18 @@ void VideoReader::open( std::string fileName )
 		}
 
 		break;
+	case Type::LIVE:
+		std::string url = "http://root:schiffe@axis3.f4.htw-berlin.de/mjpg/video.mjpg";
+		videoCapture.open( url );
+		if( videoCapture.isOpened() )
+		{
+			std::cout << "Sucessfully opened the videostream. ";
+			currentFrameNr = 0;
+			videoCapture >> currentFrame;
+			widthLoadedVideo = currentFrame.size().width;
+			heightLoadedVideo = currentFrame.size().height;
+			std::cout << "Size: " << widthLoadedVideo << " x " << heightLoadedVideo << std::endl;
+		}
 	}
 
 	std::cout << "VideoFile was successfully loaded with dimensions w:" << widthLoadedVideo << " h:" << heightLoadedVideo << "." << std::endl;
@@ -89,6 +101,22 @@ cv::Mat * VideoReader::getNextImage( void )
 		}
 
 		break;
+	case Type::LIVE:
+		if( videoCapture.isOpened() )
+		{
+			currentFrameNr++;
+			if ( !videoCapture.read( currentFrame ) )
+			{
+				std::cout << "False." << std::endl;
+				currentFrame = emptyMat;
+			}
+
+			if( currentFrame.empty() )
+			{
+				std::cout << "End of the videofile." << std::endl;
+				currentFrame = emptyMat;
+			}
+		}
 	}
 
 	// check if the video file reached its end and close the reader if it did

@@ -15,12 +15,12 @@
 class VideoReader
 {
 public:
-	enum Type { CPU, GPU } selectedType;
+	enum Type { CPU, GPU, LIVE } selectedType;
 
 	VideoReader( enum Type type );
 	~VideoReader( void );
 
-	void open( std::string fileName );
+	void open( const std::string & fileName );
 	void close( void );
 	bool isOpen( void );
 	cv::Mat * getNextImage( void );
