@@ -46,23 +46,23 @@ public:
     QAction *actionNormal_Blur;
     QAction *actionOpen_Sample;
     QAction *actionHardware_Info;
+    QAction *actionProcesingPipeline;
+    QAction *actionOpen_Video_Stream;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     QLabel *label;
-    QPushButton *pushButton;
     QSlider *verticalSlider;
-    QCheckBox *checkBox;
-    QCheckBox *checkBox_2;
     QLabel *label_2;
+    QLabel *videoLabel;
+    QPushButton *pushButton;
     QSlider *blurSlider;
     QSlider *progressBarSlider;
+    QCheckBox *checkBox;
+    QCheckBox *checkBox_2;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
     QMenu *menuOptical_Flow;
-    QMenu *menuImage_Processing;
-    QMenu *menuBackground_Subtraction;
-    QMenu *menuBlur;
     QMenu *menuHelp;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -71,7 +71,7 @@ public:
     {
         if (BachelorThesisClass->objectName().isEmpty())
             BachelorThesisClass->setObjectName(QStringLiteral("BachelorThesisClass"));
-        BachelorThesisClass->resize(477, 559);
+        BachelorThesisClass->resize(837, 905);
         actionOpen_File = new QAction(BachelorThesisClass);
         actionOpen_File->setObjectName(QStringLiteral("actionOpen_File"));
         actionExit = new QAction(BachelorThesisClass);
@@ -103,6 +103,10 @@ public:
         actionOpen_Sample->setObjectName(QStringLiteral("actionOpen_Sample"));
         actionHardware_Info = new QAction(BachelorThesisClass);
         actionHardware_Info->setObjectName(QStringLiteral("actionHardware_Info"));
+        actionProcesingPipeline = new QAction(BachelorThesisClass);
+        actionProcesingPipeline->setObjectName(QStringLiteral("actionProcesingPipeline"));
+        actionOpen_Video_Stream = new QAction(BachelorThesisClass);
+        actionOpen_Video_Stream->setObjectName(QStringLiteral("actionOpen_Video_Stream"));
         centralWidget = new QWidget(BachelorThesisClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -114,11 +118,6 @@ public:
 
         verticalLayout->addWidget(label);
 
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-
-        verticalLayout->addWidget(pushButton);
-
         verticalSlider = new QSlider(centralWidget);
         verticalSlider->setObjectName(QStringLiteral("verticalSlider"));
         verticalSlider->setMinimum(1);
@@ -128,20 +127,24 @@ public:
 
         verticalLayout->addWidget(verticalSlider);
 
-        checkBox = new QCheckBox(centralWidget);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
-
-        verticalLayout->addWidget(checkBox);
-
-        checkBox_2 = new QCheckBox(centralWidget);
-        checkBox_2->setObjectName(QStringLiteral("checkBox_2"));
-
-        verticalLayout->addWidget(checkBox_2);
-
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QStringLiteral("label_2"));
 
         verticalLayout->addWidget(label_2);
+
+        videoLabel = new QLabel(centralWidget);
+        videoLabel->setObjectName(QStringLiteral("videoLabel"));
+        videoLabel->setMinimumSize(QSize(720, 576));
+        videoLabel->setBaseSize(QSize(720, 675));
+        videoLabel->setCursor(QCursor(Qt::CrossCursor));
+        videoLabel->setMouseTracking(true);
+
+        verticalLayout->addWidget(videoLabel);
+
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
 
         blurSlider = new QSlider(centralWidget);
         blurSlider->setObjectName(QStringLiteral("blurSlider"));
@@ -158,22 +161,26 @@ public:
 
         verticalLayout->addWidget(progressBarSlider);
 
+        checkBox = new QCheckBox(centralWidget);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+
+        verticalLayout->addWidget(checkBox);
+
+        checkBox_2 = new QCheckBox(centralWidget);
+        checkBox_2->setObjectName(QStringLiteral("checkBox_2"));
+
+        verticalLayout->addWidget(checkBox_2);
+
         BachelorThesisClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(BachelorThesisClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 477, 21));
+        menuBar->setGeometry(QRect(0, 0, 837, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);
         menuEdit->setObjectName(QStringLiteral("menuEdit"));
         menuOptical_Flow = new QMenu(menuEdit);
         menuOptical_Flow->setObjectName(QStringLiteral("menuOptical_Flow"));
-        menuImage_Processing = new QMenu(menuEdit);
-        menuImage_Processing->setObjectName(QStringLiteral("menuImage_Processing"));
-        menuBackground_Subtraction = new QMenu(menuImage_Processing);
-        menuBackground_Subtraction->setObjectName(QStringLiteral("menuBackground_Subtraction"));
-        menuBlur = new QMenu(menuImage_Processing);
-        menuBlur->setObjectName(QStringLiteral("menuBlur"));
         menuHelp = new QMenu(menuBar);
         menuHelp->setObjectName(QStringLiteral("menuHelp"));
         BachelorThesisClass->setMenuBar(menuBar);
@@ -189,22 +196,14 @@ public:
         menuBar->addAction(menuHelp->menuAction());
         menuFile->addAction(actionOpen_File);
         menuFile->addAction(actionOpen_Sample);
+        menuFile->addAction(actionOpen_Video_Stream);
         menuFile->addSeparator();
         menuFile->addAction(actionExit);
         menuEdit->addAction(menuOptical_Flow->menuAction());
-        menuEdit->addAction(menuImage_Processing->menuAction());
+        menuEdit->addAction(actionProcesingPipeline);
         menuOptical_Flow->addAction(actionPyrLukasKanade);
         menuOptical_Flow->addAction(actionFarneback);
         menuOptical_Flow->addAction(actionBrox);
-        menuImage_Processing->addAction(menuBackground_Subtraction->menuAction());
-        menuImage_Processing->addAction(menuBlur->menuAction());
-        menuBackground_Subtraction->addAction(actionMOG);
-        menuBackground_Subtraction->addAction(actionMOG2);
-        menuBackground_Subtraction->addAction(actionGMG);
-        menuBackground_Subtraction->addAction(actionFGD);
-        menuBlur->addAction(actionGaussian_Blur);
-        menuBlur->addAction(actionMedian_Blur);
-        menuBlur->addAction(actionNormal_Blur);
         menuHelp->addAction(actionHardware_Info);
 
         retranslateUi(BachelorThesisClass);
@@ -230,17 +229,17 @@ public:
         actionNormal_Blur->setText(QApplication::translate("BachelorThesisClass", "Normal Blur", 0));
         actionOpen_Sample->setText(QApplication::translate("BachelorThesisClass", "Open Sample", 0));
         actionHardware_Info->setText(QApplication::translate("BachelorThesisClass", "Hardware Info", 0));
+        actionProcesingPipeline->setText(QApplication::translate("BachelorThesisClass", "ProcesingPipeline", 0));
+        actionOpen_Video_Stream->setText(QApplication::translate("BachelorThesisClass", "Open Video Stream", 0));
         label->setText(QApplication::translate("BachelorThesisClass", "No File loaded.", 0));
+        label_2->setText(QApplication::translate("BachelorThesisClass", "Blur Amount", 0));
+        videoLabel->setText(QApplication::translate("BachelorThesisClass", "TextLabel", 0));
         pushButton->setText(QApplication::translate("BachelorThesisClass", "Play", 0));
         checkBox->setText(QApplication::translate("BachelorThesisClass", "Background Subtraction", 0));
         checkBox_2->setText(QApplication::translate("BachelorThesisClass", "Meanshift Filtering", 0));
-        label_2->setText(QApplication::translate("BachelorThesisClass", "Blur Amount", 0));
         menuFile->setTitle(QApplication::translate("BachelorThesisClass", "File", 0));
         menuEdit->setTitle(QApplication::translate("BachelorThesisClass", "Edit", 0));
         menuOptical_Flow->setTitle(QApplication::translate("BachelorThesisClass", "Optical Flow", 0));
-        menuImage_Processing->setTitle(QApplication::translate("BachelorThesisClass", "Image Processing", 0));
-        menuBackground_Subtraction->setTitle(QApplication::translate("BachelorThesisClass", "Background Subtraction", 0));
-        menuBlur->setTitle(QApplication::translate("BachelorThesisClass", "Blur", 0));
         menuHelp->setTitle(QApplication::translate("BachelorThesisClass", "Help", 0));
     } // retranslateUi
 
