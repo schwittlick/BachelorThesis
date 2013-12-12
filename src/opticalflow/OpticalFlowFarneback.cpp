@@ -1,7 +1,8 @@
 #include "OpticalFlowFarneback.h"
 
 
-OpticalFlowFarneback::OpticalFlowFarneback(void) :
+OpticalFlowFarneback::OpticalFlowFarneback( QWidget *parent ) :
+	OpticalFlow( parent ),
 	pyr_scale( 0.5 ),
 	winSize( 15 ),
 	levels( 3 ),
@@ -12,9 +13,20 @@ OpticalFlowFarneback::OpticalFlowFarneback(void) :
 	scale( 30.0 )
 
 {
-	gui = new OpticalFlowFarnebackConfigDialog( (QWidget * ) ( this ) );
-	gui->show();
+	gui = new OpticalFlowFarnebackConfigDialog( this );
+
+	connect( gui, SIGNAL( changedWinSize( int ) ), this, SLOT( changedWinSize( int ) ) );
+	connect( gui, SIGNAL( changedPyrScale( int ) ), this, SLOT( changedPyrScale( int ) ) );
+	connect( gui, SIGNAL( changedPolySigma( int ) ), this, SLOT( changedPolySigma( int ) ) );
+	connect( gui, SIGNAL( changedLevels( int ) ), this, SLOT( changedLevels( int ) ) );
+	connect( gui, SIGNAL( changedIterations( int ) ), this, SLOT( changedIterations( int ) ) );
+	connect( gui, SIGNAL( changedPolyN( int ) ), this, SLOT( changedPolyN( int ) ) );
+	connect( gui, SIGNAL( changedStepSize( int ) ), this, SLOT( changedStepSize( int ) ) );
+	connect( gui, SIGNAL( changedScale( int ) ), this, SLOT( changedScale( int ) ) );
+	//gui->show();
 	previousImage = cv::Mat::zeros( 576, 720, CV_8UC1 );
+
+	std::cout << "Fanrback initialized" << std::endl;
 }
 
 
@@ -84,6 +96,7 @@ void OpticalFlowFarneback::drawOptFlowMap( const cv::Mat& flow, cv::Mat& cflowma
 
 void OpticalFlowFarneback::setPyrScale( double _pyr_scale )
 {
+	std::cout << "pyrscale changed." << std::endl;
 	this->pyr_scale = _pyr_scale;
 }
 
@@ -172,4 +185,21 @@ void OpticalFlowFarneback::changedScale( int _scale )
 	double scaleDraw = _scale / 20.0;
 	std::cout << "changed scale: " << scaleDraw << std::endl;
 	this->setScale( scaleDraw );
+}
+
+void OpticalFlowFarneback::apply( cv::gpu::GpuMat * image )
+{
+	cv::Mat calcImage( *image );
+	this->calc( &calcImage );
+	image->upload( calcImage );
+}
+
+void OpticalFlowFarneback::toggleConfigWindow( void )
+{
+	gui->setVisible( !gui->isVisible() );
+}
+
+void OpticalFlowFarneback::activate( void )
+{
+	std::cout << "OpticalFlowFarneback::activate" << std::endl;
 }

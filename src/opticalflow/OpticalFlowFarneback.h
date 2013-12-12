@@ -3,6 +3,7 @@
 #include < vector >
 
 #include "QObject"
+#include "QWidget"
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/legacy/legacy.hpp"
@@ -22,14 +23,17 @@
 #include "opencv2/imgproc/imgproc_c.h"
 
 #include "src/opticalflow/dialogs/OpticalFlowFarnebackConfigDialog.h"
+#include "OpticalFlow.h"
 
-class OpticalFlowFarneback : QWidget
+class OpticalFlowFarneback : public OpticalFlow//, public QWidget
 {
 	Q_OBJECT
 public:
 	// parameters and opticallfowdraw from here https://code.ros.org/trac/opencv/browser/trunk/opencv/samples/c/fback.cpp?rev=2271
-	OpticalFlowFarneback(void);
+	OpticalFlowFarneback( QWidget *parent = 0 );
 	~OpticalFlowFarneback(void);
+
+	void apply( cv::gpu::GpuMat * image );
 
 	void calc( cv::Mat * image );
 	void drawOptFlowMap(const cv::Mat& flow, cv::Mat& cflowmap, int step, double scale, const cv::Scalar& color);
@@ -58,5 +62,8 @@ public slots:
 	void changedPolyN( int _poly_n );
 	void changedStepSize( int _stepsize );
 	void changedScale( int _scale );
+
+	void activate( void );
+	void toggleConfigWindow( void );
 };
 
