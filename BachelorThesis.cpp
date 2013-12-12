@@ -11,13 +11,14 @@
 
 BachelorThesis::BachelorThesis(QWidget *parent)
 	: QMainWindow(parent),
-	videoReader( VideoReader::Type::LIVE ),
+	videoReader( VideoReader::Type::CPU ),
 	playbackSpeed( 1 ),
 	doBackgroundSubtraction( false ),
 	doMeanShiftFiltering( false ),
 	blurAmount( 1 ),
 	isMouseButtonDown( false ),
-	isVideoPaused( true )
+	isVideoPaused( true ),
+	originalImage( 640, 480, CV_8UC4 )
 {
 
 	ui.setupUi(this);
@@ -30,30 +31,23 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 
 	// passes all events for the videoLabel to this class and handles them via a eventfilter
 	ui.videoLabel->installEventFilter( this );
+	ui.originalVideoLabel->installEventFilter( this );
 	origin = QPoint( 0, 0 );
 	roiSelector = new QRubberBand(QRubberBand::Rectangle, ui.videoLabel);
 	roiSelector->setGeometry(QRect(QPoint( 0, 0 ), QPoint( 720, 576 ) ).normalized());
 
-	cv::gpu::setDevice( 0 );
-
 	connect( ui.actionOpen_File,			SIGNAL( triggered() ),				this,		SLOT( openFile() ) );
-	connect( ui.verticalSlider,				SIGNAL( valueChanged( int ) ),		this,		SLOT( changePlaybackSpeed( int ) ) );
 	connect( ui.pushButton,					SIGNAL( clicked() ),				this,		SLOT( startVideo() ) );
 	// TODO: fix this, it should only call this slot if the slider is moved by hand
 	//connect( ui.progressBarSlider,			SIGNAL( valueChanged( int) ),		this,	SLOT( jumpToFrame( int ) ) );
-	connect( ui.checkBox,					SIGNAL( toggled( bool ) ),			this,		SLOT( toggleBackgroundSubtraction( bool ) ) );
-	connect( ui.checkBox_2,					SIGNAL( toggled( bool ) ),			this,		SLOT( toggleMeanShiftFiltering( bool ) ) );
-	connect( ui.blurSlider,					SIGNAL( valueChanged( int ) ),		this,		SLOT( blurAmountChanged( int ) ) );
 	connect( ui.actionOpen_Sample,			SIGNAL( triggered() ),				this,		SLOT( openSampleFile() ) );
 
-	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				this,		SLOT( openLukasKanadeWindow( ) ) );
 	connect( ui.actionHardware_Info,		SIGNAL( triggered() ),				this,		SLOT( openHardwareInfoDialog() ) );
 
-	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				( QObject* )pipeline,	SIGNAL( toggleDialogDisplay() ) );
 	connect( ui.actionProcesingPipeline,	SIGNAL( triggered() ),				( QObject* ) pipeline,	SLOT( toggleProcessingPipelineConfigWidgetDisplay() ) );
+	connect( ui.actionOpticalFlowSelector,	SIGNAL( triggered() ),				( QObject* ) pipeline,	SLOT( toggleOpticalFlowSelectorDialog() ) );
 	connect( ui.actionOpen_Video_Stream,	SIGNAL( triggered() ),				this,		SLOT( openVideoStream() ) );
 
-	originalImage = new cv::gpu::GpuMat( 640, 480, CV_8UC4 );
 
 }
 
@@ -62,7 +56,6 @@ BachelorThesis::~BachelorThesis()
 	delete hardwareInfoDialog;
 	delete roiSelector;
 	delete pipeline;
-	delete originalImage;
 }
 
 void BachelorThesis::loadImage() 
@@ -72,21 +65,23 @@ void BachelorThesis::loadImage()
 		timer.start();
 		
 		cv::gpu::GpuMat processedImage;
+		cv::Mat unProcessedImage;
 
 		// loading new frames. the amount of skipped frames is indicated by playbackSpeed
 		for( int i = 0; i < playbackSpeed; i++ )
 		{
 			if( videoReader.selectedType == VideoReader::Type::CPU || videoReader.selectedType == VideoReader::Type::LIVE )
 			{
-				cv::Mat  temp = *videoReader.getNextImage();
+				cv::Mat  temp = videoReader.getNextImage();
+				
 				cv::cvtColor( temp, temp, CV_BGR2RGBA );
-
-				if( originalImage->cols != temp.cols || originalImage->rows != temp.rows )
+				unProcessedImage = temp;
+				if( originalImage.cols != temp.cols || originalImage.rows != temp.rows )
 				{
-					originalImage = new cv::gpu::GpuMat( 640, 480, CV_8UC4 );
+					originalImage = cv::gpu::GpuMat( 640, 480, CV_8UC4 );
 				}
 
-				originalImage->upload( temp );
+				originalImage.upload( temp );
 			} else if ( videoReader.selectedType == VideoReader::Type::GPU )
 			{
 				originalImage = videoReader.getNextImage_GPU();
@@ -95,18 +90,19 @@ void BachelorThesis::loadImage()
 		}
 
 		// get the selected area
-		QPoint maxSize( originalImage->cols, originalImage->rows );
+		QPoint maxSize( originalImage.cols, originalImage.rows );
 		QRect roi = roiSelector->geometry();
 
 		// adjust the roisize according to the maximum dimensions
 		adjustRoiSize( roiSelector->geometry(), roi, maxSize );
 
 		// initializes a new section gpumat with the size of the roi and the imagetype of the incoming image
-		cv::gpu::GpuMat section( roi.width(), roi.height(), originalImage->type() );
+		cv::gpu::GpuMat section( roi.width(), roi.height(), originalImage.type() );
 		// init a cv::Rect with the properties of the ROI
 		cv::Rect cvSelectedRect = cv::Rect( roi.x(), roi.y(), roi.width(), roi.height() );
 		// a new local copy of the current image
-		cv::gpu::GpuMat tempMat = *originalImage;
+
+		cv::gpu::GpuMat tempMat(originalImage );
 		// select a part of this new image ( position and size is stored in the passed cv::Rect) and copy this to the new image
 		tempMat(cvSelectedRect).copyTo( section );
 		// add the cropped image to the processing pipeline
@@ -116,16 +112,23 @@ void BachelorThesis::loadImage()
 		// get the processed image
 		processedImage = pipeline->getFinishedImage();
 		// make a local copy of the entire unprocessed original image
-		cv::gpu::GpuMat finalImage = *originalImage;
+		cv::gpu::GpuMat finalImage( originalImage );
 		// copy the processed image into the original image, exactly at the location of the ROI
 		processedImage.copyTo( finalImage( cvSelectedRect ) );
 		// convert the cv::gpu::GpuMat into a QPixmap
+		
 		QPixmap imagePixmap = QPixmap::fromImage( this->mat2QImage( cv::Mat( finalImage ) ) );
 		// display the QPixmap onto the label
 		ui.videoLabel->setPixmap( imagePixmap );
-		ui.videoLabel->setMaximumHeight( finalImage.cols );
-		ui.videoLabel->setMaximumWidth( finalImage.rows );
+		ui.videoLabel->setMaximumHeight( imagePixmap.width() );
+		ui.videoLabel->setMaximumWidth( imagePixmap.height() );
 		ui.videoLabel->adjustSize();
+
+		QPixmap originalImagePixmap = QPixmap::fromImage( this->mat2QImage( cv::Mat( unProcessedImage ) ) );
+		ui.originalVideoLabel->setPixmap( originalImagePixmap );
+		ui.originalVideoLabel->setMaximumHeight( originalImagePixmap.width() );
+		ui.originalVideoLabel->setMaximumWidth( originalImagePixmap.height() );
+		ui.originalVideoLabel->adjustSize();
 		timer.stop();
 		timer.store();
 		//std::cout << "it took by average:" << timer.getAverageTimeStdString() << "ms." << std::endl;
@@ -133,7 +136,6 @@ void BachelorThesis::loadImage()
 		QString elapsed;
 		elapsed.append( QString( "%1" ).arg( videoReader.getNormalizedProgress() ) );
 
-		ui.label->setText( elapsed );
 		ui.progressBarSlider->setValue( videoReader.getCurrentFrameNr() );
 	}
 	else
@@ -177,49 +179,13 @@ void BachelorThesis::jumpToFrame( int _frameNr )
 	videoReader.jumpToFrame( _frameNr );
 }
 
-void BachelorThesis::toggleBackgroundSubtraction( bool _doBackgroundSubtraction )
-{
-	doBackgroundSubtraction = _doBackgroundSubtraction;
-}
-
-void BachelorThesis::blurAmountChanged( int _blurAmount )
-{
-	std::cout << "BlurAmount changed to " << _blurAmount << std::endl;
-	this->blurAmount = _blurAmount;
-}
-
-void BachelorThesis::changeLKIters( int _iters )
-{
-	std::cout << "LKOF: iters: " << _iters << std::endl;
-	//this->lkflow.setIters( _iters );
-}
-
-void BachelorThesis::changeLKWinSize( int _winSize )
-{
-	std::cout << "LKOF: winSize: " << _winSize << std::endl;
-	//this->lkflow.setWinSize( _winSize );
-}
-
-void BachelorThesis::changeLKMaxlevel( int _maxLevel )
-{
-	std::cout << "LKOF: maxLevel: " << _maxLevel << std::endl;
-	//this->lkflow.setMaxLevel( _maxLevel );
-}
-
 void BachelorThesis::openSampleFile( void )
 {
-	//frameHandler.createNewOutput( "VIDEO_GPU", 0, cv::WINDOW_OPENGL );
-	//imageLabel.show();
 	std::string fileName = "G:\\DB\\Dropbox\\BA\\code\\BachelorThesis\\BachelorThesis\\Fri_Oct_11_compilation.mp4";
 
 	videoReader.open( fileName );
 	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
 
-}
-
-void BachelorThesis::toggleMeanShiftFiltering( bool _doMeanShiftFiltering )
-{
-	this->doMeanShiftFiltering = _doMeanShiftFiltering;
 }
 
 void BachelorThesis::openHardwareInfoDialog( void )

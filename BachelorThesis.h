@@ -38,7 +38,7 @@ private:
 
 	VideoReader videoReader;
 	Timer timer;
-	cv::gpu::GpuMat * originalImage;
+	cv::gpu::GpuMat originalImage;
 
 	HardwareInfoDialog * hardwareInfoDialog;
 
@@ -64,14 +64,7 @@ public slots:
 	void changePlaybackSpeed( int _playbackSpeed );
 	void startVideo( void );
 	void jumpToFrame( int _frameNr );
-	void toggleBackgroundSubtraction( bool _doBackgroundSubtraction );
-	void toggleMeanShiftFiltering( bool _doMeanShiftFiltering );
-	void blurAmountChanged( int _blurAmount );
 	void openHardwareInfoDialog( void );
-
-	void changeLKIters( int _iters );
-	void changeLKMaxlevel( int _maxLevel );
-	void changeLKWinSize( int _winSize );
 };
 
 #endif // BACHELORTHESIS_H
