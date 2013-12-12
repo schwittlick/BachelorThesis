@@ -16,16 +16,27 @@
 
 ProcessingPipeline::ProcessingPipeline( QWidget *parent ) : 
 	QWidget( parent ),
-	minSurfaceArea( 2000 ),
-	flowKanadeGPU( parent )
+	minSurfaceArea( 2000 )
 {
 	processingPipelineConfigWidget = new ImageProcessorWidget( this );
+	opticalflowSelectorDialog = new OpticalFlowSelectorDialog( this );
+	std::cout << "Trying to start Farneback" << std::endl;
+	flowFarneback = new OpticalFlowFarneback( this );
 
 	connect( processingPipelineConfigWidget,			SIGNAL( checkBoxClicked( int ) ),		this,	SLOT( checkBoxClicked( int ) ) );
 	connect( processingPipelineConfigWidget,			SIGNAL( upButtonClicked( int ) ),		this,	SLOT( upClicked( int ) ) );
 	connect( processingPipelineConfigWidget,			SIGNAL( downButtonClicked( int ) ),		this,	SLOT( downClicked( int ) ) );
 	connect( processingPipelineConfigWidget,			SIGNAL( configButtonClicked( int ) ),	this,	SLOT( configClicked( int ) ) );
 	connect( this,										SIGNAL( toggleDialogDisplay() ),		this,	SLOT( toggleLukasKanadeDialogDisplay() ) );
+
+	// connecting the functionality from the flowselector to the corresponding flow
+	//connect( opticalflowSelectorDialog, SIGNAL( lukasKanadeActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
+	connect( opticalflowSelectorDialog, SIGNAL( farnebackActivated() ), ( QWidget* )flowFarneback, SLOT( activate() ) );
+	connect( opticalflowSelectorDialog, SIGNAL( farnebackDialogToggled() ), ( QWidget* )flowFarneback, SLOT( toggleConfigWindow() ) );
+	//connect( opticalflowSelectorDialog, SIGNAL( blockMatchingActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
+	//connect( opticalflowSelectorDialog, SIGNAL( broxActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
+	//connect( opticalflowSelectorDialog, SIGNAL( dualTVL1Activated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
+	//connect( opticalflowSelectorDialog, SIGNAL( hsActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
 
 	processingSteps.push_back( new DilationStep( ) );
 	processingSteps.push_back( new ErosionStep() );
@@ -51,6 +62,7 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 ProcessingPipeline::~ProcessingPipeline(void)
 {
 	delete processingPipelineConfigWidget;
+	delete opticalflowSelectorDialog;
 }
 
 void ProcessingPipeline::addImage( cv::gpu::GpuMat * imageToBeProcessed )
@@ -70,12 +82,13 @@ void ProcessingPipeline::start( void )
 
 	//
 	
-	bool doFarneback = false;
+	bool doFarneback = true;
 	if( doFarneback )
 	{
 		cv::Mat im;
 		currentImage.download( im );
-		flowFarneback.calc( &im );
+		//flowKanade.calc( &im );
+		flowFarneback->calc( &im );
 		currentImage.upload( im );
 	}
 	// median filter, block matching
@@ -85,16 +98,7 @@ void ProcessingPipeline::start( void )
 	bool doKanade = false;
 	if( doKanade )
 	{
-		flowKanadeGPU.apply( &currentImage );
-	}
-	bool doSmooth = false;
-	if( doSmooth )
-	{
-		// doesnt work
-		cv::Mat im;
-		currentImage.download( im );
-		cvSmooth( &im.data, &im.data );
-		currentImage.upload( im );
+		flowKanadeGPU->apply( &currentImage );
 	}
 
 	bool doGpuBlur = false;
@@ -103,13 +107,11 @@ void ProcessingPipeline::start( void )
 		cv::gpu::blur( currentImage, currentImage, cv::Size( 3, 3 ), cv::Point( -1, -1 ) );
 	}
 
-	//bgs.applyBGS( &currentImage, BackgroundSubtractor::Type::MOG2 );
-
 	//flowKanade.calc( &im );
-	bool doBM = true;
+	bool doBM = false;
 	if( doBM )
 	{
-		//bm.apply( &currentImage );
+		bm->apply( &currentImage );
 	}
 	//cv::Mat flow;
 	//flowKanadeGPU.apply( &currentImage );
@@ -158,7 +160,7 @@ void ProcessingPipeline::checkBoxClicked( int id )
 
 void ProcessingPipeline::toggleLukasKanadeDialogDisplay( void )
 {
-	flowKanadeGPU.toggleViewDisplay();
+	flowKanadeGPU->toggleViewDisplay();
 }
 
 void ProcessingPipeline::toggleProcessingPipelineConfigWidgetDisplay( void )
@@ -289,4 +291,9 @@ bool ProcessingPipeline::isVeryBottomElement( int _id )
 bool ProcessingPipeline::isVeryTopElement( int _id )
 {
 	return ( findId( currentProcessingStepOrder, _id ) > 0 ) ? false : true;
+}
+
+void ProcessingPipeline::toggleOpticalFlowSelectorDialog( void )
+{
+	opticalflowSelectorDialog->setVisible( !opticalflowSelectorDialog->isVisible() );
 }

@@ -20,6 +20,7 @@
 #include "src/ip/steps/ProcessingStep.h"
 
 #include "imageprocessorwidget.h"
+#include "OpticalFlowSelectorDialog.h"
 
 #include "src/opticalflow/LukasKanadeOpticalFlow.h"
 
@@ -39,6 +40,7 @@ public:
 
 public slots:
 	void toggleProcessingPipelineConfigWidgetDisplay( void );
+	void toggleOpticalFlowSelectorDialog( void );
 	void checkBoxClicked( int id );
 	void downClicked( int id );
 	void upClicked( int id );
@@ -49,21 +51,21 @@ signals:
 
 private:
 	cv::gpu::GpuMat currentImage;
-	FeatureDetector fea;
+	FeatureDetector * fea;
 	StandardImageProcessor improc;
-	OpticalFlowFarneback flowFarneback;
-	OpticalFlowLukaskanade flowKanade;
-	OpticalFlowSF flowSF;
-	DualTVL1OpticalFlow flowTvl1;
-	OpticalFlowBlockMatching bm;
-
-	LukasKanadeOpticalFlow flowKanadeGPU;
+	OpticalFlowFarneback * flowFarneback;
+	OpticalFlowLukaskanade * flowKanade;
+	OpticalFlowSF * flowSF;
+	DualTVL1OpticalFlow * flowTvl1;
+	OpticalFlowBlockMatching * bm;
+	LukasKanadeOpticalFlow * flowKanadeGPU;
 
 	std::vector< ProcessingStep * > processingSteps;
 	std::vector< int > currentProcessingStepOrder;
 	int getActualID( int _id );
 	int findId( const std::vector<int>& where, int searchParameter );
 
+	OpticalFlowSelectorDialog * opticalflowSelectorDialog;
 	ImageProcessorWidget * processingPipelineConfigWidget;
 
 	int minSurfaceArea;
