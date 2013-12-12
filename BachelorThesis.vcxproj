@@ -109,6 +109,15 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_OpenStepDialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlow.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowFarneback.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowSelectorDialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ThresholdStep.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -151,6 +160,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_OpenStepDialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlow.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowFarneback.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowSelectorDialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ThresholdStep.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -163,6 +181,8 @@
     <ClCompile Include="GeneratedFiles\Release\moc_TopHatStep.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="OpticalFlow.cpp" />
+    <ClCompile Include="OpticalFlowSelectorDialog.cpp" />
     <ClCompile Include="src\ip\dialogs\gradientstepdialog.cpp" />
     <ClCompile Include="src\ip\dialogs\CloseStepDialog.cpp" />
     <ClCompile Include="src\ip\dialogs\GaussianBlurStepDialog.cpp" />
@@ -224,9 +244,6 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_LukasKanadeOpticalFlow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowFarneback.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowFarnebackConfigDialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -273,9 +290,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_LukasKanadeOpticalFlow.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowFarneback.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowFarnebackConfigDialog.cpp">
@@ -590,6 +604,7 @@
     <ClInclude Include="GeneratedFiles\ui_gradientstepdialog.h" />
     <ClInclude Include="GeneratedFiles\ui_MedianFilterStepDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_OpenStepDialog.h" />
+    <ClInclude Include="GeneratedFiles\ui_OpticalFlowSelectorDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_ThresholdStepDialog.h" />
     <CustomBuild Include="src\ip\dialogs\CloseStepDialog.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
@@ -692,6 +707,26 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_NETWORK_LIB -DQT_CONCURRENT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtMultimediaWidgets" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(OPENCV_DIR)\..\..\include" "-I.\src\ip\dialogs" "-IC:\opencv-2.4\build\install\include" "-I$(NOINHERIT)\."</Command>
     </CustomBuild>
     <ClInclude Include="GeneratedFiles\ui_TopHatDialog.h" />
+    <CustomBuild Include="OpticalFlowSelectorDialog.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing OpticalFlowSelectorDialog.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_NETWORK_LIB -DQT_CONCURRENT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtMultimediaWidgets" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I.\src\ip\dialogs" "-IC:\opencv-2.4\build\install\include" "-I$(NOINHERIT)\."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing OpticalFlowSelectorDialog.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_NETWORK_LIB -DQT_CONCURRENT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtMultimediaWidgets" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(OPENCV_DIR)\..\..\include" "-I.\src\ip\dialogs" "-IC:\opencv-2.4\build\install\include" "-I$(NOINHERIT)\."</Command>
+    </CustomBuild>
+    <CustomBuild Include="OpticalFlow.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing OpticalFlow.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_NETWORK_LIB -DQT_CONCURRENT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtMultimediaWidgets" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I.\src\ip\dialogs" "-IC:\opencv-2.4\build\install\include" "-I$(NOINHERIT)\."</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing OpticalFlow.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_NETWORK_LIB -DQT_CONCURRENT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtMultimediaWidgets" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(OPENCV_DIR)\..\..\include" "-I.\src\ip\dialogs" "-IC:\opencv-2.4\build\install\include" "-I$(NOINHERIT)\."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
     <ClInclude Include="src\opticalflow\DualTVL1OpticalFlow.h" />
     <CustomBuild Include="src\ip\steps\ErosionStep.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
@@ -774,14 +809,14 @@
     <ClInclude Include="GeneratedFiles\ui_imageprocessorwidget.h" />
     <ClInclude Include="GeneratedFiles\ui_OpticalFlowFarnebackConfigDialog.h" />
     <CustomBuild Include="src\opticalflow\OpticalFlowFarneback.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing OpticalFlowFarneback.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_NETWORK_LIB -DQT_CONCURRENT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtMultimediaWidgets" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I.\src\ip\dialogs" "-IC:\opencv-2.4\build\install\include" "-I$(NOINHERIT)\."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_NETWORK_LIB -DQT_CONCURRENT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtMultimediaWidgets" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I.\src\ip\dialogs" "-IC:\opencv-2.4\build\install\include" "-I$(NOINHERIT)\."</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing OpticalFlowFarneback.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_NETWORK_LIB -DQT_CONCURRENT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtMultimediaWidgets" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(OPENCV_DIR)\..\..\include" "-I.\src\ip\dialogs" "-IC:\opencv-2.4\build\install\include" "-I$(NOINHERIT)\."</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIA_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_NETWORK_LIB -DQT_CONCURRENT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtMultimedia" "-I$(QTDIR)\include\QtMultimediaWidgets" "-I$(QTDIR)\include\QtNetwork" "-I$(QTDIR)\include\QtConcurrent" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-I$(OPENCV_DIR)\..\..\include" "-I.\src\ip\dialogs" "-IC:\opencv-2.4\build\install\include" "-I$(NOINHERIT)\."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="src\opticalflow\dialogs\OpticalFlowFarnebackConfigDialog.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
@@ -1033,6 +1068,18 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="src\ip\dialogs\TopHatDialog.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="OpticalFlowSelectorDialog.ui">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>

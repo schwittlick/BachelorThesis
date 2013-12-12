@@ -143,12 +143,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowFarnebackConfigDialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowFarneback.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowFarneback.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="imageprocessorwidget.cpp">
       <Filter>Source Files\gui</Filter>
     </ClCompile>
@@ -416,6 +410,30 @@
     <ClCompile Include="GeneratedFiles\Release\moc_TopHatStep.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="OpticalFlowSelectorDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowSelectorDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowSelectorDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="OpticalFlow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowFarneback.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowFarneback.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlow.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlow.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="BachelorThesis.h">
@@ -595,6 +613,15 @@
     <CustomBuild Include="src\ip\steps\TopHatStep.h">
       <Filter>Header Files\ip</Filter>
     </CustomBuild>
+    <CustomBuild Include="OpticalFlowSelectorDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="OpticalFlowSelectorDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="OpticalFlow.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BachelorThesis.rc" />
@@ -673,6 +700,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_TopHatDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_OpticalFlowSelectorDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
