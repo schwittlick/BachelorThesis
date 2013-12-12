@@ -11,7 +11,7 @@
 
 BachelorThesis::BachelorThesis(QWidget *parent)
 	: QMainWindow(parent),
-	videoReader( VideoReader::Type::GPU ),
+	videoReader( VideoReader::Type::LIVE ),
 	playbackSpeed( 1 ),
 	doBackgroundSubtraction( false ),
 	doMeanShiftFiltering( false ),
@@ -51,6 +51,10 @@ BachelorThesis::BachelorThesis(QWidget *parent)
 
 	connect( ui.actionPyrLukasKanade,		SIGNAL( triggered() ),				( QObject* )pipeline,	SIGNAL( toggleDialogDisplay() ) );
 	connect( ui.actionProcesingPipeline,	SIGNAL( triggered() ),				( QObject* ) pipeline,	SLOT( toggleProcessingPipelineConfigWidgetDisplay() ) );
+	connect( ui.actionOpen_Video_Stream,	SIGNAL( triggered() ),				this,		SLOT( openVideoStream() ) );
+
+	originalImage = new cv::gpu::GpuMat( 640, 480, CV_8UC4 );
+
 }
 
 BachelorThesis::~BachelorThesis()
@@ -58,6 +62,7 @@ BachelorThesis::~BachelorThesis()
 	delete hardwareInfoDialog;
 	delete roiSelector;
 	delete pipeline;
+	delete originalImage;
 }
 
 void BachelorThesis::loadImage() 
@@ -65,13 +70,28 @@ void BachelorThesis::loadImage()
 	if( videoReader.isOpen() && !isVideoPaused )
 	{
 		timer.start();
-		cv::gpu::GpuMat * originalImage = nullptr;
+		
 		cv::gpu::GpuMat processedImage;
 
 		// loading new frames. the amount of skipped frames is indicated by playbackSpeed
 		for( int i = 0; i < playbackSpeed; i++ )
 		{
-			originalImage = videoReader.getNextImage_GPU();
+			if( videoReader.selectedType == VideoReader::Type::CPU || videoReader.selectedType == VideoReader::Type::LIVE )
+			{
+				cv::Mat  temp = *videoReader.getNextImage();
+				cv::cvtColor( temp, temp, CV_BGR2RGBA );
+
+				if( originalImage->cols != temp.cols || originalImage->rows != temp.rows )
+				{
+					originalImage = new cv::gpu::GpuMat( 640, 480, CV_8UC4 );
+				}
+
+				originalImage->upload( temp );
+			} else if ( videoReader.selectedType == VideoReader::Type::GPU )
+			{
+				originalImage = videoReader.getNextImage_GPU();
+			}
+			
 		}
 
 		// get the selected area
@@ -271,4 +291,10 @@ void BachelorThesis::adjustRoiSize( const QRect & srcRoi, QRect & dstRoi, const 
 	{
 		dstRoi = QRect( 0, 0, maxSize.x(), maxSize.y() );
 	}
+}
+
+void BachelorThesis::openVideoStream( void )
+{
+	std::string null = "";
+	videoReader.open( null );
 }

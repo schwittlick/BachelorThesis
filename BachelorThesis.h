@@ -38,6 +38,7 @@ private:
 
 	VideoReader videoReader;
 	Timer timer;
+	cv::gpu::GpuMat * originalImage;
 
 	HardwareInfoDialog * hardwareInfoDialog;
 
@@ -59,6 +60,7 @@ public slots:
 	void loadImage( void );
 	void openFile( void );
 	void openSampleFile( void );
+	void openVideoStream( void );
 	void changePlaybackSpeed( int _playbackSpeed );
 	void startVideo( void );
 	void jumpToFrame( int _frameNr );
