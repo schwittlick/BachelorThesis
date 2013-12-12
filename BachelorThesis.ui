@@ -6,122 +6,103 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>837</width>
-    <height>905</height>
+    <width>1454</width>
+    <height>686</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>BachelorThesis</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>No File loaded.</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QSlider" name="verticalSlider">
-      <property name="minimum">
-       <number>1</number>
-      </property>
-      <property name="maximum">
-       <number>20</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="tickInterval">
-       <number>1</number>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Blur Amount</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="videoLabel">
-      <property name="minimumSize">
-       <size>
-        <width>720</width>
-        <height>576</height>
-       </size>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>720</width>
-        <height>675</height>
-       </size>
-      </property>
-      <property name="cursor">
-       <cursorShape>CrossCursor</cursorShape>
-      </property>
-      <property name="mouseTracking">
-       <bool>true</bool>
-      </property>
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>Play</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QSlider" name="blurSlider">
-      <property name="maximum">
-       <number>20</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QSlider" name="progressBarSlider">
-      <property name="maximum">
-       <number>1</number>
-      </property>
-      <property name="singleStep">
-       <number>1</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="checkBox">
-      <property name="text">
-       <string>Background Subtraction</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="checkBox_2">
-      <property name="text">
-       <string>Meanshift Filtering</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <widget class="QLabel" name="videoLabel">
+    <property name="geometry">
+     <rect>
+      <x>727</x>
+      <y>1</y>
+      <width>720</width>
+      <height>564</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>720</width>
+      <height>564</height>
+     </size>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="cursor">
+     <cursorShape>CrossCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>processed video</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="originalVideoLabel">
+    <property name="geometry">
+     <rect>
+      <x>1</x>
+      <y>1</y>
+      <width>720</width>
+      <height>564</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>720</width>
+      <height>564</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>original video</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>1</x>
+      <y>580</y>
+      <width>1451</width>
+      <height>53</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Play</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="progressBarSlider">
+       <property name="maximum">
+        <number>1</number>
+       </property>
+       <property name="singleStep">
+        <number>1</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>837</width>
+     <width>1454</width>
      <height>21</height>
     </rect>
    </property>
@@ -139,16 +120,8 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <widget class="QMenu" name="menuOptical_Flow">
-     <property name="title">
-      <string>Optical Flow</string>
-     </property>
-     <addaction name="actionPyrLukasKanade"/>
-     <addaction name="actionFarneback"/>
-     <addaction name="actionBrox"/>
-    </widget>
-    <addaction name="menuOptical_Flow"/>
     <addaction name="actionProcesingPipeline"/>
+    <addaction name="actionOpticalFlowSelector"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -255,6 +228,11 @@
   <action name="actionOpen_Video_Stream">
    <property name="text">
     <string>Open Video Stream</string>
+   </property>
+  </action>
+  <action name="actionOpticalFlowSelector">
+   <property name="text">
+    <string>OpticalFlowSelector</string>
    </property>
   </action>
  </widget>
