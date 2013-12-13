@@ -24,7 +24,7 @@ private:
 
 	cv::gpu::GpuMat d_frame;
 
-	//cv::gpu::FGDStatModel fgd_stat;
+	cv::gpu::FGDStatModel fgd_stat;
 	cv::gpu::MOG_GPU mog;
 	cv::gpu::MOG2_GPU mog2;
 	cv::gpu::GMG_GPU gmg;
