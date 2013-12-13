@@ -14,7 +14,6 @@ public:
 
 signals:
 	void kernelSizeChanged( int value );
-	void pointPositionChanged( int value );
 	void iterationChanged( int value );
 
 private:
