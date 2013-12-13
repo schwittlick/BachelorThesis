@@ -6,27 +6,34 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>218</height>
+    <width>580</width>
+    <height>154</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>BlackHatStepDialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>21</x>
-     <y>11</y>
-     <width>361</width>
-     <height>191</height>
+     <x>10</x>
+     <y>10</y>
+     <width>561</width>
+     <height>131</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label_ksize">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>kernelsize</string>
+       <string>Kernelsize</string>
       </property>
      </widget>
     </item>
@@ -40,14 +47,34 @@
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="kernelSizeNumber"/>
+       <widget class="QLCDNumber" name="kernelSizeNumber">
+        <property name="font">
+         <font>
+          <family>Replica-Bold</family>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+        <property name="value" stdset="0">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
     <item>
      <widget class="QLabel" name="label_iterations">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>iterations</string>
+       <string>Iterations</string>
       </property>
      </widget>
     </item>
@@ -61,7 +88,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="iterationsNumber"/>
+       <widget class="QLCDNumber" name="iterationsNumber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+        <property name="value" stdset="0">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
