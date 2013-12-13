@@ -135,20 +135,24 @@ void BachelorThesis::loadImage()
 		//std::cout << "lates was: " << timer.getLatestStdString() << "ms." << std::endl;
 		QString elapsed;
 		elapsed.append( QString( "%1" ).arg( videoReader.getNormalizedProgress() ) );
-
-		ui.progressBarSlider->setValue( videoReader.getCurrentFrameNr() );
+		ui.progressBar->setValue( videoReader.getCurrentFrameNr() );
 	}
 	else
 	{
-		// no new frame. do nothing
+		// no new frame. do nothings
 	}
+}
+
+void BachelorThesis::displayImages( cv::gpu::GpuMat * image )
+{
+
 }
 
 void BachelorThesis::openFile( void )
 {
 	QString fileName = QFileDialog::getOpenFileName( this, tr( "Open File" ), "", tr( "MP4 (*.mp4);; AVI (*.avi)" ) );
 	videoReader.open( fileName.toStdString() );
-	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
+	ui.progressBar->setMaximum( videoReader.getMaxFrames() );
 }
 
 void BachelorThesis::changePlaybackSpeed( int _playbackSpeed )
@@ -184,7 +188,7 @@ void BachelorThesis::openSampleFile( void )
 	std::string fileName = "G:\\DB\\Dropbox\\BA\\code\\BachelorThesis\\BachelorThesis\\Fri_Oct_11_compilation.mp4";
 
 	videoReader.open( fileName );
-	ui.progressBarSlider->setMaximum( videoReader.getMaxFrames() );
+	ui.progressBar->setMaximum( videoReader.getMaxFrames() );
 
 }
 
