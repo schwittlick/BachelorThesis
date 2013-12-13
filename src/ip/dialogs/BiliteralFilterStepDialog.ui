@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>572</width>
+    <height>194</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,84 +17,194 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
-     <width>371</width>
-     <height>281</height>
+     <y>11</y>
+     <width>551</width>
+     <height>173</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label_d">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
        <string>d</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QSlider" name="dSlider">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_bordertype">
-      <property name="text">
-       <string>bordertype</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QSlider" name="borderTypeSlider">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QSlider" name="dSlider">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>1</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="dnumber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+        <property name="value" stdset="0">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="QLabel" name="label_sigmaColor">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>sigmaColor</string>
+       <string>Sigma color</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QSlider" name="sigmaColorSlider">
-      <property name="maximum">
-       <number>300</number>
-      </property>
-      <property name="value">
-       <number>171</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QSlider" name="sigmaColorSlider">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>300</number>
+        </property>
+        <property name="value">
+         <number>171</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="sigmacolornumber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+        <property name="value" stdset="0">
+         <double>171.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="QLabel" name="label_sigmaSpace">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>sigmaSpace</string>
+       <string>Sigma space</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QSlider" name="sigmaSpaceSlider">
-      <property name="maximum">
-       <number>300</number>
-      </property>
-      <property name="value">
-       <number>3</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QSlider" name="sigmaSpaceSlider">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>300</number>
+        </property>
+        <property name="value">
+         <number>3</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="sigmaspacenumber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+        <property name="value" stdset="0">
+         <double>3.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>dSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>dnumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>52</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>441</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sigmaColorSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sigmacolornumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>52</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>441</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sigmaSpaceSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sigmaspacenumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>52</x>
+     <y>161</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>441</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
