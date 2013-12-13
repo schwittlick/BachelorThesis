@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>610</width>
+    <height>210</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,15 +18,22 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>381</width>
-     <height>281</height>
+     <width>591</width>
+     <height>191</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>kernelsize</string>
+       <string>Kernelsize</string>
       </property>
      </widget>
     </item>
@@ -38,7 +45,7 @@
          <number>1</number>
         </property>
         <property name="maximum">
-         <number>100</number>
+         <number>30</number>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -47,6 +54,9 @@
       </item>
       <item>
        <widget class="QLCDNumber" name="kernelSizeNUmber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
         <property name="intValue" stdset="0">
          <number>1</number>
         </property>
@@ -56,6 +66,13 @@
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
        <string>sigma1</string>
       </property>
@@ -65,20 +82,34 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QSlider" name="sigma1Slider">
+        <property name="maximum">
+         <number>200</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="sigma1Number"/>
+       <widget class="QLCDNumber" name="sigma1Number">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
     <item>
      <widget class="QLabel" name="label_3">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>sigma1</string>
+       <string>sigma2</string>
       </property>
      </widget>
     </item>
@@ -86,13 +117,20 @@
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <widget class="QSlider" name="sigma2Slider">
+        <property name="maximum">
+         <number>200</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="sigma2Number"/>
+       <widget class="QLCDNumber" name="sigma2Number">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

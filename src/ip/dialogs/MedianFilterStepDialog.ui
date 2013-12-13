@@ -6,27 +6,34 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>380</width>
-    <height>247</height>
+    <width>654</width>
+    <height>172</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MedianFilterStepDialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>29</x>
-     <y>11</y>
-     <width>331</width>
-     <height>221</height>
+     <x>10</x>
+     <y>10</y>
+     <width>631</width>
+     <height>151</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>kernelSize</string>
+       <string>KernelSize</string>
       </property>
      </widget>
     </item>
@@ -38,7 +45,7 @@
          <number>1</number>
         </property>
         <property name="value">
-         <number>11</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -47,8 +54,14 @@
       </item>
       <item>
        <widget class="QLCDNumber" name="kernelSizeNumber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+        <property name="value" stdset="0">
+         <double>1.000000000000000</double>
+        </property>
         <property name="intValue" stdset="0">
-         <number>11</number>
+         <number>1</number>
         </property>
        </widget>
       </item>
@@ -56,8 +69,15 @@
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>iterations</string>
+       <string>Iterations</string>
       </property>
      </widget>
     </item>
@@ -78,6 +98,9 @@
       </item>
       <item>
        <widget class="QLCDNumber" name="iterationsNumber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
         <property name="intValue" stdset="0">
          <number>1</number>
         </property>

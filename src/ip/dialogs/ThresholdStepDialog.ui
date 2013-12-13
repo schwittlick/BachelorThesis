@@ -6,27 +6,34 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>373</width>
-    <height>256</height>
+    <width>550</width>
+    <height>138</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>ThresholdStepDialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>31</x>
-     <y>11</y>
-     <width>301</width>
-     <height>221</height>
+     <x>10</x>
+     <y>10</y>
+     <width>531</width>
+     <height>121</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>threshold</string>
+       <string>Threshold</string>
       </property>
      </widget>
     </item>
@@ -46,12 +53,26 @@
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="thresholdNumber"/>
+       <widget class="QLCDNumber" name="thresholdNumber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+        <property name="value" stdset="0">
+         <double>127.000000000000000</double>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
        <string>maxVal</string>
       </property>
@@ -73,7 +94,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="maxValNumber"/>
+       <widget class="QLCDNumber" name="maxValNumber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+        <property name="value" stdset="0">
+         <double>255.000000000000000</double>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

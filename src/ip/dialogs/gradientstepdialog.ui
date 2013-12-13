@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>632</width>
+    <height>173</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,16 +17,23 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>20</y>
-     <width>371</width>
-     <height>251</height>
+     <y>10</y>
+     <width>611</width>
+     <height>151</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>kernelSize</string>
+       <string>Kernelsize</string>
       </property>
      </widget>
     </item>
@@ -44,6 +51,9 @@
       </item>
       <item>
        <widget class="QLCDNumber" name="kernelSizeNUmber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
         <property name="intValue" stdset="0">
          <number>1</number>
         </property>
@@ -53,8 +63,15 @@
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>iterations</string>
+       <string>Iterations</string>
       </property>
      </widget>
     </item>
@@ -72,6 +89,9 @@
       </item>
       <item>
        <widget class="QLCDNumber" name="iterationsNumber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
         <property name="intValue" stdset="0">
          <number>1</number>
         </property>
@@ -84,5 +104,38 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>iterationsSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>iterationsNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>586</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kernelSizeSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>kernelSizeNUmber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>586</x>
+     <y>66</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
