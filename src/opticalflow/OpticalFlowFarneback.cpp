@@ -2,7 +2,7 @@
 
 
 OpticalFlowFarneback::OpticalFlowFarneback( QWidget *parent ) :
-	OpticalFlow( parent ),
+	OpticalFlowMethod( parent ),
 	pyr_scale( 0.5 ),
 	winSize( 15 ),
 	levels( 3 ),
@@ -10,8 +10,11 @@ OpticalFlowFarneback::OpticalFlowFarneback( QWidget *parent ) :
 	poly_n( 5 ),
 	poly_sigma( 1.2 ),
 	stepSize( 8 ),
-	scale( 30.0 )
-
+	scale( 30.0 ),
+	minLength( 0 ),
+	maxLength( 100 ),
+	activated( false ),
+	previousGpuImage( 20, 20, CV_8UC1 )
 {
 	gui = new OpticalFlowFarnebackConfigDialog( this );
 
@@ -23,10 +26,10 @@ OpticalFlowFarneback::OpticalFlowFarneback( QWidget *parent ) :
 	connect( gui, SIGNAL( changedPolyN( int ) ), this, SLOT( changedPolyN( int ) ) );
 	connect( gui, SIGNAL( changedStepSize( int ) ), this, SLOT( changedStepSize( int ) ) );
 	connect( gui, SIGNAL( changedScale( int ) ), this, SLOT( changedScale( int ) ) );
-	//gui->show();
-	previousImage = cv::Mat::zeros( 576, 720, CV_8UC1 );
+	connect( gui, SIGNAL( changedMinLength( int ) ), this, SLOT( changedMinLength( int ) ) );
+	connect( gui, SIGNAL( changedMaxLength( int ) ), this, SLOT( changedMaxLength( int ) ) );
 
-	std::cout << "Fanrback initialized" << std::endl;
+	previousImage = cv::Mat::zeros( 576, 720, CV_8UC1 );
 }
 
 
@@ -45,7 +48,12 @@ void OpticalFlowFarneback::calc( cv::Mat * image )
 	cv::cvtColor( *image, *image, CV_BGRA2GRAY);
 
 	cv::Mat outputImage;
+	timer.start();
 	cv::calcOpticalFlowFarneback(previousImage, *image, outputImage, pyr_scale, levels, winSize, iterations, poly_n, poly_sigma, 0 );
+	timer.stop();
+	timer.store();
+
+	std::cout << "last:" << timer.getLatestStdString() << std::endl;
 	image->copyTo( previousImage );
 
 	cv::Mat xy[2]; //X,Y
@@ -73,13 +81,20 @@ void OpticalFlowFarneback::calc( cv::Mat * image )
 	cv::Mat bgr;//CV_32FC3 matrix
 	cv::cvtColor(hsv, bgr, cv::COLOR_HSV2BGR);
 
-	drawOptFlowMap( outputImage, bgr, stepSize, scale, cv::Scalar( 255, 0, 0 ) );
-
-	cv::cvtColor( *image, *image, CV_GRAY2BGR );
-	//cv::imwrite( "image_farnflow.jpg", bgr );
-	bgr.copyTo( *image );
-	image->convertTo( *image, CV_8UC3 );
-	cv::cvtColor( *image, *image, CV_BGR2BGRA );
+	bool drawIt = true;
+	if( drawIt )
+	{
+		drawOptFlowMap( outputImage, bgr, stepSize, scale, cv::Scalar( 255, 0, 0 ) );
+		cv::cvtColor( *image, *image, CV_GRAY2BGR );
+		bgr.copyTo( *image );
+		image->convertTo( *image, CV_8UC3 );
+		cv::cvtColor( *image, *image, CV_BGR2BGRA );
+	}
+	else
+	{
+		cv::cvtColor( *image, *image, CV_GRAY2BGRA );
+	}
+	
 }
 
 void OpticalFlowFarneback::drawOptFlowMap( const cv::Mat& flow, cv::Mat& cflowmap, int step, double scale, const cv::Scalar& color )
@@ -88,8 +103,14 @@ void OpticalFlowFarneback::drawOptFlowMap( const cv::Mat& flow, cv::Mat& cflowma
 		for(int x = 0; x < cflowmap.cols; x += step)
 		{
 			const cv::Point2f& fxy = flow.at<cv::Point2f>(y, x);
-			line(cflowmap, cv::Point(x,y), cv::Point(cvRound(x+fxy.x), cvRound(y+fxy.y)),
-				color);
+			const cv::Point2f end = cv::Point( cvRound( x+( fxy.x * scale ) ) , cvRound( y+ ( fxy.y * scale ) ) ) ;
+			const cv::Point2f start = cv::Point( x, y) ;
+			float length = cv::norm( end - start );
+			if( length > minLength && length < maxLength )
+			{
+				cv::line(cflowmap, start, end, color);
+			}
+			
 			//cv::circle(cflowmap, cv::Point(x,y), 1, color, -1);
 		}
 }
@@ -141,7 +162,7 @@ void OpticalFlowFarneback::changedPyrScale( int _pyr_scale )
 void OpticalFlowFarneback::changedPolySigma( int _polySigma )
 {
 
-	double polySigma = _polySigma / 200.0;
+	double polySigma = _polySigma / 100.0;
 	std::cout << "changed polysigma: " << polySigma << std::endl;
 	this->setPolySigma( polySigma );
 }
@@ -182,16 +203,23 @@ void OpticalFlowFarneback::changedStepSize( int _stepsize )
 
 void OpticalFlowFarneback::changedScale( int _scale )
 {
-	double scaleDraw = _scale / 20.0;
-	std::cout << "changed scale: " << scaleDraw << std::endl;
-	this->setScale( scaleDraw );
+	std::cout << "changed scale: " << _scale << std::endl;
+	this->setScale( _scale );
 }
 
 void OpticalFlowFarneback::apply( cv::gpu::GpuMat * image )
 {
-	cv::Mat calcImage( *image );
-	this->calc( &calcImage );
-	image->upload( calcImage );
+	if( activated )
+	{
+		//timer.start();
+		cv::Mat calcImage( *image );
+		this->calc( &calcImage );
+		image->upload( calcImage );
+		//timer.stop();
+		//timer.store();
+		//this->calc_GPU( image );
+	}
+	//std::cout << "FarnebackOpticalFlow took: " << timer.getLatestStdString() << std::endl;
 }
 
 void OpticalFlowFarneback::toggleConfigWindow( void )
@@ -201,5 +229,36 @@ void OpticalFlowFarneback::toggleConfigWindow( void )
 
 void OpticalFlowFarneback::activate( void )
 {
-	std::cout << "OpticalFlowFarneback::activate" << std::endl;
+	activated = !activated;
+	std::cout << "farn actrivated now: " << activated << std::endl;
+}
+
+void OpticalFlowFarneback::changedMinLength( int _miNlength )
+{
+	this->minLength = _miNlength;
+}
+
+void OpticalFlowFarneback::changedMaxLength( int _maxLength )
+{
+	this->maxLength = _maxLength;
+}
+
+void OpticalFlowFarneback::calc_GPU( cv::gpu::GpuMat * image )
+{
+	cv::gpu::GpuMat flowX, flowY;
+	cv::gpu::GpuMat currentImage;
+	cv::gpu::cvtColor( *image, currentImage, CV_BGRA2GRAY );
+
+	if( previousGpuImage.size() != currentImage.size() )
+	{
+		currentImage.copyTo( previousGpuImage );
+	}
+
+	cv::gpu::FarnebackOpticalFlow farn;
+	farn( currentImage, previousGpuImage, flowX, flowY );
+
+	currentImage.copyTo( previousGpuImage );
+
+	cv::gpu::cvtColor( currentImage, *image, CV_GRAY2BGRA );
+	std::cout << "gpu farneback is working." << std::endl;
 }

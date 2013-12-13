@@ -22,10 +22,12 @@
 #include "opencv2/highgui/highgui_c.h"
 #include "opencv2/imgproc/imgproc_c.h"
 
-#include "src/opticalflow/dialogs/OpticalFlowFarnebackConfigDialog.h"
-#include "OpticalFlow.h"
+#include "src/misc/Timer.h"
 
-class OpticalFlowFarneback : public OpticalFlow//, public QWidget
+#include "src/opticalflow/dialogs/OpticalFlowFarnebackConfigDialog.h"
+#include "OpticalFlowMethod.h"
+
+class OpticalFlowFarneback : public OpticalFlowMethod//, public QWidget
 {
 	Q_OBJECT
 public:
@@ -36,6 +38,7 @@ public:
 	void apply( cv::gpu::GpuMat * image );
 
 	void calc( cv::Mat * image );
+	void calc_GPU( cv::gpu::GpuMat * image );
 	void drawOptFlowMap(const cv::Mat& flow, cv::Mat& cflowmap, int step, double scale, const cv::Scalar& color);
 
 
@@ -52,6 +55,13 @@ private:
 	cv::Mat previousImage;
 	double pyr_scale, poly_sigma, stepSize;
 	int levels, winSize, iterations, poly_n, scale;
+	bool activated;
+	float minLength, maxLength;
+
+	Timer timer;
+
+	//gpu stuff
+	cv::gpu::GpuMat previousGpuImage;
 
 public slots:
 	void changedWinSize( int _winSize );
@@ -62,6 +72,8 @@ public slots:
 	void changedPolyN( int _poly_n );
 	void changedStepSize( int _stepsize );
 	void changedScale( int _scale );
+	void changedMinLength( int _miNlength );
+	void changedMaxLength( int _maxLength );
 
 	void activate( void );
 	void toggleConfigWindow( void );
