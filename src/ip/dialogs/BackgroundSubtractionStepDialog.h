@@ -12,6 +12,9 @@ public:
 	BackgroundSubtractionStepDialog(QWidget *parent = 0);
 	~BackgroundSubtractionStepDialog();
 
+
+	void setLCDNumber( float val );
+
 signals:
 	void typeChanged( int );
 	void learningRateChanged( int );

@@ -12,3 +12,8 @@ BackgroundSubtractionStepDialog::~BackgroundSubtractionStepDialog()
 {
 
 }
+
+void BackgroundSubtractionStepDialog::setLCDNumber( float val )
+{
+	this->ui.lcdNumber->display( val );
+}
