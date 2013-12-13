@@ -2,8 +2,7 @@
 
 
 ErosionStep::ErosionStep( QWidget *parent  ) :
-	iterations( 1 ),
-	point( -1 )
+	iterations( 1 )
 {
 	controls = new ErosionStepWidget( this );
 
@@ -21,10 +20,8 @@ void ErosionStep::apply( cv::gpu::GpuMat * image )
 {
 	if( isActive()  )
 	{
-		cv::Mat tmp;
-		image->download( tmp );
-		cv::erode( tmp, tmp, getKernel(), cv::Point( point, point ), iterations, 1, 1 );
-		image->upload( tmp );
+		cv::gpu::erode( *image, processedMat, getKernel(), cv::Point( -1, -1 ), iterations );
+		processedMat.copyTo( *image );
 	}
 }
 

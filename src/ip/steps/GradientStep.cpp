@@ -20,11 +20,8 @@ void GradientStep::apply( cv::gpu::GpuMat * image )
 {
 	if( isActive()  )
 	{
-		cv::Mat tmp;
-		image->download( tmp );
-		cv::morphologyEx( tmp, tmp, CV_MOP_GRADIENT, getKernel(), cv::Point( getKernelSize(), getKernelSize() ), iterations );
-		image->upload( tmp );
-		//cv::gpu::morphologyEx( *image, *image, cv::MORPH_GRADIENT, kernel, cv::Point( -1, -1 ), 1 );
+		cv::gpu::morphologyEx( *image, processedImage, cv::MORPH_GRADIENT, getKernel(), cv::Point( -1, -1 ), iterations );
+		processedImage.copyTo( *image );
 	}
 }
 

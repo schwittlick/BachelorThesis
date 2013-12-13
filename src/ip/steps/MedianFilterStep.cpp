@@ -3,7 +3,7 @@
 
 MedianFilterStep::MedianFilterStep( QWidget *parent ) :
 	iterations( 1 ),
-	kernelSize( 11 )
+	kernelSize( 1 )
 {
 	controls = new MedianFilterStepDialog( this );
 
@@ -26,6 +26,8 @@ void MedianFilterStep::apply( cv::gpu::GpuMat * image )
 		for( int i = 0; i < iterations; i++ )
 		{
 			cv::medianBlur( im, im, kernelSize );
+			//cv::medianBlur( *image, processedImage, getKernelSize() );
+			//processedImage.copyTo( *image );
 		}
 		image->upload( im );
 	}
@@ -43,5 +45,10 @@ void MedianFilterStep::iterationsChanged( int _it )
 
 void MedianFilterStep::kernelSizeChanged( int _k )
 {
-	this->setKernelSize( _k );
+	this->kernelSize = _k;
+	if( this->kernelSize % 2 == 0 )
+	{
+		this->kernelSize++;
+	}
+	//this->setKernelSize( _k );
 }

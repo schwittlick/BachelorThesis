@@ -2,7 +2,7 @@
 
 
 GaussianBlurStep::GaussianBlurStep( QWidget *parent ) :
-	kernelSize( 13 ),
+	kernelSize( 1 ),
 	sigma1( 0.0 ),
 	sigma2( 0.0 )
 {

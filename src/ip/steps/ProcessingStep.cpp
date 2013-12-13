@@ -4,7 +4,7 @@
 ProcessingStep::ProcessingStep( QWidget *parent ) :
 	QWidget( parent ),
 	activated( false ),
-	kernelSize( 3 )
+	kernelSize( 1 )
 {
 	this->setKernelSize( kernelSize );
 }

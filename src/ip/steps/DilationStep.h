@@ -19,12 +19,10 @@ public:
 
 public slots:
 	void kernelSizeChangedD( int ksize );
-	void pointChangedD( int point );
 	void iterationChangedD( int iterations );
 
 private:
 	DilationStepWidget * controls;
-	int point;
 	int iterations;
 };
 

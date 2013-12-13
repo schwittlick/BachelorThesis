@@ -20,10 +20,9 @@ void ThresholdStep::apply( cv::gpu::GpuMat * image )
 {
 	if( this->isActive() )
 	{
-		cv::gpu::GpuMat tmpMat;
-		cv::gpu::cvtColor( *image, tmpMat, CV_BGRA2GRAY );
-		cv::gpu::threshold( tmpMat, tmpMat, this->threshold, this->maxval, 0 );
-		cv::gpu::cvtColor( tmpMat, *image, CV_GRAY2BGRA );
+		cv::gpu::cvtColor( *image, processedImage, CV_BGRA2GRAY );
+		cv::gpu::threshold( processedImage, processedImage, this->threshold, this->maxval, 0 );
+		cv::gpu::cvtColor( processedImage, *image, CV_GRAY2BGRA );
 	}
 }
 

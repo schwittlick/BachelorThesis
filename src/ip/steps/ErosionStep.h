@@ -21,8 +21,8 @@ public slots:
 	void iterationChanged( int iterations );
 
 private:
+	cv::gpu::GpuMat processedMat;
 	ErosionStepWidget * controls;
-	int point;
 	int iterations;
 };
 

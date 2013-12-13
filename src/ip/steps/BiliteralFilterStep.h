@@ -17,13 +17,12 @@ public:
 
 public slots:
 	void dChanged( int _d );
-	void borderTypeChanged( int _borderType );
 	void sigmaColorChanged( int _sigmaColor );
 	void sigmaSpaceChanged( int _sigmaSpace );
 
 private:
 	BiliteralFilterStepDialog * controls;
-	int d, borderType;
+	int d;
 	double sigmaColor, sigmaSpace;
 };
 

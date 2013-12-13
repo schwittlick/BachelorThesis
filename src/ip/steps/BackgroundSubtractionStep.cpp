@@ -3,7 +3,7 @@
 
 BackgroundSubtractionStep::BackgroundSubtractionStep( QWidget *parent ) :
 	learningRate( 0.05),
-	selectedType( BackgroundSubtractor::Type::MOG )
+	selectedType( BackgroundSubtractor::Type::MOG2 )
 {
 	controls = new BackgroundSubtractionStepDialog( this );
 
@@ -38,4 +38,5 @@ void BackgroundSubtractionStep::typeChanged( int _type )
 void BackgroundSubtractionStep::learningRateChanged( int _learningRate )
 {
 	this->learningRate = _learningRate / 100.0;
+	controls->setLCDNumber( this->learningRate );
 }

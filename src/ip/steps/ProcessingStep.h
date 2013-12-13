@@ -23,6 +23,10 @@ public:
 	cv::Mat getKernel( void );
 	int getKernelSize( void );
 
+
+protected:
+	cv::gpu::GpuMat processedImage;
+
 private:
 	bool activated;
 	int kernelSize;
