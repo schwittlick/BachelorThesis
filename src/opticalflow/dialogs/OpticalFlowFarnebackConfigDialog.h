@@ -21,6 +21,8 @@ signals:
 	void changedPyrScale( int _pyrscale );
 	void changedStepSize( int _stepsize );
 	void changedScale( int _scale );
+	void changedMinLength( int _minLength );
+	void changedMaxLength( int _maxLength );
 private:
 	Ui::OpticalFlowFarnebackConfigDialog ui;
 };

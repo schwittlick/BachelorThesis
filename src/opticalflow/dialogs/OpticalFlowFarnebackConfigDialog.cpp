@@ -13,6 +13,8 @@ OpticalFlowFarnebackConfigDialog::OpticalFlowFarnebackConfigDialog(QWidget *pare
 	connect( ui.slider_pyr_scale, SIGNAL( valueChanged( int ) ), this, SIGNAL( changedPyrScale( int ) ) );
 	connect( ui.slider_stepSize, SIGNAL( valueChanged( int ) ), this, SIGNAL( changedStepSize( int ) ) );
 	connect( ui.slider_scale, SIGNAL( valueChanged( int ) ), this, SIGNAL( changedScale( int ) ) );
+	connect( ui.slider_minLength, SIGNAL( valueChanged( int ) ), this, SIGNAL( changedMinLength( int ) ) );
+	connect( ui.slider_maxLength, SIGNAL( valueChanged( int ) ), this, SIGNAL( changedMaxLength( int ) ) );
 }
 
 OpticalFlowFarnebackConfigDialog::~OpticalFlowFarnebackConfigDialog()

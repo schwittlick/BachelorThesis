@@ -6,141 +6,481 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>388</height>
+    <width>504</width>
+    <height>715</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>OpticalFlowFarnebackConfigDialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="label_pyr_scale">
-     <property name="text">
-      <string>pyr_scale</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSlider" name="slider_pyr_scale">
-     <property name="maximum">
-      <number>99</number>
-     </property>
-     <property name="singleStep">
-      <number>1</number>
-     </property>
-     <property name="pageStep">
-      <number>10</number>
-     </property>
-     <property name="value">
-      <number>50</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_winSize">
-     <property name="text">
-      <string>winSize</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSlider" name="slider_winSize">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_levels">
-     <property name="text">
-      <string>levels</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSlider" name="slider_levels">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_iterations">
-     <property name="text">
-      <string>iterations</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSlider" name="slider_iterations">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_poly_n">
-     <property name="text">
-      <string>poly_n</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSlider" name="slider_poly_n">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_poly_sigma">
-     <property name="text">
-      <string>poly_sigma</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSlider" name="slider_poly_sigma">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_stepSize">
-     <property name="text">
-      <string>draw:stepSize</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSlider" name="slider_stepSize">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_scale">
-     <property name="text">
-      <string>draw: scale</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QSlider" name="slider_scale">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>431</width>
+     <height>701</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label_pyr_scale">
+      <property name="text">
+       <string>pyr_scale</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QSlider" name="slider_pyr_scale">
+        <property name="maximum">
+         <number>99</number>
+        </property>
+        <property name="singleStep">
+         <number>1</number>
+        </property>
+        <property name="pageStep">
+         <number>10</number>
+        </property>
+        <property name="value">
+         <number>50</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="pyrScaleNumber"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_winSize">
+      <property name="text">
+       <string>winSize</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QSlider" name="slider_winSize">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>15</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="winSizeNumber"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_levels">
+      <property name="text">
+       <string>levels</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QSlider" name="slider_levels">
+        <property name="value">
+         <number>3</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="levelsNumber"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_iterations">
+      <property name="text">
+       <string>iterations</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QSlider" name="slider_iterations">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>20</number>
+        </property>
+        <property name="value">
+         <number>3</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="iterationsNumber"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_poly_n">
+      <property name="text">
+       <string>poly_n</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QSlider" name="slider_poly_n">
+        <property name="value">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="poly_nNumber"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_poly_sigma">
+      <property name="text">
+       <string>poly_sigma</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QSlider" name="slider_poly_sigma">
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+        <property name="pageStep">
+         <number>120</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="poly_sigmaNumber"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_stepSize">
+      <property name="text">
+       <string>draw:stepSize</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <item>
+       <widget class="QSlider" name="slider_stepSize">
+        <property name="value">
+         <number>8</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="stepSizeNumber"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_scale">
+      <property name="text">
+       <string>draw: scale</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <item>
+       <widget class="QSlider" name="slider_scale">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>30</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="scaleNumber"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_stepSize_2">
+      <property name="text">
+       <string>draw:minLength</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <item>
+       <widget class="QSlider" name="slider_minLength">
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="minlengthNumber"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_scale_2">
+      <property name="text">
+       <string>draw: maxLength</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_10">
+      <item>
+       <widget class="QSlider" name="slider_maxLength">
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>100</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="maxLengthNumber"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>410</y>
+     <width>46</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>/100.0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>60</y>
+     <width>46</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>/100.0</string>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>slider_pyr_scale</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>pyrScaleNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>60</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_winSize</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>winSizeNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>131</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_levels</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>levelsNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>201</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_iterations</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>iterationsNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>272</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_poly_n</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>poly_nNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>342</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>342</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_poly_sigma</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>poly_sigmaNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>412</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>413</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_stepSize</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>stepSizeNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>483</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>483</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_scale</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>scaleNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>553</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>554</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_minLength</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>minlengthNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>624</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>624</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slider_maxLength</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>maxLengthNumber</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>694</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>695</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
