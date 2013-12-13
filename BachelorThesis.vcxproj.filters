@@ -410,17 +410,11 @@
     <ClCompile Include="GeneratedFiles\Release\moc_TopHatStep.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="OpticalFlowSelectorDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowSelectorDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowSelectorDialog.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="OpticalFlow.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowFarneback.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -428,11 +422,17 @@
     <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowFarneback.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlow.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_OpticalFlowMethod.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlow.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_OpticalFlowMethod.cpp">
       <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\OpticalFlowMethod.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opticalflow\dialogs\OpticalFlowSelectorDialog.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -613,14 +613,14 @@
     <CustomBuild Include="src\ip\steps\TopHatStep.h">
       <Filter>Header Files\ip</Filter>
     </CustomBuild>
-    <CustomBuild Include="OpticalFlowSelectorDialog.h">
+    <CustomBuild Include="src\opticalflow\OpticalFlowMethod.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="OpticalFlowSelectorDialog.ui">
+    <CustomBuild Include="src\opticalflow\dialogs\OpticalFlowSelectorDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\opticalflow\dialogs\OpticalFlowSelectorDialog.ui">
       <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="OpticalFlow.h">
-      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

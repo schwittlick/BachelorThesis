@@ -31,6 +31,7 @@ public:
 
 private:
 	QImage mat2QImage( cv::Mat const& src );
+	void displayImages( cv::gpu::GpuMat * image );
 
 	Ui::BachelorThesisClass ui;
 

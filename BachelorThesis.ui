@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1454</width>
-    <height>686</height>
+    <height>689</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,10 +67,10 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>1</x>
-      <y>580</y>
+      <x>0</x>
+      <y>581</y>
       <width>1451</width>
-      <height>53</height>
+      <height>52</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -82,15 +82,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QSlider" name="progressBarSlider">
-       <property name="maximum">
-        <number>1</number>
-       </property>
-       <property name="singleStep">
-        <number>1</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="value">
+        <number>0</number>
        </property>
       </widget>
      </item>
