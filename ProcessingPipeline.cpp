@@ -1,4 +1,5 @@
 #include "ProcessingPipeline.h"
+
 #include "src/ip/steps/MedianFilterStep.h"
 #include "src/ip/steps/BackgroundSubtractionStep.h"
 #include "src/ip/steps/DilationStep.h"
@@ -20,23 +21,14 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 {
 	processingPipelineConfigWidget = new ImageProcessorWidget( this );
 	opticalflowSelectorDialog = new OpticalFlowSelectorDialog( this );
-	std::cout << "Trying to start Farneback" << std::endl;
-	flowFarneback = new OpticalFlowFarneback( this );
+
+	blob = new BlobDetector();
 
 	connect( processingPipelineConfigWidget,			SIGNAL( checkBoxClicked( int ) ),		this,	SLOT( checkBoxClicked( int ) ) );
 	connect( processingPipelineConfigWidget,			SIGNAL( upButtonClicked( int ) ),		this,	SLOT( upClicked( int ) ) );
 	connect( processingPipelineConfigWidget,			SIGNAL( downButtonClicked( int ) ),		this,	SLOT( downClicked( int ) ) );
 	connect( processingPipelineConfigWidget,			SIGNAL( configButtonClicked( int ) ),	this,	SLOT( configClicked( int ) ) );
 	connect( this,										SIGNAL( toggleDialogDisplay() ),		this,	SLOT( toggleLukasKanadeDialogDisplay() ) );
-
-	// connecting the functionality from the flowselector to the corresponding flow
-	//connect( opticalflowSelectorDialog, SIGNAL( lukasKanadeActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
-	connect( opticalflowSelectorDialog, SIGNAL( farnebackActivated() ), ( QWidget* )flowFarneback, SLOT( activate() ) );
-	connect( opticalflowSelectorDialog, SIGNAL( farnebackDialogToggled() ), ( QWidget* )flowFarneback, SLOT( toggleConfigWindow() ) );
-	//connect( opticalflowSelectorDialog, SIGNAL( blockMatchingActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
-	//connect( opticalflowSelectorDialog, SIGNAL( broxActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
-	//connect( opticalflowSelectorDialog, SIGNAL( dualTVL1Activated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
-	//connect( opticalflowSelectorDialog, SIGNAL( hsActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
 
 	processingSteps.push_back( new DilationStep( ) );
 	processingSteps.push_back( new ErosionStep() );
@@ -57,12 +49,36 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 	{
 		currentProcessingStepOrder.push_back( i );
 	}
+
+	// adding some optical flow methods to the container
+	opticalFlows.push_back( new OpticalFlowFarneback() );
+
+	// connecting the functionality from the flowselector to the corresponding flow
+	//connect( opticalflowSelectorDialog, SIGNAL( lukasKanadeActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
+	connect( opticalflowSelectorDialog, SIGNAL( farnebackActivated() ), ( QWidget* ) opticalFlows.at( 0 ), SLOT( activate() ) );
+	connect( opticalflowSelectorDialog, SIGNAL( farnebackDialogToggled() ), ( QWidget* ) opticalFlows.at( 0 ), SLOT( toggleConfigWindow() ) );
+	//connect( opticalflowSelectorDialog, SIGNAL( blockMatchingActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
+	//connect( opticalflowSelectorDialog, SIGNAL( broxActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
+	//connect( opticalflowSelectorDialog, SIGNAL( dualTVL1Activated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
+	//connect( opticalflowSelectorDialog, SIGNAL( hsActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
+
+	
 }
 
 ProcessingPipeline::~ProcessingPipeline(void)
 {
 	delete processingPipelineConfigWidget;
 	delete opticalflowSelectorDialog;
+
+	for( auto it = processingSteps.begin(); it != processingSteps.end(); ++it )
+	{
+		delete *it;
+	}
+
+	for( auto it = opticalFlows.begin(); it != opticalFlows.end(); ++it )
+	{
+		delete *it;
+	}
 }
 
 void ProcessingPipeline::addImage( cv::gpu::GpuMat * imageToBeProcessed )
@@ -74,21 +90,27 @@ void ProcessingPipeline::start( void )
 {
 	if( checkSize( &currentImage ) )
 	{
-		for( auto it = processingSteps.begin(); it != processingSteps.end(); ++it )
+		// doing some image processing
+		for( int i = 0; i < processingSteps.size(); i++ )
+		{
+			// does the imageprocessing in the selected order. phew.
+			processingSteps.at( currentProcessingStepOrder[ i ] )->apply( &currentImage );
+		}
+
+		//doing some optical flow calculation
+		for( auto it = opticalFlows.begin(); it != opticalFlows.end(); ++it )
 		{
 			( *it )->apply( &currentImage );
 		}
 	}
 
-	//
-	
-	bool doFarneback = true;
-	if( doFarneback )
+	bool doBlobDetec = false;
+	if( doBlobDetec )
 	{
+		// this should be done on a b/w image
 		cv::Mat im;
 		currentImage.download( im );
-		//flowKanade.calc( &im );
-		flowFarneback->calc( &im );
+		blob->detect( &im );
 		currentImage.upload( im );
 	}
 	// median filter, block matching

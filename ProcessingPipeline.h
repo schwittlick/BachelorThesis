@@ -2,6 +2,10 @@
 
 #include < vector >
 #include < map >
+#include < memory >
+
+//#include <boost/spirit.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 
 #include "QObject"
 #include "QDialog"
@@ -18,9 +22,10 @@
 #include "src/opticalflow/OpticalFlowBlockMatching.h"
 
 #include "src/ip/steps/ProcessingStep.h"
+#include "src/detect/BlobDetector.h"
 
 #include "imageprocessorwidget.h"
-#include "OpticalFlowSelectorDialog.h"
+#include "src/opticalflow/dialogs/OpticalFlowSelectorDialog.h"
 
 #include "src/opticalflow/LukasKanadeOpticalFlow.h"
 
@@ -53,17 +58,19 @@ private:
 	cv::gpu::GpuMat currentImage;
 	FeatureDetector * fea;
 	StandardImageProcessor improc;
-	OpticalFlowFarneback * flowFarneback;
 	OpticalFlowLukaskanade * flowKanade;
 	OpticalFlowSF * flowSF;
 	DualTVL1OpticalFlow * flowTvl1;
 	OpticalFlowBlockMatching * bm;
 	LukasKanadeOpticalFlow * flowKanadeGPU;
+	BlobDetector * blob;
 
 	std::vector< ProcessingStep * > processingSteps;
 	std::vector< int > currentProcessingStepOrder;
 	int getActualID( int _id );
 	int findId( const std::vector<int>& where, int searchParameter );
+
+	std::vector< OpticalFlowMethod * > opticalFlows;
 
 	OpticalFlowSelectorDialog * opticalflowSelectorDialog;
 	ImageProcessorWidget * processingPipelineConfigWidget;
