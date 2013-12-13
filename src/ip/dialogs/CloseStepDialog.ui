@@ -6,27 +6,34 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>608</width>
+    <height>171</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>CloseStepDialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>371</width>
-     <height>261</height>
+     <width>571</width>
+     <height>131</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>kernelsize</string>
+       <string>KernelSize</string>
       </property>
      </widget>
     </item>
@@ -34,20 +41,37 @@
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QSlider" name="kernelSizeSlider">
+        <property name="minimum">
+         <number>1</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="kernelSizeNumber"/>
+       <widget class="QLCDNumber" name="kernelSizeNumber">
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+        <property name="value" stdset="0">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <family>Replica-Bold</family>
+        <pointsize>15</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
       <property name="text">
-       <string>iterations</string>
+       <string>Iterations</string>
       </property>
      </widget>
     </item>
@@ -55,13 +79,20 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QSlider" name="iterationsSlider">
+        <property name="minimum">
+         <number>1</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="iterationsNumber"/>
+       <widget class="QLCDNumber" name="iterationsNumber">
+        <property name="value" stdset="0">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
