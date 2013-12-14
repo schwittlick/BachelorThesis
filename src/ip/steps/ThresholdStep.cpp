@@ -1,6 +1,5 @@
 #include "ThresholdStep.h"
 
-
 ThresholdStep::ThresholdStep( QWidget *parent ) :
 	threshold( 127 ),
 	maxval( 255 )
