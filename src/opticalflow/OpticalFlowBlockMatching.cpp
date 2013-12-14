@@ -1,10 +1,12 @@
 #include "OpticalFlowBlockMatching.h"
 
 
-OpticalFlowBlockMatching::OpticalFlowBlockMatching(void)
+OpticalFlowBlockMatching::OpticalFlowBlockMatching(void) :
+	lastMat( 10, 10, CV_8UC1 )
 {
+	lastMat = cv::gpu::GpuMat( cv::Mat::zeros( 10, 10, CV_8UC1 ) );
+	std::cout << "Created the lastMat X=" << lastMat.cols << " Y:" << lastMat.rows << std::endl;
 }
-
 
 OpticalFlowBlockMatching::~OpticalFlowBlockMatching(void)
 {
@@ -12,13 +14,12 @@ OpticalFlowBlockMatching::~OpticalFlowBlockMatching(void)
 
 void OpticalFlowBlockMatching::apply( cv::gpu::GpuMat * mat )
 {
-	cv::gpu::GpuMat currentMat( *mat );
-	cv::gpu::cvtColor( currentMat, currentMat, CV_BGRA2GRAY );
-	if( lastMat.empty() || lastMat.size() != currentMat.size() )
+	cv::gpu::GpuMat currentMat;
+	cv::gpu::cvtColor( *mat, currentMat, CV_BGRA2GRAY );
+	if( lastMat.size() != currentMat.size() )
 	{
 		lastMat = cv::gpu::GpuMat( currentMat );
 	}
-
 	
 	cv::gpu::GpuMat velX( mat->size(), mat->type() );
 	cv::gpu::GpuMat velY( mat->size(), mat->type() );
@@ -26,12 +27,11 @@ void OpticalFlowBlockMatching::apply( cv::gpu::GpuMat * mat )
 	cv::gpu::GpuMat paintedFlow( mat->size(), CV_8UC3 );
 	cv::gpu::calcOpticalFlowBM( lastMat, currentMat, cv::Size( 5, 5 ), cv::Size( 20, 20 ), cv::Size( 30, 30 ), true, velX, velY, buf );
 	
-	drawFlow( buf, paintedFlow );
+	//drawFlow( buf, paintedFlow );
 
 	std::cout << paintedFlow.type() << mat->type() << std::endl;
 	//mat->upload( bgr );
 	//buf.copyTo( *mat );
-
 	currentMat.copyTo( lastMat );
 }
 
@@ -41,17 +41,17 @@ void OpticalFlowBlockMatching::drawFlow( cv::gpu::GpuMat & flow, cv::gpu::GpuMat
 	{
 		std::cout << "Here." << std::endl;
 		cv::Mat xy[2]; //X,Y
-		cv::Mat tempBuf;
-		flow.download( tempBuf );
-		cv::split( tempBuf, xy );
+		cv::Mat outputImage;
+		flow.download( outputImage );
+		cv::split( outputImage, xy );
 
 		//calculate angle and magnitude
 		cv::Mat magnitude, angle;
-		cv::cartToPolar( xy[0], xy[1], magnitude, angle, true );
+		//cv::cartToPolar( xy[0], xy[1], magnitude, angle, true );
 
 		//translate magnitude to range [0;1]
-		double mag_max = 0.0;
-		double mag_min = 0.0;
+		double mag_max;
+		double mag_min = 0.1;
 		//cv::minMaxLoc()
 		cv::minMaxLoc( magnitude, &mag_min, &mag_max );
 		magnitude.convertTo( magnitude, -1, 1.0/mag_max );
