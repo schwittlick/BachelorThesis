@@ -22,7 +22,7 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 	processingPipelineConfigWidget = new ImageProcessorWidget( this );
 	opticalflowSelectorDialog = new OpticalFlowSelectorDialog( this );
 
-	blob = new BlobDetector();
+	blob = new BlobDetector( );
 
 	connect( processingPipelineConfigWidget,			SIGNAL( checkBoxClicked( int ) ),		this,	SLOT( checkBoxClicked( int ) ) );
 	connect( processingPipelineConfigWidget,			SIGNAL( upButtonClicked( int ) ),		this,	SLOT( upClicked( int ) ) );
@@ -62,13 +62,14 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 	//connect( opticalflowSelectorDialog, SIGNAL( dualTVL1Activated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
 	//connect( opticalflowSelectorDialog, SIGNAL( hsActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
 
-	
+	bm = new OpticalFlowBlockMatching();
 }
 
 ProcessingPipeline::~ProcessingPipeline(void)
 {
 	delete processingPipelineConfigWidget;
 	delete opticalflowSelectorDialog;
+	delete blob;
 
 	for( auto it = processingSteps.begin(); it != processingSteps.end(); ++it )
 	{
@@ -104,7 +105,7 @@ void ProcessingPipeline::start( void )
 		}
 	}
 
-	bool doBlobDetec = false;
+	bool doBlobDetec = true;
 	if( doBlobDetec )
 	{
 		// this should be done on a b/w image
@@ -133,6 +134,7 @@ void ProcessingPipeline::start( void )
 	bool doBM = false;
 	if( doBM )
 	{
+		std::cout << "trying tzo do bm." << std::endl;
 		bm->apply( &currentImage );
 	}
 	//cv::Mat flow;
