@@ -434,6 +434,15 @@
     <ClCompile Include="src\opticalflow\dialogs\OpticalFlowSelectorDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\detect\BlobDetectorDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BlobDetectorDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BlobDetectorDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="BachelorThesis.h">
@@ -622,6 +631,15 @@
     <CustomBuild Include="src\opticalflow\dialogs\OpticalFlowSelectorDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="src\detect\BlobDetector.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\detect\BlobDetectorDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\detect\BlobDetectorDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BachelorThesis.rc" />
@@ -634,9 +652,6 @@
       <Filter>Header Files\ip</Filter>
     </ClInclude>
     <ClInclude Include="src\ip\Denoiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\detect\BlobDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_hardwareinfodialog.h">
@@ -703,6 +718,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_OpticalFlowSelectorDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_BlobDetectorDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
