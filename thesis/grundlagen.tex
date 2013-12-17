@@ -3,7 +3,7 @@
 Der typische grundlegend strukturellen Schritte bei der Erkennung der Schiffe ist wie folgt:
 Im folgenden werden sämtliche grundlegenden Konzepte die zum Verständnis der in den folgenden Kapiteln erarbeiteten Lösungsansätze helfen erläutert. 
 
-Die Aufgabe Objekte anhand von Bild/-sequenzen zu erkennen und diesen Informationen über der realen Objekte zu entnehmen gliedert sich in die Thematik des Bildverstehens ein. Das Forschungsgebiet des Bildverstehens beschäftigt sich damit die menschliche Art zu sehen auf eine Maschine zu übertragen. Die visuelle Interpretation von dem was unsere Augen wahrnehmen geschieht ununterbrochen und meist unterbewusst. \cite[S.~33]{Sester01}Die Tatsache, dass der Mensch auf seine Erfahrung darüber, wie die Welt aufgebaut ist immer zugreifen kann ermöglicht ihm Gegenstände zu erkennen, die nicht ausschließlich dadurch, was man davon sieht gedeutet werden können, sondern aus einer Kombination von zusätzlichen Informationen. Diese weiteren Informationen können aus anderen menschlichen Sinnen gewonnen werden, welche bei der maschinellen Bildinterpretation nicht gegeben sind. (vgl. Sester01)
+Die Aufgabe Objekte anhand von Bild/-sequenzen zu erkennen und diesen Informationen über der realen Objekte zu entnehmen gliedert sich in die Thematik des Bildverstehens ein. Das Forschungsgebiet des Bildverstehens beschäftigt sich damit die menschliche Art zu sehen auf eine Maschine zu übertragen. Die visuelle Interpretation von dem was unsere Augen wahrnehmen geschieht ununterbrochen und meist unterbewusst. \cite[S.~33]{Sester95}Die Tatsache, dass der Mensch auf seine Erfahrung darüber, wie die Welt aufgebaut ist immer zugreifen kann ermöglicht ihm Gegenstände zu erkennen, die nicht ausschließlich dadurch, was man davon sieht gedeutet werden können, sondern aus einer Kombination von zusätzlichen Informationen. Diese weiteren Informationen können aus anderen menschlichen Sinnen gewonnen werden, welche bei der maschinellen Bildinterpretation nicht gegeben sind. (vgl. Sester95)
 \begin{quote}
 Menschliches Sehen bezeichnet nach Boden den Prozess, der Bilder der realen Welt in eine für den Betrachter günstige Beschreibung überführt, bei dem nur noch die wichtigen Informationen erhalten bleiben und unwichtige entfallen.
 \footnote{\url{http://www.ifp.uni-stuttgart.de/publications/dissertationen/moni_diss.pdf}}
@@ -43,32 +43,71 @@ Sämtliche Bildoperatoren arbeiten auf den Daten ( Pixeln ) eines Ursprungsbildes
 \subsubsection{Punkoperatoren}
 Bildpunktoperatoren arbeiten ausschließlich auf dem Farbwert(en) eines Bildpunktes des Ursprungsbildes. Sie haben als Eingabedaten die Farbwerte eines Bildpunktes und errechen ausschließlich die Farbwerte des Ergebnisbildes des Pixels an der gleichen Position im Bild, wie des Ursprungsbildes.
 \begin{quote}
-\textit{ErgebnisPixel( x, y ) = Operator( Ursprungsbild( x, y ) )}
+\textit{ErgebnisPixel( x, y ) = Bildpunktoperator( Ursprungsbild( x, y ) )}
 \end{quote}
 
-TODO: Hier eine Grafik eines einfachen Punktoperators einfügen.
-
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{bildpunktoperator} %{CS0031}
+\caption[Arbeitsweise von Bildpunktoperatoren]{Arbeitsweise von Bildpunktoperatoren}
+\label{fig:Arbeitsweise von Bildpunktoperatoren}
+\end{figure}
 
 Mithilfe von Bildpunktoperatoren können Verarbeitungen, wie zum Beispiel Helligkeits- und Kontrastanpassungen, sowie Farbkorrekturen und Tonwertkorrekturen, aber auch Bildüberlagerungen erreicht werden.
 \emph{homogen}
 \emph{inhomogen}
+
 \subsubsection{Nachbarschaftsoperatoren}
-Nachbarschaftsoperatoren arbeiten als Eingabedaten auf mehreren Bildpunkten. Sie haben einen Kernel, welcher bestimmt, welche Bildpunkt um den aktiven Bildpunkt in die Berechnung des Filters mit einbezogen werden soll. Nachbarschaftsoperatoren werden im Folgenden \emph{Filter} genannt.
+Nachbarschaftsoperatoren arbeiten als Eingabedaten auf mehreren Bildpunkten. Sie haben einen Kernel, welcher bestimmt, welche Bildpunkte um den aktiven Bildpunkt in die Berechnung des Filters mit einbezogen werden sollen. Mit Hilfe von Nachbarschaftsoperatoren können diverse Ziele, wie die Glättung eines Bildes, oder Verringerung des Rauschen in Bildern, oder die Bestimmung von Kanten eines Bildes erreicht werden. Im Folgenden werden Nachbarschaftsoperatoren \emph{Filter} genannt.
+
 \begin{quote}
 \textit{ErgebnisPixel( x, y ) = Operator( KernelUrsprungsbild( x, y ) )}
 \end{quote}
 
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{nachbarschaftsoperator} %{CS0031}
+\caption[Arbeitsweise von Nachbarschaftsoperatoren]{Arbeitsweise von Nachbarschaftsoperatoren}
+\label{fig:Arbeitsweise von Nachbarschaftsoperatoren}
+\end{figure}
+
 \emph{Faltungsfilter}
 \emph{Medianfilter}
+Der Medianfilter ist ein Filter, der zur Reduktion von Bildrauschen dient.
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{saltnpepper_median_coins} %{CS0031}
+\caption[Medianfilter]{Medianfilter\footnotemark}
+\label{fig:Medianfilter}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{teapot_ensemble} %{CS0031}
+\caption[Medianfilter]{Medianfilter\footnotemark}
+\label{fig:Medianfilter}
+\end{figure}
+\footnotetext{\url{http://www.mathworks.com/help/releases/R2013b/images/ref/referencemtoz2.gif}}
+\footnotetext{\url{http://bitchslapmag.com/2013/art/thomas-mailaenders-amazingly-weird-images/}}
+
 \emph{Extremalspannenfilter}
 \emph{Prewitt-Operator}
 \emph{Dekonvolution}
-\subsubsection{Geometrische Bilderoperation / Globale Operatoren}
-\emph{skalierung}
-\emph{rotation}
-\emph{translation}
-\emph{Anistrophische Filterung}
-\emph{Fourier Transformation}
+\subsubsection{Geometrische Bilderoperationen}
+Geometrische Bildoperation dienen zur Veränderung der Größe, Form und Topologie von Bildern. 
+
+Die folgende geometrische Bildoperation verkleinert das Bild um den Faktor 2.
+\begin{quote}
+\textit{ErgebnisPixel( x, y ) = Ursprungsbild( x * 2, y * 2 )}
+\end{quote}
+
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{bildverkleinerung} %{CS0031}
+\caption[Bildverkleinerung]{Bildverkleinerung}
+\label{fig:Bildverkleinerung}
+\end{figure}
+
+Weiterhin kann mit geometrischen Bildoperationen unter Anderem die \emph{Skalierung}, \emph{Rotierung} oder \emph{Translation} von Bildern erreicht werden.
 
 \subsection{Bildberarbeitung}
 Bildbearbeitung bedeutet die Veränderung ( Verbesserung, Verfremdung oder Manipulation ) vorhandener digitaler Bilder mit ensprechender Software, wie zum Beispiel Adobe Photoshop\footnote{\url{http://www.adobe.com/}}. Diese Veränderung geschieht mit dem Anreiz den Eindruck des Bildes auf das menschliche Auge zu verändern. Dort liegt der entscheidende Unterschied zu Bildverarbeitung, welche im vorangehenden Punkt beschrieben wurde. Es werden für die Bildbearbeitung zwar Algorithmen die der Bildverarbeitung zuzuordnen sind genutzt, allerdings ist der 'Konsument' des Bildes bei der Bildbearbeitung das menschliche Auge und bei der Bildverarbeitung die Maschine, bzw. weitere Algorithmen, die auf Pixelebene arbeiten.
