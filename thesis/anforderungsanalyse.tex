@@ -58,14 +58,31 @@ In diesem Abschnitt wird erläutert von welchen Anforderungen sich der Prototyp k
 In den folgenden Unterabschnitten wird tiefer auf die Umsetzung des Prototypen und dieser Dokumentation eingegangen. Es werden Hilfsmittel, die das Projektmanagement und die Programmierung unterstützen gegeneinander abgewogen und untersucht.
 \subsection{Projektmanagement}
 Um ein professionelles und strukturiertes Projektmanagement zu gewährleisten muss ich für eine Unterstützung entschieden werden. Gängige Möglichkeiten bieten Projektmanagement-Systeme wie trac und Redmine.
+\subsubsection{trac}
+trac\footnote{\url{http://www.trac.edgewall.org/}} ist eine \emph{issue tracking} System. Es soll dazu dienen Entwickler bei ihrer Arbeit zu unterstützen, indem es die Organisiation und zukünftige Aufgaben ordnet und in nützlicher Weise aufbereitet. In Abbildung (???) ist eine klassische Ansicht von trac zu sehen. Weiterhin ermöglicht \emph{trac} gängige Versionskontrollsysteme einzubinden und bietet eine Wiki-Funktion, welche viele typische Aufgaben der Softwareentwicklung unterstützt. Zudem ist es kostenlos, Open-Source und unter der Modified BSD License\footnote{\url{http://en.wikipedia.org/wiki/Modified\_BSD\_license\#3-clause}} veröffentlicht.
 \begin{figure}
 \centering
 \includegraphics[width=.95\textwidth]{trac-timetracking-report} %{CS0031}
 \caption[trac Projektmanagement]{trac Projektmanagement\footnotemark}
 \label{fig:trac Projektmanagement}
 \end{figure}
-\subsection{Programmiermethodik}
 \footnotetext{\url{http://trac.edgewall.org/wiki/TimeTracking}}
+\subsubsection{Redmine}
+\footnotetext{\url{http://www.redmine.org/}}
+\emph{Redmine}\footnotemark ist ein weiteres Projektmanagement Programm, welches ähnliche Funktionen wie \emph{trac} erfüllt. Es ist unter der GPL\footnote{\url{http://www.gnu.org/licenses/old-licenses/gpl-2.0.html}}-Lizenz veröffentlicht.
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{redmine_roadmap} %{CS0031}
+\caption[Redmine]{Redmine\footnotemark}
+\label{fig:Redmine}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{gant_diagramm_20131208.jpg} %{CS0031}
+\caption[Gantt Diagramm]{Gantt Diagramm}
+\label{fig:Gantt Diagramm}
+\end{figure}
+\subsection{Programmiermethodik}
 Bei diesem Projekt kann kein nicht-iteratives Vorgehensmodell, wie das Wasserfallmodell benutzt werden, da sich die tatsächlichen Anforderungen an die Software erst während der Implementierungsphase herausstellen. Man kann bei solch einem Projekt vorab schlichtweg nicht sagen, welche Bildverarbeitungsmethoden genau angewandt werden sollen, da nach der Implementierung zunächst eine fundierte Untersuchung der Ergebnisse geschehen muss, um zu entscheiden, welche Folgeverarbeitungen darauf aufbauen können. Es gibt diverse Ansätze, die das Problem dieser Arbeit lösen, welche jedoch nicht vor tatsächlicher Implementierung festgehalten werden können.
 Daher wurde sich entschieden eine agile Vorgehensweise zu wählen, um genau diese Art des Projektes zu addressieren. Dadurch kann sich unmittelbar an Erkenntnisse der Implementierung angepasst werden.
 \subsubsection{Agile Programmierung}
