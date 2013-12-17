@@ -23,15 +23,14 @@ void OpticalFlowBlockMatching::apply( cv::gpu::GpuMat * mat )
 	
 	cv::gpu::GpuMat velX( mat->size(), mat->type() );
 	cv::gpu::GpuMat velY( mat->size(), mat->type() );
+
 	cv::gpu::GpuMat buf( mat->size(), mat->type() );
 	cv::gpu::GpuMat paintedFlow( mat->size(), CV_8UC3 );
+
 	cv::gpu::calcOpticalFlowBM( lastMat, currentMat, cv::Size( 5, 5 ), cv::Size( 20, 20 ), cv::Size( 30, 30 ), true, velX, velY, buf );
 	
 	//drawFlow( buf, paintedFlow );
 
-	std::cout << paintedFlow.type() << mat->type() << std::endl;
-	//mat->upload( bgr );
-	//buf.copyTo( *mat );
 	currentMat.copyTo( lastMat );
 }
 

@@ -53,14 +53,9 @@ ProcessingPipeline::ProcessingPipeline( QWidget *parent ) :
 	// adding some optical flow methods to the container
 	opticalFlows.push_back( new OpticalFlowFarneback() );
 
-	// connecting the functionality from the flowselector to the corresponding flow
-	//connect( opticalflowSelectorDialog, SIGNAL( lukasKanadeActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
+	// add some more flows to the gui
 	connect( opticalflowSelectorDialog, SIGNAL( farnebackActivated() ), ( QWidget* ) opticalFlows.at( 0 ), SLOT( activate() ) );
 	connect( opticalflowSelectorDialog, SIGNAL( farnebackDialogToggled() ), ( QWidget* ) opticalFlows.at( 0 ), SLOT( toggleConfigWindow() ) );
-	//connect( opticalflowSelectorDialog, SIGNAL( blockMatchingActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
-	//connect( opticalflowSelectorDialog, SIGNAL( broxActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
-	//connect( opticalflowSelectorDialog, SIGNAL( dualTVL1Activated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
-	//connect( opticalflowSelectorDialog, SIGNAL( hsActivated() ), ( QObject* )flowFarneback, SIGNAL( activate() ) );
 
 	bm = new OpticalFlowBlockMatching();
 }
@@ -108,16 +103,12 @@ void ProcessingPipeline::start( void )
 	bool doBlobDetec = true;
 	if( doBlobDetec )
 	{
-		// this should be done on a b/w image
 		cv::Mat im;
 		currentImage.download( im );
 		blob->detect( &im );
 		currentImage.upload( im );
 	}
-	// median filter, block matching
-	// geschwindigkeitsberechnung anhand von 2 linien
-	// meanshift filtering
-	// pyrup, pyrdown
+
 	bool doKanade = false;
 	if( doKanade )
 	{
@@ -130,32 +121,12 @@ void ProcessingPipeline::start( void )
 		cv::gpu::blur( currentImage, currentImage, cv::Size( 3, 3 ), cv::Point( -1, -1 ) );
 	}
 
-	//flowKanade.calc( &im );
 	bool doBM = false;
 	if( doBM )
 	{
 		std::cout << "trying tzo do bm." << std::endl;
 		bm->apply( &currentImage );
 	}
-	//cv::Mat flow;
-	//flowKanadeGPU.apply( &currentImage );
-	
-	//flowKanade.calc( &im );
-	//std::cout << "startin." << std::endl;
-	//flowSF.calc( &im );
-	//cv::Mat flow;
-	
-	//flow = flowTvl1.calc( &im );
-	//flowGpu = flowTvl1.calcGPU( &currentImage );
-	//flowGpu.copyTo( currentImage );
-
-	//std::cout << "finished." << std::endl;
-
-	//flowGpu.copyTo( currentImage );
-
-	//currentImage.upload( flow );
-
-	//fea.processHOGDetection_GPU( &currentImage );
 }
 
 cv::gpu::GpuMat ProcessingPipeline::getFinishedImage( void )
@@ -178,7 +149,6 @@ bool ProcessingPipeline::checkSize( cv::gpu::GpuMat * image )
 
 void ProcessingPipeline::checkBoxClicked( int id )
 {
-	//setTaskTodo( id, !getTaskTodo( id ) );
 	processingSteps.at( id )->toggle( );
 }
 
@@ -238,8 +208,6 @@ void ProcessingPipeline::downClicked( int id )
 		QCheckBox * toSwapWithCheckbox = processingPipelineConfigWidget->getCheckBoxByID( oneButtonDownID );
 		clickedCheckBox->setGeometry( toSwapWithCheckbox->geometry() );
 		toSwapWithCheckbox->setGeometry( tempPosCheckbox );
-		
-		//printCurrentprocessingOrder( id );
 	}
 }
 
