@@ -1,89 +1,72 @@
-\chapter{Anforderungsanalyse}
-In der Bachelorarbeit soll es darum gehen Schiffe bzw. Boote anhand eines Live-Videostreames zu erkennen und zu tracken. Zusätzlich soll untersucht werden, inwiefern die Schiffe nach bestimmten
-Kriterien klassifiziert werden können, um gegebenenfalls Muster im Flussverkehr erkennen zu
-können. Mögliche Klassifikatoren können der Schifftyp, die Größe des Schiffes und die
-Geschwindigkeit des Schiffes sein. Dadurch können detaillierte Statistiken über einen bestimmten
-Flussabschnitt erstellt werden, welche gegebenenfalls mit Statistiken anderer Flussabschnitte
-verglichen werden können. 
-Deswegen soll die Hardwarekomponente des Systemes portabel und
-resistent gegenüber Wettereinflüssen sein. Die Entwicklung der Hardware Komponente soll
-ebenfalls Teil der Arbeit sein und aus einer IP-Kamera inklusive Wetterresistenter Halterung
-bestehen. Es soll ein funktionierender Prototyp erarbeitet werden, der mit wenigen Schritten an
-einen anderen Ort umgezogen werden kann. Dies erfordert höchstwarscheinlich eine Art
-Kalibrierung des Systemes auf die veränderten Umgebungsfaktoren, wie Blickwinkel und
-Lichtverhältnisse des neuen Ortes, welche elementarer Teil des Systemes sein soll.
-Die Erkennung, Verfolgung und Klassifizierung soll mittels bekannter und bereits implementierter
-Computer Vision Algorithmen geschehen und möglichst robust gegenüber eventuellen
-Wettereinflüssen sein. Zur Klassifizierung der Schiffe soll die Methode des Maschinellen Lernens in
-Betracht gezogen werden, allerdings mit anderen Ansätzen zur Klassifizierung verglichen werden.
-Es soll eine Software entwickelt werden, welche es ermöglicht Schiffe anhand von digitalem Videosignal zu erkennen, zu verfolgen und zu klassifizieren. Dieses Problem ist ein Klassisches Problem der Computer Vision und mit den nötigen Methoden und Mitteln umzusetzen. Allerdings soll die Software weiterhin für die Möglichkeit die Kamera an verschieden Orte zu stellen gestaltet werden. Durch die unterschiedlichen Positionen der Kamera muss die Software variablen gebaut sein, sodass man das System an die geänderten Umstände anpassen kann. Weiterhin muss bedacht werden, dass das Software system zu jeder Zeit während des Tages funktionieren soll und muss sich deswegen an ändernde Wetterumstände anpassen können, oder so robust gebaut sein, dass sie zu jeder Jahreszeit funktioniert.
+\chapter{Anforderungsanalyse}\label{ch:anforderungsanalyse}
+In dieser Arbeit soll erarbeitet werden, wie Schiffe automatisch erkannt, verfolgt und klassifiziert werden können. Diese Schritte sollen anhand des Videostreams einer digitalen Kamera geschehen. 
+Die Möglichkeit Schiffe anhand Eigenschaften ihres Typs, ihrer Größe\footnote{Länge sowie Breite} sowie ihrer Geschwindigkeit in Gruppen einzuordnen bzw. zu klassifizieren soll untersucht werden.
 
 \section{Anwendungsgebiet}
-Die Arbeit beschäftigt sich mit der Thematik anhand von Bildern und Bildsequenzen ( Videos ) aussagekräftige Informationen zu erhalten. Ein Bild repräsentiert im Computer speicher ist nichts weiter, als eine
-Matrix mit bestimmter Höhe und Breite, welche multipliziert die Pixelanzahl des Bildes angeben. An jeder Position dieser Matrix sind die Farbwerte zu dem entsprechendem Pixel gespeichert. Durch die Betrachtung dieser Pixelmatrix kann unser menschliches Gehirn ohne weiteres dem Bild Informationen über dessen Inhalt entnehmen, folglich das Bild zu interpretieren. Die Interpretation eines Bildes ist ein komplexes Konstrukt und ist durch unsere Erfahrung als Mensch möglich. Mehr zu diesem Thema in einem abgesonderten Block.
-Ein Computer hat allerdings kein komplexes Gehirn und sieht ein Bild, was für einen Menschen z.B. großen emotionalen Wert haben kann schlichtweg als einen zweidimensionalen Array, welcher konkrete farbwerte enthält.
-Anhand dieser repräsentation des Bildes kann allerdings der Computer instruiert werden bestimmte Muster zu erkennen, oder bestimmte Operationen auf das Bild anzuwenden, wodurch letztendlich dem Bild Informationen 
-entnommen werden kann. Diese Verarbeitung wird maschinelles Sehen oder Bildverstehen engl. Computer Vision genannt und beschäftigt sich damit computergestützt Bilder auf eine menschliche Art und Weise zu interpretieren. Das Thema maschinelles Sehen wird im Abschnitt Maschinelles Sehen näher beschrieben.
+Die Arbeit beschäftigt sich mit der Thematik anhand von Bildern und Bildsequenzen\footnote{Videos} aussagekräftige Informationen zu generieren. 
+Ein digitales Bild wird im Computer als Matrix mit einer bestimmten Höhe und Breite dargestellt. Diese Höhe und Breite ergeben miteinander multipliziert die Pixelanzahl, welche ausschlaggebende  Aussagefähigkeit über den Informationsgehalte eines digitalen Bildes besitzt. An jeder Position dieser Matrix sind Werte gespeichert, welche den Farbwert des Pixels an dieser Stelle beschreiben. Anhand dieser Pixelmatrix kann ein menschliches Gehirn, wenn die Matrix am Bildschirm oder einem anderem Ausgabemedium dargestellt wird, ein Bild interpretieren. Die menschliche Interpretation von Bildern und die allgemeine menschliche Wahrnehmung anhand des visuellen Sinnes ist ein komplexes Thema, was in dieser Arbeit nicht näher beschrieben wird, um dem Umfang der Arbeit nicht zu sprengen.
+Die Thematik dieser Arbeit beschäftigt sich damit, diese menschliche Wahrnehmung durch einen Computer durchzuführen. Die Arbeitsweise eines Computer ist offensichtlich anderer Natur als der des menschlichen Gehirnes und kommt in der Tatsache zum tragen, dass der Computer keine Emotionen generiert. Aus Sicht eines Computers ist ein Bild, das was eine Kamera mit einem Lichtsensor wahrnimmt und das was ein Mensch mit den Augen wahrnimmt, nichts anderes als in einer Matrix angeordnete Farbwerte ohne weiteren Kontext.
+Anhand dieser Repräsentation eines Bildes kann ein Computer allerdings instruiert bzw. programmiert werden bestimmte Operationen auf diese Matrix anzuwenden, welche dem Ziel dienen konkrete Muster und Informationen einem Bild zu entnehmen. Diese Verarbeitung von Bildern zu Informationen wird auch maschinelles Sehen oder Bildverstehen \emph{engl. computer vision} genannt und beschäftigt sich damit computergestützt Bilder für das menschliche Verständnis zu interpretieren. Die Thematik Maschinelles Sehen wird im Abschnitt ??? im Kapitel Grundlagen näher beschrieben.
 
-\section{Umsetzung}
+\section{Szene}
+Die Szene besteht aus dem Fluss, auf dem die zu erkennenden Schiffe fahren und die Kamera stehen in einem bestimmtem Verhältnis zueinander. Die Position und Blickwinkel der Digitalkamera soll als gegeben gesehen werden. Eine räumliche Ansicht des Aufbaus der Kamera und deren Verhältnis zum zu filmenden Fluss ist in Abbildung X zu sehen. Die Kamera befindet sich im 3. Stock des FKI Gebäudes auf dem Campus Wilhelminenhof des HTW Berlin und hat einen Neigungswinkel ihres Blickfeldes von ungefähr 20\%.
+
 \section{Anforderungen an den Prototypen}
-Der Prototyp soll in der Lage sein unter möglichst allen Wetterumständen Schiffe anhand des Videostreames der IP-Kamera zu erkennen. Dies soll nur tagsüber passieren.
-Dieser Prototyp soll an unterschiedlichen Orten eingesetzt werden können, gegebenenfalls soll die Kamera an einen anderen Flussabschnitt bewegt werden können und die Software soll an die dort gegebenen lokalen Umstände anpassbar sein. Diese Anpassung soll anhand einer Grafischen Benutzeroberfläche geschehen.
-\subsection{Hardware}
-Die Hardwarekomponente des Prototypen soll aus einer Kamera bestehen, die entweder Videosinal über das Netzwerk / Internet an den verarbeitenden Rechner inkl. Software sendet, oder direkt an einem Computer angeschlossen sein, welcher die Verarbeitung dann direkt vor Ort vornimmt. Allerdings ergibt sich dadurch das Problem, dass ein Computer am FLuss stehen mnuss, was nicht immer möglich ist, da eine Stromzufuhr nicht immer gegeben sein kann. ( Wie soll denn überhaupt eine Kamera dort funktionieren? Eventuell eine Kamera per Batterie laufen lassen mit Mobilem Hotspot?!! ) 
+Die Hardwarekomponente des Systems soll auf unterschiedliche Umgebungen anpassbar sein und das System soll auf andere Flussabschnitte ebenso anwendbar sein. Dadurch muss die Installation der Kamera ebenso, wie die Softwarekomponente sich nicht von externen Faktoren, wie Wettereinflüsse beeinträchtigen lassen können. Diese Hardwarekomponente des Systems einschließlich der Halterung der Kamera soll in dieser Arbeit ebenso beschrieben werden. 
+Der Prototyp soll in der Lage sein unter möglichst allen Wetterumständen Schiffe anhand des Videostreams einer digitalen Kamera zu erkennen. Dieser Videostream soll durch eine digitale Kamera aufgezeichnet und über das Internet von einem verarbeitenden Computer abgerufen werden. Diese Verarbeitung soll in Echtzeit geschehen.
+
+\subsection{Hardwarekomponente}
+Die Hardwarekomponente des Prototyps soll aus einer Kamera bestehen, welche im Abschnitt ??? näher erläutert wird. Die Kamera soll ihr Videosignal über das Netzwerk\footnote{Internet} an einen verarbeitenden Computer senden können, was durch eine typische Netzwerkkamera ermöglicht wird. Weiterhin soll der Prototyp an unterschiedlichen Orten eingesetzt werden können, wodurch eine portable Halterung der Kamera, welche ebenso unterschiedlichen Wetterumständen trotzen können soll entwickelt werden.
 
 \subsubsection{Kamera}
-An die Kamera, die die Aufgabe hat den Flussausschnitt zu filmen werden nur wenige Anforderungen gestellt. Sie soll ausschließlich die Fähigkeit haben ihren Videostream über das Internet erreichbar zu machen. Die Qualität des Videostreames ist ein Kriterium, das ausser Acht gelassen werden soll.
-Als Kamera wurde die AXIS M1031-M gewählt, da sie schlichtweg gegeben war und den Anforderungen entspricht. Sie bietet ihren Stream in diversen Formaten ( h.264, Motion JPEG, MPEG-4 ) an und war bereits eingerichtet.
-Ausserdem hat diese Kamera den Vorteil einer einfachen Installation, einer 640x480 Pixel Auflösung mit einer Bildrate von 30FPS.
+Die Anforderungen an die Kamera sind gering. Sie soll ausschließlich die Fähigkeit haben ihren Videostream über das Internet erreichbar zu machen. Die Qualität des Videostreams ist an niedrige Kriterien gehalten, eine Pixelanzahl von 640 x 480 bei einer Bildrate von 30 Bildern pro Sekunde ist ausreichend.
 
-\begin{figure}
+\subsubsection{Kamerahalterung}
+Die Gestaltung der Kamerahalterung soll sehr am Nutzen orientiert werden und keinerlei ästhetischen Wert haben. Sie hat die Anforderungen, dass sie diversen Wetterumständen( z.B. Regen, sowie direkte Sonneneinstrahlung ) trotzen können soll. Weiterhin soll sie es ermöglichen die Kamera außerhalb der Fenster des FKI Gebäudes zu befestigen, um eventuellen Reflexionen vorzubeugen, welche entstehen können, wenn sie durch Fensterglas filmt.
+
+\subsection{Softwarekomponente}
+Die zu entwickelnde Software soll in der Lage sein Schiffe in Echtzeit zu erkennen und zu verfolgen. Was die Erkennung und Verfolgung von Objekten anhand von Videosequenzen impliziert wird im Kapitel Grundlagen beschrieben.
+Weiterhin soll die Software an unterschiedliche Wetterumstände und Perspektiven der Kamera anpassbar sein. Dies soll dem Benutzer der Software durch eine grafische Benutzeroberfläche ermöglicht werden.
+% Zusätzlich soll die Software eventuelle Möglichkeiten zur Klassifikation der Schiffe umsetzen, welche im Verlauf der Problemlösung entwickelt werden.
+
+\subsubsection{Verarbeitender Computer}
+Um eine Verarbeitung des Videosignals in Echtzeit zu gewährleisten muss der verarbeitende Computer mindestens den Systemvoraussetzungen in Tabelle \ref{tab:mindestanforderungen} \nameref{tab:mindestanforderungen} gerecht werden.
+
+\begin{table}
+\caption[Anforderungen und Systemvoraussetzungen]{Anforderungen und Systemvoraussetzungen}
+\label{tab:mindestanforderungen}
 \centering
-\includegraphics[width=.95\textwidth]{axis_camera} %{CS0031}
-\caption[AXIS M1031-M]{AXIS M1031-M\footnotemark}
-\label{fig:AXIS M1031-M}
-\end{figure}
-\subsubsection{Halterung}
-\subsubsection{Benutzte Hardware}
-\subsection{Software}
-\footnotetext{\url{http://www.networkcamerastore.com/axis-m1031-w-0300-004-wireless-network-camera}}
-Die Softwarekomponente des Systemes soll inder Lage sein aus einer erhöhren Position am Flussrand Schiffe zu erkennen, zu verfolgen und gegebenenfalls klassifizieren und sonstige Informationen über das Schiff, wie z.B. Geschwindigkeit, Länge aufzuzeichnen. Die Position aus der die Kamera auf den Fluss 'sieht' soll variabel sein und die Sofware soll an diese veränderbaren Umstände angepasst werden können. Diese Anpassung soll anhand einer grafischen Benutzeroberfläche geschehen können.
+\setlength{\tabcolsep}{5mm}	% separator between columns
+\def\arraystretch{1.25}			% vertical stretch factor (Standard = 1.0)
+\begin{tabular}{|c|c|} \hline
+Betriebssystem & Windows 7 oder 8 (aktuelle Updates)\\
+\hline
+CPU & mindestens Intel Core Duo oder AMD Athlon 64 X2\\
+\hline
+RAM & mindestens 4GB\\
+\hline
+Grafikkarte & vom Hersteller NVIDIA mit mindestens 1GB Videospeicher\\
+\hline
+Sonstiges & Ethernet Verbindung, Maus, Monitor\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Wetterumstände}
+Wie in Abbildung \ref{fig:wetterumstaende} \nameref{fig:wetterumstaende} zu sehen ist, ist das Wetter unbeständig. Das System soll in der Lage sein von sich ändernden Wetterumständen unbeeinträchtigt zu funktionieren.
+
 \subsubsection{Benutzeroberfläche}
-Die grafische Benutzeroberfläche soll es dem Benutzer ermöglichen die Algorithmen, die zur Erkennung und Verfolgung der Schiffe bnuetzt werden fein zu parametrisieren. Dazu sollen alle entscheidenden Parameter der Algorithmen aoffen gelegt werden und durch Standard Oberfkächen-Elemente veränderbar sein.
-\subsubsection{Performance}
-Da die Verarbeitung des Videostreames in Echtzeit geschehen soll die Software alle möglichen Parallelisierungsmethoden benutzen, die sich anbieten. 
+Die grafische Benutzeroberfläche soll es dem Benutzer ermöglichen die Algorithmen, die zur Erkennung und Verfolgung der Schiffe benutzt werden zu parametrisieren. Dazu sollen die entscheidenden Parameter der Algorithmen über standardisierte Oberflächenelemente anpassbar sein. Das GUI\footnote{Graphical User Interface} soll in Betracht auf den Entwicklungsaufwand so einfach wie möglich gehalten werden, ohne den Nutzen selbst einzuschränken. Es soll sich auf einfache Elemente wie Schieberegler, Schaltknöpfe und Kontrollkästchen beschränkt werden.
+
+\subsubsection{Performanz}
+Da das Videosignal in Echtzeit verarbeitet werden soll, muss während dem Entwurf und der Implementierung des Prototyps der Aspekt der Performanz berücksichtigt werden. Es soll, wenn möglich, zu jeder Zeit auf Möglichkeiten zur Parallelisierung der Berechnungen eingegangen werden.
+
 \section{Abgrenzungskriterien}
-In diesem Abschnitt wird erläutert von welchen Anforderungen sich der Prototyp klar abgrenzt. Darüber sollte ich mir mal gedanken machen-
-\section{Methodik}
-In den folgenden Unterabschnitten wird tiefer auf die Umsetzung des Prototypen und dieser Dokumentation eingegangen. Es werden Hilfsmittel, die das Projektmanagement und die Programmierung unterstützen gegeneinander abgewogen und untersucht.
-\subsection{Projektmanagement}
-Um ein professionelles und strukturiertes Projektmanagement zu gewährleisten muss ich für eine Unterstützung entschieden werden. Gängige Möglichkeiten bieten Projektmanagement-Systeme wie trac und Redmine.
-\subsubsection{trac}
-trac\footnote{\url{http://www.trac.edgewall.org/}} ist eine \emph{issue tracking} System. Es soll dazu dienen Entwickler bei ihrer Arbeit zu unterstützen, indem es die Organisiation und zukünftige Aufgaben ordnet und in nützlicher Weise aufbereitet. In Abbildung (???) ist eine klassische Ansicht von trac zu sehen. Weiterhin ermöglicht \emph{trac} gängige Versionskontrollsysteme einzubinden und bietet eine Wiki-Funktion, welche viele typische Aufgaben der Softwareentwicklung unterstützt. Zudem ist es kostenlos, Open-Source und unter der Modified BSD License\footnote{\url{http://en.wikipedia.org/wiki/Modified\_BSD\_license\#3-clause}} veröffentlicht.
-\begin{figure}
-\centering
-\includegraphics[width=.95\textwidth]{trac-timetracking-report} %{CS0031}
-\caption[trac Projektmanagement]{trac Projektmanagement\footnotemark}
-\label{fig:trac Projektmanagement}
-\end{figure}
-\footnotetext{\url{http://trac.edgewall.org/wiki/TimeTracking}}
-\subsubsection{Redmine}
-\footnotetext{\url{http://www.redmine.org/}}
-\emph{Redmine}\footnotemark ist ein weiteres Projektmanagement Programm, welches ähnliche Funktionen wie \emph{trac} erfüllt. Es ist unter der GPL\footnote{\url{http://www.gnu.org/licenses/old-licenses/gpl-2.0.html}}-Lizenz veröffentlicht.
-\begin{figure}
-\centering
-\includegraphics[width=.95\textwidth]{redmine_roadmap} %{CS0031}
-\caption[Redmine]{Redmine\footnotemark}
-\label{fig:Redmine}
-\end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=.95\textwidth]{gant_diagramm_20131208.jpg} %{CS0031}
-\caption[Gantt Diagramm]{Gantt Diagramm}
-\label{fig:Gantt Diagramm}
-\end{figure}
-\subsection{Programmiermethodik}
-Bei diesem Projekt kann kein nicht-iteratives Vorgehensmodell, wie das Wasserfallmodell benutzt werden, da sich die tatsächlichen Anforderungen an die Software erst während der Implementierungsphase herausstellen. Man kann bei solch einem Projekt vorab schlichtweg nicht sagen, welche Bildverarbeitungsmethoden genau angewandt werden sollen, da nach der Implementierung zunächst eine fundierte Untersuchung der Ergebnisse geschehen muss, um zu entscheiden, welche Folgeverarbeitungen darauf aufbauen können. Es gibt diverse Ansätze, die das Problem dieser Arbeit lösen, welche jedoch nicht vor tatsächlicher Implementierung festgehalten werden können.
-Daher wurde sich entschieden eine agile Vorgehensweise zu wählen, um genau diese Art des Projektes zu addressieren. Dadurch kann sich unmittelbar an Erkenntnisse der Implementierung angepasst werden.
-\subsubsection{Agile Programmierung}
-\subsubsection{Extreme Programming}
+In diesem Abschnitt wird erläutert von welchen Anforderungen sich der Prototyp klar abgrenzt.
+
+\subsection{Klassifikation}
+Die Klassifikation der Schiffe anhand ihrer Eigenschaften soll voll funktionstüchtig umgesetzt werden. Es sollen ausschließlich Ansätze entwickelt werden, welche die Klassifikation ermöglichen würden. Dieser Teil soll ausschließlich theoretisch entwickelt werden.
+
+\section{Vorgehensweise}
+In diesem Abschnitt werden die Anforderungen an die Vorgehensweise des Autors zur Realisierung des Arbeit und des Prototyps festgehalten.
+Um eine kontrollierte und erfolgreiche Vorgehensweise zur Bearbeitung dieser Arbeit zu gewährleisten soll der Autor abwägen welche Unterstützenden Hilfsmittel zum Projektmanagements hilfreich sind. Weiterhin soll untersucht werden, welche Programmiermethodik zur Umsetzung des Prototyps gewählt werden soll.
