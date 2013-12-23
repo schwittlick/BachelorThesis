@@ -1,53 +1,123 @@
 \chapter{Definition}
-Das System muss diversen Umständen gerecht werden. Diese Umstände sind Wetterumstände, da zu bestimmten Jahreszeiten, sowie Tageszeiten unterschiedliche Helligkeiten im Videobild bestehen, sowie auch diverse Faktoren, die das System kurzfristig komplett ausser Kraft setzen können. Diese extrem gravierenden Faktoren können extreme Blendungen durch die Sonneneinstrahlung in die Linse der Kamera, sowie auch starke Reflexion des Sonnenlichtes auf der Wasseroberfläche sein. Weiter Umstände sind, dass das System schlichtweg Nachts nicht funktionieren kann, da zu dieser Zeit das Bild schwarz ist und kein Sonnenlicht vom Schiff reflektiert in die Linse der Kamera fällt.
-Sonstige Umstände, die das System zu meistern wissen muss sind diverse größen, farben, geschwindigkeiten und distanzen zur Kamera der Boote. 
-Größe: Schiffe können sehr groß ( lang ) sein, und weit über den Blickwinkel der Kamera herausreichen, Auf der anderen Seite können sie auch sehr klein sein, wie in der Abbildung ??? zu sehen ist.
-Distanz zur Kamera: Ein weiterer Faktor ist die Entfernung von Kamera und Boot. Dadurch wird das Schiff kleiner wahrgenommen, als wenn das gleiche Boot mit kleinerer Distanz zur Kamera fährt. Wenn also kleine Boote an der anderen Seite der Spree fahren wirken sie noch kleiner.
-Farben: Der großteil der Schiffe hat weiße Farbe als Lack. Einige Schiffe allerdings haben eine Farbe, die einen kleineren Kontrast zur Farbe des Wassers aufweisen, wodurch eine Segmentierung und Abgrenzung des Schiffes vom Wasser erschwerht werden kann.
-Geschwindigkeiten: Die Geschwindigkeit der beobachteten Schiffe reicht von sehr langsam ( Kohletanker ) is zu sehr schnell ( Speedboot ) ? Abbildungen einfügen. Das System soll in der Lage sein sämtliche Schiffe zu erkennen, unter der Bedingung, dass das Boot sich tatsächlich Bewegt.
 
-Anhand dieser Analyse ist zu sehen, dass die Erkennung der Schiffe grundlegend anhand derer Bewegung zu erfolgen hat. Ansätze zur Bewegungsanalyse anhand von Bildsequenzen sind zum ersten die Berechnung des Optischen Flusses. Zum anderen kann eine einfache Hintergrundsubtraktion die zur Segmentierung des Vordergrundes dient genutzt werden, um die Berechnung des optischen flusses zu vereinfachen. Dadurch wird die Berechnung des flusses ausschließlich auf sich tatsächlich bewegende Bilder berechnet. Hier sollte ich vergleichsbilder einbauen, wie die unterschiedlichen Umstände nach gleichen Verarbeitungsschritten aussehen.
+Wie bereits im Kapitel \ref{ch:anforderungsanalyse} \nameref{ch:anforderungsanalyse} beschrieben, soll  das zu entwickelnde System unter möglichst vielen Umständen mit geringer Ausfallrate operieren können. Um diese Eigenschaften zu gewährleisten, müssen zunächst alle möglichen Umstände der Domäne analysiert werden. 
+Diese Umstände sind sich verändernde Wettereinflüsse, sowie Varianzen in der äußeren Gestalt des Schiffe selbst, welche in den folgenden Abschnitten erläutert und analysiert werden.
 
-\section{Objektverfolgung}
-Das Thema Objektverfolgung ist eine Forschungsrichtung, die zur Zeit von vielen Forschern aktiv bearbeitet wird. Die Objektverfolgung ist für viele Anwendungsbereiche von Bedeutung, und ist für folgende Anwendungen nötig: Überwachungssysteme, Sportanalyse, Gestenerkennung, medizinische Zwecke wie zum Beispiel die Untersuchung von Mikroskopiebildern, Verkehrsanalyse zur effizienten Gestaltung von Straßen und Wegen, sowie Analyse von Verhaltensmustern von Pflanzen und Tieren.\cite[p.~215]{naeem12}
-
-\section{OpenCV}
-\subsection{Installation}
-Da die Geschwindigkeit des Programmes von Anfang an wichtig ist wurde sich dazu entschieden so viel arbeitslast wie möglich zu parallelisieren. Die Parallelsierung von Bildverarbeitsungsaufgaben bietet sich regelrecht an, da die Algorithmen wie folgt arbeiten: sie wenden die gleiche berechnung auf sehr viele zahlen/pixel an. Diese Arbeitsweise der Algorithmen ähnelt sehr stark der Arbeitsweise der GPU jeder Grafikkarte. 
-Deswegen wurde sich dazu entschieden so viel wie möglich der Arbeitslast auf die GPU auzulagern, da zu beginn der Bearbeitung vermutet wurde, dass eine Sequenzielle bearbeitung der Berechnungen nicht ausreichen wird, da die Software in Echzeit Videodaten verarbeiten können soll.
-OpenCV unterstützt seit der version 2.4.6. die benutzung der CUDA Runtime API und unterstützt ausschließlich NVIDIA GPU's. Um die GPU für OpenCV zu benutzen muss OpenCV eigenständig gebaut werden, die vorkompilierten versionen sind ohne CUDA support kompiliert. Dafür muss CUDA , die neuesten Grafikkartentreiber und eine NVIDIA Grafikkarte vorhanden sein. 
-Die Kompilierung hat sich als etwas kompliziert herausgestellt, sodass die neueste version von \url{http://www.github.com/itseez/opencv}  mit dem tag 2.4.7. benutzt werden musste um eine erfolgreiche kompilierung abzuschließen. Dafür ist die Option WITH\_CUDA zu aktivieren, worauf man zusätzlich das Verzeichnis der NVIDIA CUDA installation angeben muss. Weiterhin habe ich OpenGL für die beschleunigte videodarstellung und OpenMP für die parallelisierung auf den CPUs aktiviert, um die die Grundbedingungen für die Geschwindigkeit der Software ausreichend zu erfüllen.
-\subsection{Mat}
-In OpenCV werden sämtliche Bilddaten als Matrizen abgebildet und der entsprechende Datentyp zur programmatischen Speicherung von Bilddaten heisst ensprechend Mat. Dieser Datentyp hält einige Informationen, wie die Größe des Bildes und der \emph{Typ} des Bildes. Die Größe beschreibt schlichtweg, wieviele Bildpunkte das Bild in der horizontalen, sowie in der vertikalen besitzt. Der Typ beschreibt, was für Bilddaten gespeichert sind. Wie bereits im Kapitel (??GRUNDLAGEN??) beschrieben können Bilder in unterschiedlichen Formaten, wie z.B. Grauwerte und Farbwerte gespeichert werden. OpenCV geht darüber hinaus und ermöglicht dem Entwickler zu bestimmen, wieviele \emph{channels} ein Bild hat und wie genau die Farbwerte gespeichert sind: \emph{depth}. Der Tabelle types können die diversen unterschiedlichen Typen entnommen werden.
-\begin{table}
-\caption[Mat Typen in OpenCV]{Mat Typen in OpenCV\footnotemark}
-\label{tab:types}
+\section{Wetterumstände}\label{subs:wetterumstaende}
+Der gravierenste Einfluss auf das Kamerabild hat das Wetter. Wie in Abb. \ref{fig:wetterumstaende} \nameref{fig:wetterumstaende} auf Seite \pageref{fig:wetterumstaende} zu sehen ist haben \emph{Sonnenstellung} und \emph{Tageszeit}, sowie \emph{Jahreszeit} einen großen Einfluss. Zum Beispiel unterscheiden sich die Reflexion des Lichtes auf der Wasseroberfläche in ihrer Intensität, sowie ihrer Position und Art. Wie in Abb. \ref{fig:wetterumstaende} \nameref{fig:wetterumstaende} 3.v.u.r. zu sehen ist, erzeugt eine niedrige Sonnenstellung starke Linsenlichtreflexionen, welche das Bild aus Perspektive der Bilderverarbeitung enorm verändert. Weiterhin gelangt während der Dämmerung und Nacht sehr wenig Licht in die Linse der Kamera, wodurch Schiffe nicht mehr von der Wasseroberfläche unterschieden werden können. Durch wechselnde Tageszeiten werden die u.a. in Abb. \ref{fig:wetterumstaende} \nameref{fig:wetterumstaende} zu sehenden Wohnhäuser und Bäume auf der Wasseroberfläche unterschiedlich reflektiert. 
+\begin{figure}
 \centering
-\setlength{\tabcolsep}{5mm}	% separator between columns
-\def\arraystretch{1.25}			% vertical stretch factor (Standard = 1.0)
-\begin{tabular}{|r||c|c|c|c|} \hline
-& \emph{C1} & \emph{C2} & \emph{C3} & \emph{C4}\\
-\hline\hline
-CV\_8U & 0 & 8 & 16 & 24\\
-\hline
-CV\_8S & 1 & 9 & 17 & 25\\
-\hline
-CV\_16U & 2 & 10 & 18 & 26\\
-\hline
-CV\_16S & 3 & 11 & 19 & 27\\
-\hline
-CV\_32S & 4 & 12 & 20 & 28\\
-\hline
-CV\_32F & 5 & 13 & 21 & 29\\
-\hline
-CV\_64F & 6 & 14 & 22 & 30\\
-\hline
-\end{tabular}
-\end{table}
-\footnotetext{\url{http://ninghang.blogspot.de/2012/11/list-of-mat-type-in-opencv.html}}
+\includegraphics[width=.8\textwidth]{alle_wetterumstaende_smaller}
+\caption[Wetterumstände]{Wetterumstände}
+\label{fig:wetterumstaende}
+\end{figure}
+
+\section{Objektvarianz}
+In diesem Abschnitt wird auf das Problem der abweichenden Gestalt der zu verfolgenden Schiffe eingegangen.
+Wie bereits im Abschnitt \ref{ch:anforderungsanalyse} \nameref{ch:anforderungsanalyse} beschrieben, soll die Verfolgung von Schiffe auf der Spree anhand eines Systems geschehen, welches Schiffe unter möglichst allen bzw. möglichst vielen Umständen verfolgen kann. In diesem Abschnitt wird untersucht, in welchen äußeren Erscheinungen Schiffe auftreten können, sowie welche Varianz in der Erscheinung der Schiffe besteht. Es wird auf Aspekte wie die diversen \nameref{subs:typen}, \nameref{subs:groesse}, \nameref{subs:farbe} sowie der \nameref{subs:distanz_zur_kamera} eingegangen. Das System muss soll in der Lage sein Schiffe unbeeinträchtigt von den genannten Umständen zu erkennen und zu verfolgen.
+
+\subsection{Schiffsformen}\label{subs:typen}
+Wie in Abb. \ref{fig:alle_schiffstypen} \nameref{fig:alle_schiffstypen} auf Seite \pageref{fig:alle_schiffstypen} zu sehen ist wird die Spree von vielen unterschiedlichen Schiffstypen befahren. Diese reichen von kleinen Motorbooten ( l.o. ), über Jachten ( 2.v.u.l ), Floßen ( u.r. ), bis zu großen Touristenschiffen ( 2.v.o.r. ) und Massengutfrachtern ( r.o. ), wobei jeder Schiffstyp eine andere charakteristische Form besitzt.
+\begin{figure}
+\centering
+\includegraphics[width=.8\textwidth]{alle_schiffstypen}
+\caption[Schiffsformen]{Schiffsformen}
+\label{fig:alle_schiffstypen}
+\end{figure}
+
+\subsection{Größe}\label{subs:groesse}
+Ein weiterer Punkt, in dem sich die Schiffe untereinander unterscheiden ist die Größe der Schiffe. Die größere der Schiffe stark durch den eigentlichen Typ des Schiffes bestimmt und beschreibt die  \emph{Länge} und \emph{Breite} des Schiffes.
+\begin{figure}
+\centering
+\includegraphics[width=.8\textwidth]{alle_groessenunterschiede} 
+\caption[Größenunterschiede]{Größenunterschiede}
+\label{fig:alle_groessenunterschiede}
+\end{figure}
+
+\subsection{Farbe}\label{subs:farbe}
+Schiffe sind mit unterschiedlichen Farben lackiert, wodurch es dazu kommen kann, dass sich bestimmte Schiffe mehr oder weniger von der Farbe des Wassers unterscheiden. Dadurch müssen Schiffe unabhängig von ihrer Farben erkannt und verfolgt werden.
+\begin{figure}
+\centering
+\includegraphics[width=.8\textwidth]{alle_farbunterschiede} 
+\caption[Farbunterschiede]{Farbunterschiede}
+\label{fig:alle_farben}
+\end{figure}
+
+\subsection{Distanz zur Kamera}\label{subs:distanz_zur_kamera}
+Die Distanz des Schiffes zur Kamera ist ist dadurch bestimmt, wo auf der Spree das Schiff fährt. Durch die Distanz eines Schiffes zur Kamera wird wiederum die Größe des Schiffes beeinflusst, da die Kamera weiter entfernte Objekte unterschiedlich groß aufzeichnet. \textbf{TODO: Ein Bild heraussuchen, was beschreibt, wie kameras funktionieren. Auch ein Bild einfügen, das beschreibt, wie ein Schiffabschnitt aus der Vogelperspektive aussieht, und wo Schiffe fahren. } 
+\begin{figure}
+\centering
+\includegraphics[width=.8\textwidth]{alle_distanz_zur_kamera} 
+\caption[Diverse Distanzen zur Kamera]{Diverse Distanzen zur Kamera}
+\label{fig:alle_distanzen_zur_kamera}
+\end{figure}
+
+\section{Methodik}
+In den folgenden Unterabschnitten wird tiefer auf die Umsetzung des Prototypen und dieser Dokumentation eingegangen. Es werden Hilfsmittel, die das Projektmanagement und die Programmierung unterstützen gegeneinander abgewogen und untersucht.
+\subsection{Projektmanagement}
+Um ein professionelles und strukturiertes Projektmanagement zu gewährleisten muss ich für eine Unterstützung entschieden werden. Gängige Möglichkeiten bieten Projektmanagement-Systeme wie trac\footnote{\url{http://www.trac.edgewall.org/}} und Redmine\footnote{\url{http://www.redmine.org/}}.
+\subsubsection{trac}
+\emph{trac} ist eine \emph{issue tracking} System. Es soll dazu dienen Entwickler bei ihrer Arbeit zu unterstützen, indem es die Organisiation und zukünftige Aufgaben ordnet und in nützlicher Weise aufbereitet. In Abbildung \ref{fig:trac} \nameref{fig:trac} ist eine klassische Ansicht von trac zu sehen. Weiterhin ermöglicht \emph{trac} gängige Versionskontrollsysteme einzubinden und bietet eine Wiki-Funktion, welche viele typische Aufgaben der Softwareentwicklung unterstützt. Zudem ist es kostenlos, Open-Source und unter der Modified BSD License\footnote{\url{http://en.wikipedia.org/wiki/Modified\_BSD\_license\#3-clause}} veröffentlicht.
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{trac-timetracking-report} %{CS0031}
+\caption[trac Projektmanagement]{trac Projektmanagement\footnotemark}
+\label{fig:trac}
+\end{figure}
+\footnotetext{\url{http://trac.edgewall.org/wiki/TimeTracking}}
+
+\subsubsection{Redmine}
+\emph{Redmine} ist ein weiteres Projektmanagement Programm, welches ähnliche Funktionen wie \emph{trac} erfüllt. Es Besitzt die Fähigkeit Aufgaben bestimmten Benutzern, sowie Meilensteinen zuzuordnen, was eine organisierte Vorgehensweise bei der Softwareenwicklung unterstützt. Weiterhin können alle gängigen Versionskontrollsysteme eingebunden werden und Redmine bietet sogar die Möglichkeit ein Gantt Diagramm zu generieren, welches in Abbildung \ref{fig:ganttdiagramm} \nameref{fig:ganttdiagramm} zu sehen ist. Ein Gantt Diagramm ist ein Balkendiagramm, was den Zeitplan eines Projektes veranschaulicht. Es dient dazu den aktuellen Status eines Projektes darzustellen und hilft dabei den Zeitplan und Meilensteine einzuhalten\footnote{vgl. \url{http://ganttdiagramm.com/}}  Es ist unter der GPL\footnote{\url{http://www.gnu.org/licenses/old-licenses/gpl-2.0.html}}-Lizenz veröffentlicht. In Abbildung \ref{fig:Redmine} \nameref{fig:Redmine} ist die \emph{Roadmap} Ansicht von Redmine zu sehen. 
+\begin{figure}
+
+\centering
+\includegraphics[width=.95\textwidth]{redmine_roadmap} %{CS0031}
+\caption[Redmine]{Redmine\footnotemark}
+\label{fig:Redmine}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{gant_diagramm_20131208.jpg} %{CS0031}
+\caption[Gantt Diagramm]{Gantt Diagramm}
+\label{fig:ganttdiagramm}
+\end{figure}
+\subsection{Programmiermethodik}
+Bei diesem Projekt kann kein nicht-iteratives Modell, wie das Wasserfallmodell benutzt werden, da sich die tatsächlichen Anforderungen an die Software erst während der Implementierungsphase herausstellen. Man kann bei solch einem Projekt vorab schlichtweg nicht sagen, welche Bildverarbeitungsmethoden genau angewandt werden sollen, da nach der Implementierung zunächst eine fundierte Untersuchung der Ergebnisse geschehen muss, um zu entscheiden, welche Folgeverarbeitungen darauf aufbauen können. Es gibt diverse Ansätze, die das Problem dieser Arbeit lösen, welche jedoch nicht vor tatsächlicher Implementierung festgehalten werden können.
+Daher wurde sich entschieden eine agile Vorgehensweise zu wählen, um genau diese Art des Projektes zu adressieren. Dadurch kann sich unmittelbar an Erkenntnisse der Implementierung angepasst werden. Diese Anforderung an die Programmiermethodik erfordert die Vorgehensweise der agilen Programmierung.
+\subsubsection{Agile Programmierung}
+Die agile Programmierung hat einige Kernunterschiede zu klassischen Softwareentwicklungsmethoden. Die Agile Programmierung folgt vier wesentlichen Grundsätzen; es stellt die Rolle Individuen, der Softwareentwicklung und deren Interaktionen höher als die von Prozessen und Werkzeugen. Funktionierende Software wird wichtiger als ausführliche Dokumentation gesehen. Die Zusammenarbeit mit dem Kunden ist wichtiger als Manifestierung von Aufgaben in Verträgen. Zuletzt wird die Fähigkeit auf Anforderungsänderungen einzugehen wichtiger eingeschätzt als die einem strikten Plan zu folgen.\footnote{vgl. \url{http://agilemanifesto.org/}}
+
+\subsubsection{Wasserfallmodell}
+Bei der Anwendung des Wasserfallmodells wird die Softwareentwicklung strikt in Phasen unterteilt, die nacheinander durchlaufen werden. Die unterschiedlichen Phasen belaufen sich auf die Phasen der Planung, des Entwurfes, der Implementierung und der Validierung, wohingegen jedes Ende einer Phase jeweils durch einen Meilenstein gekennzeichnet ist. Eine Rückkopplung aus einzelnen Phasen auf frühere Phasen ist im Wasserfallmodell nur eingeschränkt möglich.\footnote{\url{http://www.tu-ilmenau.de/en/sse/lehre/winter-201213/softwareprojekt/vorgehen-wasserfallmodell/}} Die einzelnen Phasen selbst sollen hier nicht weiter erläutert werden, da diese Programmiermethode aufgrund ihrer Eigenschaften nicht Bestand dieser Arbeit sein soll. 
+
+\section{Framework}
+Hier wird untersucht welche unterstützenden Frameworks der Bildverarbeitung und Computer Vision existieren. Es sollen deren Vor- sowie Nachteile analysiert und gegeneinander Abgewogen werden.
+
+\subsection{SimpleCV}
+SimpleCV\footnote{\url{http://www.simplecv.org/}} ist ein Framework zur Erstellung von \emph{computer vision} Programmen, dessen Quellcode frei verfügbar und unter der BSD\footnote{\url{http://en.wikipedia.org/wiki/Modified\_BSD\_license\#3-clause}} Lizenz verfügbar ist. \emph{SimpleCV} ist in der Sprache Python geschrieben, kann unter Mac OSX, Windows, sowie Linux genutzt werden. \emph{SimpleCV} hat zum Anspruch eine 'einfach' anzuwendende Bibliothek zu sein, welche kein Wissen bezüglich der wissenschaftlichen Herangehensweise zu Problemen der Computer Vision voraussetzt. 
+
+\subsection{ccv}
+ccv\footnote{http://libccv.org/} ist nach eigener Aussage eine moderne Computer Vision Bibliothek, welche zum Ziel hat eine performante, leicht in bestehende Projekte zu integrierende Bibliothek zu sein. Ein weiteres Kernkonzept von \emph{ccv} ist es eine Bibliothek, welche auf tatsächliche Anwendungen zugeschnitten ist zu sein. Das heisst, dass viele "`state-of-art"'\footnote{http://libccv.org/} Algorithmen implementiert sind. \emph{ccv} ist unter der BSD\footnote{\url{http://en.wikipedia.org/wiki/Modified\_BSD\_license\#3-clause}} Lizenz veröffentlicht.
+
+\subsection{VXL}
+VXL\footnote{\url{http://vxl.sourceforge.net/}} ist Sammlung von C++ Bibliotheken, welche zur dafür gestaltet wurde Aufgaben der Computer Vision zu übernehmen. Sie ist von \emph{TargetJr}\footnotemark \footnotetext{\url{http://www.robots.ox.ac.uk/~tgtjr/}} und \emph{IUE}\footnotemark \footnotetext{\url{http://www.iue.edu/}} entwickelt worden, mit dem Ziel ein leichtes, schnelles und konsistentes System zu sein. 
+
+\subsection{OpenCV}
+OpenCV\footnote{Open Source Computer Vison Library} ist eine von itseez\footnote{\url{http://itseez.com/}} entwickelte Bibliothek zur Unterstützung von Applikationen des maschinellen Sehen und des maschinellen Lernens. Sie ist unt der BSD Lizenz lizensiert.
+OpenCV ist die mit über 7 Millionen Downloads\footnote{\url{http://opencv.org/}} meistgenutzte Bibliothek zur Bewältigung von Problemen der Computer Vision. Sie implementiert mehr als 2500 optimierte Algorithmen und bewältigt unter anderen Aufgaben der folgenden Themen: Gesichtserkennung, Objekterkennung, Gestenerkennnug, Objektwiederkennung, 3D Modellierung von Objekten, Errechnung von Punktewolken anhand von Stereobildern, \emph{imagestitching} und \emph{feature detection}\footnotemark. 
+\footnotetext{Open Source Computer Vision Library}
+Es existieren Anbindungen der Bibliothek für die Programmiersprachen C++, C Phython, Java und MATLAB. Weiterhin kann die Bibliothek unter Windows, Linux, Android und Mac OSX genutzt werden. OpenCV hat den Anspruch in Echtzeitanwendungen genutzt werden zu können, weswegen Anbindungen zu Technologien wie CUDA\footnote{\url{http://www.nvidia.de/object/cuda_home_new.html}} und OpenCL\footnote{\url{http://www.khronos.org/opencl/}} entwickelt wurden und werden. 
+\footnotetext{\url{http://opencv.org/about.html}} 
+
+\subsection{Zusammenfassung}
+Warum habe ich OpenCV gewählt?
+
+\section{Sprache}
+Der Prototyp selbst soll in der nativen Programmiersprache der \emph{OpenCV} Bibliothek entwickelt werden, um keine Einschränkungen der Performanz in kauf nehmen zu müssen.
 
 \section{Grafische Benutzeroberfläche}
-Es wird ein Framework zur gestaltung und umsetzung der grafischen Benutzeroberfläche genutzt werden müssen. Die Anforderungen an dieses Framework sind eindeutig: Es muss in C++ geschrieben sein, viele gängige Oberflächenelemente anbieten und frei benutzbar sein. Im folgenden werden zwei Frameworks verglichen.
+Wie in Kapitel Anforderungsanalyse beschrieben, soll der Prototyp mit Hilfe eines GUI parametrierbar sein. Zur Gestaltung und Entwicklung der grafischen Benutzeroberfläche soll ein bereits implementiertes und frei verfügbares \emph{Framework} genutzt werden. Das \emph{Framework} muss in C++ geschrieben sein, da der Prototyp selbst in dieser Sprache geschrieben werden soll. Weiterhin soll es alle gängigen Oberflächenelemente anbieten und frei benutzbar sein. Im folgenden werden einige \emph{Frameworks} verglichen.
 \subsection{Qt}
 Qt existiert zur Zeit unter der Version 5.1.1. und ist eines der meist verbreitetsten C++ Bibliotheken zur Erstellung von grafischen Benutzeroberflächen. Qt's Entwicklungsgeschichte reicht bis zum Jahr 1991 zurück, wo die tatsächliche Entwicklung begann, allerdings wurde die erste Version im Jahr 1998 von der norwegischen Firma \textit{TrollTech} veröffentlicht. Qt bietet eine vielzahl von grafischen Steuerelementen, einen Qt Creator an, mit dem die Steuerelemente interaktiv angeordnet werden können und sogar ein Modul zur Übersetzung der Texte, die im Interface vorkommen in andere Sprachen, dem Linguist. Zudem wird Qt aktiv weiterentwickelt und die aktuelle Version 5.1. wurde im Juli 2013 veröffentlicht. Weiterhin hat Qt ein interessantes Lizensierungsmodell. Seitdem Nokia das Projekt 2008 aufkaufte wurde, wird es seit Oktober 2011 als freie Software unter der LGPL weitergegeben. Durch die LGPL ist es möglich auch ohne eine kostenflichtige Lizenz kostenpflichtige Software mit Qt zu entwickeln, ohne den Sourcecode der Software veröffentlichen zu müssen. Ausschließlich, wenn Änderungen am Quellcode von Qt selbst vorgenommen wurden, müssen diese Änderungen veröffentlicht werden. 
 \begin{figure}
@@ -70,7 +140,7 @@ WTL\footnote{\url{http://wtl.sourceforge.net/}} ist eine Bibliothek zur Entwickl
 \end{figure}
 \footnotetext{\url{http://www.codewiz51.com/wiki/GetFile.aspx?File=WTLFopDemonstration/WTLFopDemonstrationNoMenu.JPG}}
 \subsubsection{wxWidgets}
-wxWidgets\footnote{}\url{http://www.wxwidgets.org/} ist eine C++ Bibliothek, die die Entwicklung von grafischen, plattformübergreifenden Anwendungen unterstützt.
+wxWidgets\footnote{\url{http://www.wxwidgets.org/}} ist eine C++ Bibliothek, die die Entwicklung von grafischen, plattformübergreifenden Anwendungen unterstützt.
 wxWidgets ist under der "wxWidgets License" lizensiert, welche grundsätzlich der L-GPL Lizenz entspricht, allerdings mit dem Unterschied, Software, die wxWidgets in binärer Form nutzt eigene Lizensierung anwenden kann\footnote{\url{http://www.wxwidgets.org/about/newlicen.htm}}.
 \subsubsection{gtkmm}
 gtkmm ist eine offizielle C++ Anbindung an die GTK+ Bibliothek. Sie bietet viele übliche Oberflächenelemente an, und bietet die Möglichkeit diese per Vererbung noch anzupassen. Die Benutzeroberfläche kann per Quellcode, aber auch mithilfe des \textit{Glade User Inteface Designer}s\footnote{}\url{http://glade.gnome.org/} erstellt werden.
@@ -82,3 +152,10 @@ gtkmm ist eine offizielle C++ Anbindung an die GTK+ Bibliothek. Sie bietet viele
 \end{figure}
 \footnotetext{\url{https://developer.gnome.org/gtkmm-tutorial/3.4/toolpalette-example.html.en}}
 Weiterhin ist gktmm unter der LGPL Lizenz veröffentlicht\footnote{\url{http://www.gtkmm.org/en/license.shtml}}.
+
+\section{Zusammenfassung / Problemlösung}
+U ist die Verschiebung des Pixels in X Richtung und V ist die Verschiebung des Pixels in V Richtung. Bei meiner Anwendung brauche ich doch dann also nur die U werte? Diese Thresholden und zeichen. Eine Wichtige Annahme ist, dass pro Bildausschnitt in eine Richtung ausschließlich ein Boot zu sehen ist. Dadurch kann erkannt werden, wo, auf die X Achse gesehen hohe ausschläge sind. Dann einfach eine Bounding Box um diese Punkte ziehen, egal wie weit sie voneinander entfernt sind. Pro Spalte ( y-Achse ) kann dann die Breite des Schiffes errechnet werden, dies kann mit unterschiedlichen Abständen errechnet werden, um Performance zu sparen. Wenn es pro Spalte einmal eine Größe von 0 gibt-> keine Bewegungen in der X-Achse, dann wird einer der Werte daneben genommen. Diese Minimum und Maximum auf der X-Achse sind in ihrer Reihenfolge das Objekt. Alle Punkte miteinander Verbinden und es ist die Kontur.
+Die Ergebnisse der Hintergrundsubtraktion kann als Maske für die Berechnung des dense Optical Flow genutzt werden, um Performance zu sparen. 
+Der Ansatz zur Sparung von Performance ist genau das, was bei guter Videokompression versucht wird zu erreichen. An bestimmten Pixeln ist die Bewegung einfach konstant, wodurch die gleiche Farbe ist und nicht berechnet werden muss. Es wird keine Weitere Information aus diesen Bereichen generiert und sind dadurch Redundant.
+
+Anhand dieser Analyse ist zu sehen, dass die Erkennung der Schiffe grundlegend anhand derer Bewegung zu erfolgen hat. Ansätze zur Bewegungsanalyse anhand von Bildsequenzen sind zum ersten die Berechnung des Optischen Flusses. Zum anderen kann eine einfache Hintergrundsubtraktion die zur Segmentierung des Vordergrundes dient genutzt werden, um die Berechnung des optischen flusses zu vereinfachen. Dadurch wird die Berechnung des flusses ausschließlich auf sich tatsächlich bewegende Bilder berechnet. Hier sollte ich vergleichsbilder einbauen, wie die unterschiedlichen Umstände nach gleichen Verarbeitungsschritten aussehen.
