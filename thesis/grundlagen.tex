@@ -1,15 +1,23 @@
 \chapter{Grundlagen}
-\section{Allgemein}
+\begin{quote}
+\emph{"`If you can't explain it to a six year old, you don't understand it yourself."'} -- Albert Einstein
+\end{quote}
+
+\section{Einleitung}
+
+
+\subsection{Menschliche Wahrnehmung}
+\subsection{Maschinelle Wahrnehmung}
 Der typische grundlegend strukturellen Schritte bei der Erkennung der Schiffe ist wie folgt:
 Im folgenden werden sämtliche grundlegenden Konzepte die zum Verständnis der in den folgenden Kapiteln erarbeiteten Lösungsansätze helfen erläutert. 
 
 Die Aufgabe Objekte anhand von Bild/-sequenzen zu erkennen und diesen Informationen über der realen Objekte zu entnehmen gliedert sich in die Thematik des Bildverstehens ein. Das Forschungsgebiet des Bildverstehens beschäftigt sich damit die menschliche Art zu sehen auf eine Maschine zu übertragen. Die visuelle Interpretation von dem was unsere Augen wahrnehmen geschieht ununterbrochen und meist unterbewusst. \cite[S.~33]{Sester95}Die Tatsache, dass der Mensch auf seine Erfahrung darüber, wie die Welt aufgebaut ist immer zugreifen kann ermöglicht ihm Gegenstände zu erkennen, die nicht ausschließlich dadurch, was man davon sieht gedeutet werden können, sondern aus einer Kombination von zusätzlichen Informationen. Diese weiteren Informationen können aus anderen menschlichen Sinnen gewonnen werden, welche bei der maschinellen Bildinterpretation nicht gegeben sind. (vgl. Sester95)
 \begin{quote}
-Menschliches Sehen bezeichnet nach Boden den Prozess, der Bilder der realen Welt in eine für den Betrachter günstige Beschreibung überführt, bei dem nur noch die wichtigen Informationen erhalten bleiben und unwichtige entfallen.
+"`Menschliches Sehen bezeichnet nach Boden den Prozess, der Bilder der realen Welt in eine für den Betrachter günstige Beschreibung überführt, bei dem nur noch die wichtigen Informationen erhalten bleiben und unwichtige entfallen."'
 \footnote{\url{http://www.ifp.uni-stuttgart.de/publications/dissertationen/moni_diss.pdf}}
 \end{quote}
 Der menschliche Sehapparat hat sich über den Verlauf der Evolution so entwickelt, dass er ebenfalls Objekte, die in verschiedenen Erscheinungsarten auftreten können erkennen zu können. Objekte können in unterschiedlichen Situationen 'gesehen' werden, wobei diverse Faktoren, der die äußere Erscheinung verändern können greifen. Diese sind Faktoren wie Beleuchtung, Perspektive, Orientierung und andere Einflüsse ein Objekt gar physisch verändern. Trotzdem können diese Objekte von dem menschlichen Sehapparat erkannt werden, was grundsätzlich damit zusammen hängt, dass der Mensch die Fähigkeit zu lernen hat. Dadurch ist es den Menschen möglich ununterbrochen Informationen über ihre Umgebung zu verarbeiten und daraus die menschliche Bildverstehen zu verbessern, um in der Zukunft visuelle Einflüsse noch schneller und genauer zu verarbeiten und zu interpretieren.
-\begin{figure}
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=.95\textwidth]{digitale_bildwandlung} %{CS0031}
 \caption[Digitale Bildwandlung]{Digitale Bildwandlung\footnotemark}
@@ -28,7 +36,7 @@ Die allgemeine Abfolge von Schritten, die zur Lösung des Problemes dieser Arbeit
 \item{Aussage}
 \end{itemize}
 
-\subsection{Bildverarbeitung}
+\section{Bildverarbeitung}
 %http://de.wikipedia.org/wiki/Bildverarbeitung 
 %http://people.f4.htw-berlin.de/~barthel/veranstaltungen/GLDM/GLDM.htm 
 Die Bildverarbeitung allgemein, allerdings im besonderen Verfahren der digitalen Bildverarbeitung erfordern Bilddaten als Eingabedaten. Als Eingabebilddaten ist die Rastergrafik am meisten verbreitet, welche ein Bild durch ein zweidimensionales Raster dargestellt wird. Eine andere Art der Bilddaten sind die Vektorgrafiken, die nicht aus Pixeln bestehen, sondern aus geometrischen Anweisungen, die das Bild aus Grafikprimitiven und geometrischen Kurven formt.
@@ -40,7 +48,17 @@ Die Auflösung beschreibt, mithilfe von wievielen Bildpunkten eine Szene abgetast
 
 Sämtliche Bildoperatoren arbeiten auf den Daten ( Pixeln ) eines Ursprungsbildes und erzeugen daraus ein Ergebnisbild. Sie können als mathematische Bildoperation gesehen werden und können in einige Untergruppen kategorisiert werden, welche im folgenden individuell betrachtet werden.
 
-\subsubsection{Punkoperatoren}
+\subsection{Zweidimensionale Bilder}
+Zweidimensionale Bilder in unterschiedlichen Formaten bzw. Typen gespeichert und verarbeitet werden. Diese Typen sind \emph{Binärbilder}, \emph{Graustufenbilder} und \emph{Farbbilder}.
+
+\textbf{Binärbilder} haben die Eigenschaft, dass sie pro Pixel ausschließlich zwei unterschiedliche Informationen enhalten kann. Null oder Eins. Dies beschreibt, ob ein Pixel z.B. Weiß oder Schwarz ist. Die Informationen eines Pixels in einem Binärbild können in einem Bit gespeichert werden.
+
+\textbf{Graustufenbilder} können pro Pixel 256 unterschiedliche Werte annehmen. Diese Werte beschreiben die Intensität dieses Pixels und werden in der Regel als Intensität der weißen Farbe des Pixels ausgedrückt. Die Informationen eines Pixels eines Graustufenbildes können in Acht Bits bzw. einem Byte gespeichert werden.
+
+\textbf{Farbbilder} haben pro Pixel entweder Drei Kanäle. Diese Kanäle indizieren jeweils die Intensität der Farbe des Kanales. Die Drei Kanäle bestimmen die Farbintensität des Pixels für die Farbe Rot, Grün, Blau. Die Informationen eines Pixels eines Farbbildes können in 24 Bits bzw. 3 Bytes gespeichert werden.
+
+
+\subsection{Punkoperatoren}
 Bildpunktoperatoren arbeiten ausschließlich auf dem Farbwert(en) eines Bildpunktes des Ursprungsbildes. Sie haben als Eingabedaten die Farbwerte eines Bildpunktes und errechen ausschließlich die Farbwerte des Ergebnisbildes des Pixels an der gleichen Position im Bild, wie des Ursprungsbildes.
 \begin{quote}
 \textit{ErgebnisPixel( x, y ) = Bildpunktoperator( Ursprungsbild( x, y ) )}
@@ -57,7 +75,7 @@ Mithilfe von Bildpunktoperatoren können Verarbeitungen, wie zum Beispiel Helligk
 \emph{homogen}
 \emph{inhomogen}
 
-\subsubsection{Nachbarschaftsoperatoren}
+\subsection{Nachbarschaftsoperatoren}
 Nachbarschaftsoperatoren arbeiten als Eingabedaten auf mehreren Bildpunkten. Sie haben einen Kernel, welcher bestimmt, welche Bildpunkte um den aktiven Bildpunkt in die Berechnung des Filters mit einbezogen werden sollen. Mit Hilfe von Nachbarschaftsoperatoren können diverse Ziele, wie die Glättung eines Bildes, oder Verringerung des Rauschen in Bildern, oder die Bestimmung von Kanten eines Bildes erreicht werden. Im Folgenden werden Nachbarschaftsoperatoren \emph{Filter} genannt.
 
 \begin{quote}
@@ -92,7 +110,7 @@ Der Medianfilter ist ein Filter, der zur Reduktion von Bildrauschen dient.
 \emph{Extremalspannenfilter}
 \emph{Prewitt-Operator}
 \emph{Dekonvolution}
-\subsubsection{Geometrische Bilderoperationen}
+\subsection{Geometrische Bilderoperationen}
 Geometrische Bildoperation dienen zur Veränderung der Größe, Form und Topologie von Bildern. 
 
 Die folgende geometrische Bildoperation verkleinert das Bild um den Faktor 2.
@@ -109,47 +127,167 @@ Die folgende geometrische Bildoperation verkleinert das Bild um den Faktor 2.
 
 Weiterhin kann mit geometrischen Bildoperationen unter Anderem die \emph{Skalierung}, \emph{Rotierung} oder \emph{Translation} von Bildern erreicht werden.
 
-\subsection{Bildberarbeitung}
+\subsection{Segmentierung}
+
+\subsection{smoothing}
+\subsection{median filter}
+\subsection{erosion / dilatation}
+%http://de.wikipedia.org/wiki/Segmentierung_(Bildverarbeitung) 
+Die Segmentierung ist ein Teilgebiet der digitalen Bildverarbeitung und des maschinellen Sehens.
+
+Die Segmentierung ist ein Schritt/Prozess der Bildverarbeitung, in dem Regionen eines Bildes als inhaltlich zusammenhängend erklärt werden. Typischerweise geht der Segmentierung eine Vorverarbeitung voraus und folgt eine Merkmalsextraktion anhan
+
+\section{Bildberarbeitung}
 Bildbearbeitung bedeutet die Veränderung ( Verbesserung, Verfremdung oder Manipulation ) vorhandener digitaler Bilder mit ensprechender Software, wie zum Beispiel Adobe Photoshop\footnote{\url{http://www.adobe.com/}}. Diese Veränderung geschieht mit dem Anreiz den Eindruck des Bildes auf das menschliche Auge zu verändern. Dort liegt der entscheidende Unterschied zu Bildverarbeitung, welche im vorangehenden Punkt beschrieben wurde. Es werden für die Bildbearbeitung zwar Algorithmen die der Bildverarbeitung zuzuordnen sind genutzt, allerdings ist der 'Konsument' des Bildes bei der Bildbearbeitung das menschliche Auge und bei der Bildverarbeitung die Maschine, bzw. weitere Algorithmen, die auf Pixelebene arbeiten.
 
 \subsubsection{Weichzeichnen}
 \subsubsection{Farbstichanpassungen}
 \subsubsection{Zurechtschneiden}
 
-\subsection{Maschinelles Sehen} 
+\section{Maschinelles Sehen} 
 %http://de.wikipedia.org/wiki/Maschinelles_Sehen 
 Das Maschinelle Sehen erzeugt anhand eines Bildes / Bildsignales Interpretationen bzw. Bildbeschreibung des Bildes.
+\section{Maschinelles Lernen}
 
-\subsection{Computer Vision}
+\section{Histogramm}
+Das Histogramm eines Bildes wird auch Intensitätshistogram genannt. Dieses Intensitätshistogram gibt Aufschluss über die Anzahl der Pixel im Bild, die allen möglichen Intensitäten zugeordnet werden können. Für ein 8-bit Graustufenbild gibt es also 256 unterschiedliche Intensitäten welchen das Histogramm die Anzahl der Pixel, welche diese Intensität hat, zuordnet.\cite{fisher03} Das Histogramm enthält ausschließlich Informationen über die Verteilung von Intensitäten und lässt die Ordnung bzw. Reihenfolge dieser Intensitäten vollständig außer Acht. Das Histogramm ist Grundlage für viele Techniken des maschinellen sehens, in denen die Reihenfolge der Pixelintensitäten irrelevant sind. 
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{intensityhistogram} %{CS0031}
+\caption[Intensitätshistogramm]{Intensitätshistogramm\footnotemark}
+\label{fig:Intensitätshistogramm}
+\end{figure}
+\footnotetext{\url{http://homepages.inf.ed.ac.uk/rbf/HIPR2/histb.gif} 21.12.2013 18:01Uhr}
 
-\subsection{Computergrafik} 
+\section{Computer Vision}
+\section{Klassifikation}
+Was ist eine Klassifikation?
+\subsection{Bag of Words / Bag of Features}
+\subsection{SVM}
+\subsection{Haar Klassifikator}
+
+\subsubsection{Schlüsselpunkte}\label{keypoints}
+Die auch \emph{keypoints} genannten Schlüsselpunkte sind Grundlage für sehr viele Anwendungsgebiete des Maschinellen Sehens. Schlüsselpunkte sind Punkte im Bild mit hohem Informationsgehalt, welche in der Regel an Ecken im Bild auftreten. Diese Eckpunkte können anhand von Harris Corner Detection, Triggs, Szeliski oder Shi-Tomasi erkannt werden, wobei diese Ansätze sich auschließlich darin unterscheiden, wo der Unterschied zwischen Ecken und Nicht-Ecken liegt. Der Ansatz von Harris ist im Kapitel \ref{ssection:harris} \nameref{ssection:harris} auf Seite \pageref{ssection:harris} näher beschrieben. Ein weiterer Ansatz zur Berechnung von Schlüsselpunkten wurde 2004 von David G. Lower in seinem Paper \emph{Distinctive Image Features from Scale-Invariant Keypoints} vorgestellt, woraus die SIFT-Methode resultiert ist.
+Die Qualität von Schlüsselpunkten bestimmt sich daraus, wie aussagekräftig sie sich dafür eignen die Übereinstimmung mit anderen Schlüsselpunkten zu berechnen. Wie in Abbildung \ref{fig:szeliski_feature_points} zu erkennen ist können Teilbilder ohne Textur nur sehr schlecht dafür genutzt werden eine Übereinstimmung mit anderen Teilbildern zu errechnen. Teilbilder mit hohen Kontrasveränderungen bzw. Gradienten können einfacher lokalisiert werden, wobei gerade Liniensegmente das \emph{aperture problem} aufweisen.\citefield{[S. 209]}{szeliski10}\cite[1]{szeliski10}
+Schlüsselpunkte besitzen sogenannte Deskriptoren, welche die Umgebung des Schlüsselpunktes beschreiben.
+
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{feature_points_szieliski} %{CS0031}
+\caption[Bildpaar mit extrahierten Teilbildern]{Bildpaar mit extrahierten Teilbildern\footnotemark}
+\label{fig:szeliski_feature_points}
+\end{figure}
+\footnotetext{S. 209 [szeliski09]}
+
+Schlüsselpunkte sind wesentliche Grundlage für die automatisierung von Objektverfolgung, Segmentierung aufgrund von Bewegung, Objekterkennung, 3D Objektrekonstruktion und die Navigation von Robottern.\footnote{\url{http://crcv.ucf.edu/courses/CAP5415/Fall2012/Lecture-4-Harris.pdf}}
+
+\subsubsection{Deskriptoren}
+Der Deskriptor eines Schlüsselpunktes gibt Auskunft über die Aussagekräftigkeit eines Schlüsselpunktes. 
+
+\subsubsection{Harris Corner Detection}\label{ssection:harris}
+
+\section{Computergrafik} 
 Die Computergrafik beschäftigt sich damit anhand von Bildbeschreibungen Bilder zu erzeugen.
 
-\subsection{Bildvorverarbeitung} 
+\section{Bildvorverarbeitung} 
 Während der Bildvorverarbeitung können unterschiedliche Bildverarbeitungsalgorithmen auf ein Bild angewendet werden. 
 
 
-\subsection{Segmentierung}
-%http://de.wikipedia.org/wiki/Segmentierung_(Bildverarbeitung) 
-Die Segmentierung ist ein Teilgebiet der digitalen Bildverarbeitung und des maschinellen Sehens.
+\section{Hintergrundsubtraktion}
+Methodiken der Hintergrundsubtraktion\footnote{engl. background subtraction} werden weitläufig dazu genutzt sich bewegende Objekte in Bildsequenzen zu erkennen. Einige Beispiele dieser Anwendungen sind Verkehrsüberwachung, Aufzeichnung von menschlichen Bewegungen und Videoüberwachung.
+Die Erkennung von sich bewegenden Objekten in Videostreams ist der erste ausschlaggebende Schritt der Informationsextraktion vieler Anwendungen der \emph{Computer Vision}, einschließlich Videoüberwachungen, Personenverfolgung und Verkehrsüberwachung. Aufgrund dieser vor-verarbeitenden Rolle der Hintergrundsubtraktion wird die Qualität dieser anhand von einigen Faktoren charakterisiert.
 
-Die Segmentierung ist ein Schritt/Prozess der Bildverarbeitung, in dem Regionen eines Bildes als inhaltlich zusammenhängend erklärt werden. Typischerweise geht der Segmentierung eine Vorverarbeitung voraus und folgt eine Merkmalsextraktion anhan
+\textbf{Genauigkeit}
+Die Fähigkeit den Hintergrund pixelgenau vom Hintergrund zu trennen, sowie eine genaue Adaption des Hintergrundmodells über die Zeit.
 
-\section{Konkret}
-\subsection{Vorverarbeitung}
-\subsubsection{background subtraction}
-\subsubsection{smoothing}
-\subsubsection{median filter}
-\subsubsection{erosion / dilatation}
-\subsubsection{pyrDown / pyrUp}
-\subsection{Bewegungserkennung}
-\subsubsection{Optical Flow Farneback sparse/dense}
-\subsubsection{Optical flow Lukas kanade sparse/dense}
-\subsubsection{Opticval Flow Block Matching dense}
-\subsubsection{Optical Flow Brox dense}
-\subsubsection{Optiucal Flow DualTVL1}
-\subsubsection{Optical Flow Horn Schunk}
-\subsection{Objekterkennung}
-\subsubsection{blob detection}
-\subsection{Objektverfolgung}
+\textbf{Flexibilität}
+Die Anpassungsfähigkeit an unterschiedliche Szenarios, wie sich ändernde Lichtverhältnisse sowie Gültigkeit für Anwendungen innerhalb, sowie außerhalb von Gebäuden.
+
+\textbf{Effizienz}
+Um die Erkennung von sich bewegenden Objekten in Echtzeit zu realisieren, muss die Berechnung des Hintergrundmodells möglichst effizient geschehen.
+
+Grundsätzlich werden die Effizienz, sowie die Flexibilität als primäre Anforderungen an eine Methode zur Hintergrundsubtraktion gesehen. Weiterhin ist eine akkurate Erkennung von sich bewegenden Objekten eine wichtige Grundvoraussetzung, als auch Unterstützung für die darauffolgenden Schritte der Verfolgung, sowie Klassifikation von Objekten. \cite{cucchiara07}
+
+Die Hintergrundsubtraktion beschäftigt sich mit dem folgenden Problem: Wie kann der Vordergrund vom Hintergrund getrennt werden?
+Grundsätzlich arbeitet jeder Ansatz zur Berechnung einer Hintergrundsubtraktion so, dass Objekt als Vordergrund erkannt wird, wenn es sich in aufeinanderfolgenden Bildern einer Bildsequenz bewegen, oder verändern. Dies geschieht dadurch, dass die Differenz eines Bildes und dessen statischem Hintergrund berechnet wird. 
+
+\[
+{}^{}_{}\mathbf{|frame}^{}_{i} - {}^{}_{}\mathbf{background}^{}_{i}| > Th
+ \quad
+\]
+
+Dadurch ergibt sich wiederum die Frage, wie das Bild des statischen Hintergrundes der Szene errechnet werden kann. An dieses statische Hintergrundbild werden einige Anforderungen gestellt. Es soll sich über die Zeit an Belichtungsveränderungen, sowie Bewegungsveränderungen anpassen. Beispielhaft soll sich das Hintergrundbild an Tageslichtveränderungen anpassen und Bewegungen der Kamera auf lange Betrachtung ignorieren.
+
+Für die Errechnung des Hintergrundbildes gibt es diverse Ansätze. Einer dieser Ansätze nennt sich Bildunterschied oder \emph{frame difference}, welcher als statischen Hintergrundbild schlichtweg das in der Bildsequenz vorangegangene Bild verwendet. 
+
+\[
+{}^{}_{}\mathbf{|frame}^{}_{i} - {}^{}_{}\mathbf{frame}^{}_{i-1}| > Th
+ \quad
+\]
+
+Dieser Ansatz funktioniert unter bestimmten Umständen, welche mit der Bewegungsgeschwindigkeit des Objektes und des \emph{Framerate} zusammen hängt.\footnote{\url{http://www-staff.it.uts.edu.au/~massimo/BackgroundSubtractionReview-Piccardi.pdf}}
+
+\subsubsection{MOG}
+\subsubsection{MOG2}
+\subsubsection{GMG}
+\section{Bewegungserkennung}
+\subsubsection{Optischer Fluss}
+Die Berechnung des Optischen Flusses für \emph{jedes} Pixel ist die meistverbreiteste und zugleich rechenintensivste Methode.
+
+Der Optische Fluss ist eine Methode zur Bewegungsanalyse in Bildsequenzen. Das Ergebnis der Berechnung sind zweidimensionale Verschiebungsvektoren, welche die örtliche Veränderung eines Pixels zwischen zwei aufeinanderfolgenden Bildern beschreibt. Ein Problem der Berechnungs von Verschiebungsvektoren ist das Finden der geeigneten Schlüsselpunkten, anhand von welchen der optische Fluss berechnet werden kann.
+Der optische Fluss ist für viele Anwendungen von Bedeutung. Es kann die eine Segmentierung eines sich bewegenden Objektes von dessen Hintergrund erreicht werden. Weiterhin kann der \emph{Globale Fluss} errechnet werden, welcher aussage über die Bewegung der Kamera gibt. Dadurch kann ein wackeliges Kamerabild stabilisiert werden.
+Weiterhin kann und wird der Optische Fluss zur Videokompression genutzt. Der Kompressionscodec MPEG macht großen Gebrauch vom Optischen Fluss, um dadurch Bewegung im Bild vorauszusehen.
+Das Konzept des Optischen Flusses wurde als ersten von Horn \& Schunck im Jahr 1981 erdacht.
+
+Der Optische Fluss von Horn \& Schunck basiert zunächst auf der \emph{brightness constancy assumption}\footnotemark, welche die Annahme, dass aufeinanderfolgende Bilder mit ähnlicher Intensität belichtet sind, beschreibt.
+\footnotetext{S.3 \cite{gennert87}}
+
+Der Optische Fluss, welcher von Lucas \& Kanade weiterentwickelt wurde, basiert auf der \emph{smoothness assumption}\footnotemark, der Annahme, dass nah beieinander liegende Pixel sehr ähnliche Verschiebungsvektoren besitzen.
+\footnotetext{S.6 \cite{gennert87}}
+
+Beide Optischen Flüsse von Horn \& Schunck und von Lucas \& Kanade scheitern daran die Berechnung großen Bewegungen durchzuführen. Da die Berechnung des Flusses nur auf Bewegung innerhalb des Kernels von 3x3 wahrgenommen werden kann wurde das Konzept der \emph{Pyramids} in Kombination mit der Berechnung des Optischen Flusses erdacht.?????
+
+\subsubsection{Pyramids}
+Pyramids sind eine Methode des Maschinellen Sehens und dienen dazu ein Bild in unterschiedlichen Größen darzustellen. Dies dient zur Videokompression und unterstützt die Berechnung des Optischen Flusses dahingehen, dass ebenfalls große Bewegungen errechnet werden können.
+Die Pixelanzahl eines Bildes vergrößert bzw. verkleinert sich bei jedem Schritt der Pyramide, abhängig von der Richtung des Schrittes. Der Faktor, mit denen die Pixelanzahl reduziert bzw. erweitert wird ist 1/4.
+Das Konzept der Pyramids kann sowohl im 1D, als auch in 2D oder n-D Raum angewandt werden.
+
+\textbf{Pyramids und Optischer Fluss}. Auf der höchsten Stufe des Pyramide, die Stufe, auf der das Bild die höchste Pixelanzahl aufweist, können ausschließlich sehr feine und kleine Bewegungen erkannt werden. Um größere Flüsse mit Hilfe von Pyramids zu berechnen wird der Optische Fluss einer Region mit den Flüssen der gleichen Region auf anderen Ebenen der Pyramide addiert.  Pyramids werden dafür benutzt, um große Bewegungen im Verhältnis zur Größe des Bildes \emph{kleiner} zu machen, indem das Bild in einer kleineren Auflösung betrachtet wird.
+
+\section{Objekterkennung}
+\subsection{blob detection}
+\section{Objektverfolgung}
+Das Thema Objektverfolgung ist eine Forschungsrichtung, die zur Zeit von vielen Forschern aktiv bearbeitet wird. 
+Die Objektverfolgung ist ein Gebiet, das versucht anhand von Sensordaten die Position, den Weg, sowie Charakteristiken des zu verfolgenden Objektes herauszufinden. Der benutzte Sensor kann von jeglicher Art sein, welcher Daten eines Objektes aus der Umgebung aufzeichnen kann. Ein Sensor kann eine Videokamera, ein Mikrophon, allerdings ebenfalls ein Radar, Sonar, oder Infrarotsensor sein. Typische Ziele der Objektverfolgung sind die Bestimmung der Anzahl von Objekten, ihrer Eigenschaften, wie Position, Geschwindigkeit und andere Objektspezifische Eigenschaften. \citefield{[vgl. Naeem, Pridmore S.1]}{naeem12}\cite[1]{naeem12}
+Die Objektverfolgung ist für viele Anwendungsbereiche von Bedeutung, und ist für folgende Anwendungen nötig: Überwachungssysteme, Sportanalyse, Gestenerkennung, medizinische Zwecke wie zum Beispiel die Untersuchung von Mikroskopiebildern, Verkehrsanalyse zur effizienten Gestaltung von Straßen und Wegen, sowie Analyse von Verhaltensmustern von Pflanzen und Tieren.\footnote{vgl. Naeem, Pridmore S.1\cite[1]{naeem12}}
+Eine typische Abfolge von Systemen die Objektverfolgung als Aufgabe haben ist in Abb. \ref{fig:system_objektverfolgung} zu sehen, worauf im Abschnitt \ref{sec:schritte_der_objektverfolgung} \nameref{sec:schritte_der_objektverfolgung} auf Seite \pageref{sec:schritte_der_objektverfolgung} weiter eingegangen wird.
+\begin{figure}
+\centering
+\includegraphics[width=.95\textwidth]{objektverfolgung_system_cropped} 
+\caption[typisches System zur Objektverfolgung]{typisches System zur Objektverfolgung\footnotemark}
+\label{fig:system_objektverfolgung}
+\end{figure}
+\footnotetext{\citefield{Naeem, Pridmore S.2}{naeem12} \cite[2]{naeem12}}
+\section{Schritte/Bestandteile der Objektverfolung}\label{sec:schritte_der_objektverfolgung}
+\subsection{Datenaufnahme}
+Zunächst müssen Daten der Umgebung des zu verfolgenden Objektes aufgezeichnet werden. 
+\subsection{Signalvorverarbeitung}
+Darauf folgend müssen die rohen Daten vorverarbeitet werden. Es werden Erscheinungen, wie Rauschen und Informationen, die offensichtlich nicht Teil des zu verfolgenden Objektes sind gefiltert und verworfen werden. Dieser Schritt dient dazu die aufgezeichneten Daten zu schmälern und zu selektieren, welche Informationen zum folgenden Schritt, der Informationsverarbeitung, weitergegeben wird.
+\subsection{Informationsverarbeitung}
+In diesem Schritt werden vorverarbeitete Daten analysiert. 
+
+Die Objektverfolgung oder auch \emph{object tracking} genannte Methode beschäftigt sich damit die Bewegung von Objekten hervorzusehen, während sie sich innerhalb des Bildes bewegen. Die Objektverfolgung ist eine Thematik in der zum Zeitpunkt des Schreibens aktiv geforscht wird. Ein Objekt geschieht anhand von dessen Eigenschaften bzw. \emph{features}. Inwiefern Eigenschaften von Objekten erkannt werden wurde im Abschnitt \ref{keypoints} \nameref{keypoints} beschrieben. Es können innerhalb einer Szene ein, oder mehrere Objekte verfolgt werden, wohingegen die Verfolgung eines einzelnen Objektes die einfachste Art der Objektverfolgung darstellt. Weiterhin ist es möglich Objekte mit einer fixierten Kameraposition, aber auch mit einer sich bewegenden Kamera zu verfolgen. Sogar die Verfolgung eines Objektes in einer Szene, welche von mehreren Kameras gefilmt wird ist möglich. Zusätzlich ist es möglich die Kontur eines Objektes zu verfolgen, was die Extraktion von mehr Informationen über das Objekt selbst ermöglicht.
+
+Eine erfolgreiche Verfolgung eines Objektes ist gegeben, wenn einem Objekt kontinuierlich die gleiche Nummer zugeordnet werden kann.
+
+Eine konkrete Anwendung zur Objektverfolgung ist von Kanade, Lucas und Tomasi beschrieben, dessen Schritte im Folgenden näher beschrieben werden. TODO: paper finden. 
+
+\subsection{Objektverfolgung mittels Optischem Fluss}
+\subsection{Objektverfolgung mittels Mean Shift}
+Der \emph{Mean Shift} errechnet die dichteste Region eines Punktemenge. Dies geschieht anhand der Intensität eines Wertes, welchen alle Punkte besitzen. Anhand dessen kann ein dreidimensionale Histogramm errechnet werden, welches die Intensitäten dieses Wertes aufzeigt.
+
+
 \subsubsection{Kalman filter}
+\section{Objektwiedererkennung}
+\section{CUDA}
+\section{OpenCL}
