@@ -5,7 +5,9 @@
 %%------------------------------------------------------------
 
 \graphicspath{{images/}}    % wo liegen die Bilder?
+\usepackage{mathtools}
 \AddBibFile{literatur.bib}  % Angabe der BibTeX-Datei
+\usepackage{acronym}
 
 %%%----------------------------------------------------------
 \begin{document}
@@ -33,12 +35,29 @@ und Booten auf der Spree anhand des Videostreams einer IP-Kamera}
 %%%----------------------------------------------------------
 \frontmatter
 \maketitle
-\tableofcontents
 %%%----------------------------------------------------------
 
-\include{vorwort}		% ggfs. weglassen
+%\include{vorwort}		% ggfs. weglassen
 \include{kurzfassung}
 \include{abstract}
+
+\chapter{Abkürzungsverzeichnis}
+\begin{acronym}
+\acro{IP}{Internet Protocol}
+\acro{CV}{Computer Vision}
+\acro{FPS}{Bilder pro Sekunde \emph{engl. frames per second}}
+\acro{CG}{Computergrafik \emph{engl. computer graphics}}
+\acro{BGS}{Hintergrundsubtraktion \emph{engl. background subtraction}}
+\acro{PC}{Personal Computer}
+\acro{ms}{Millisekunde}
+\acro{vgl.}{vergleiche}
+\acro{bzw.}{beziehungsweise}
+\acro{GUI}{Graphical User Interface}
+\end{acronym}
+
+\listoffigures
+\listoftables
+\tableofcontents
 
 %%%----------------------------------------------------------
 \mainmatter         % Hauptteil (ab hier arab. Seitenzahlen)
@@ -60,15 +79,46 @@ und Booten auf der Spree anhand des Videostreams einer IP-Kamera}
   Asad Naeem, Tony Pridmore,
   \emph{Object Tracking Using Hybrid Mean Shift \& Particle Filter Algorithms: An indepth discussion on computer vision object tracking algorithms}.
   LAMBERT Academic Publishing,
-  2012
+  2012,
+	\textbf{naeem12}
+	
+\bibitem{szeliski10}
+ Richard Szeliski,
+ \emph{Computer Vision: Algorithms and Applications}.
+ Springer Verlag,
+ 2010,
+	\textbf{szelistki10}
+	
+\bibitem{fisher03}
+R. Fisher, S. Perkins, A. Walker, E. Wolfart,
+\emph{Intensity Histogramm}.
+\url{http://homepages.inf.ed.ac.uk/rbf/HIPR2/histgram.htm} (20.12.2013 16:34Uhr),
+2003,
+\textbf{fisher03}
+	
+	\bibitem{cucchiara07}
+  Rita Cucchiara, Constantino Grana, Massimo Piccardi, Andrea Prati,
+  \emph{Detecting Moving Objects, Ghosts and Shadows in Video Streams}.
+  \url{http://imagelab.ing.unimore.it/Pubblicazioni/pubblicazioni/pami_sakbot.pdf} (23.12.2013 17:01Uhr),
+  2007,
+	\textbf{cucchiara07}
+	
+		\bibitem{gennert87}
+  Michael A. Gennert and Shahriar Negahdaripour,
+  \emph{Relaxing the Brightness Constancy Assumtion in Computing Optical Flow}.
+	Massachusetts Institute of Technology
+  \url{http://18.7.29.232/bitstream/handle/1721.1/6477/AIM-975.pdf?sequence=2} (22.12.2013 13:42Uhr),
+  1987,
+	\textbf{gennert87}	
 
 \bibitem{sester95}
   Monika Sester,
   \emph{Lernen struktureller Modelle für die Bildanalyse}.
 	Dissertation,
   Universität Stuttgart,
-  \url{http://www.ifp.uni-stuttgart.de/publications/dissertationen/moni_diss.pdf},
-  1995
+  \url{http://www.ifp.uni-stuttgart.de/publications/dissertationen/moni_diss.pdf} (18.12.2013 21:31Uhr),
+  1995,
+	\textbf{sester95}
 	
 \end{thebibliography}
 
